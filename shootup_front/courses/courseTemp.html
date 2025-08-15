@@ -617,7 +617,13 @@
             }
             
             function applyStyle(styleName) {
-                 cssLink.href = `./${styleName}Style.css`;
+                if (styleName === 'minimalistic') {
+                    cssLink.href = './minimalistStyle.css';
+                } else if (styleName === 'lux') {
+                    cssLink.href = './luxuriousStyle.css';
+                } else {
+                    cssLink.href = `./${styleName}Style.css`;
+                }
             }
 
             function saveNotes() {
