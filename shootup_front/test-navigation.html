@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Toggle Test - ShootUp</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dist/style.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+
+    <!-- Main container for the entire layout -->
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+
+        <div id="navigation-placeholder"></div>
+
+        <!-- Main Content Area -->
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <!-- Sidebar toggle button (hidden when sidebar is open) -->
+            <button id="sidebar-toggle-btn" class="absolute top-8 left-8 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none transition-all duration-300 ease-in-out hidden btn-primary" title="Show Navigation">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+
+            <!-- Test Content -->
+            <div class="p-8">
+                <h1 class="text-4xl font-bold mb-8 text-white">Navigation Toggle Test</h1>
+                
+                <div class="bg-gray-800 rounded-xl p-6 mb-6">
+                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Test Instructions</h2>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>• Click the <i class="fas fa-times text-red-400"></i> button in the navigation to close it</li>
+                        <li>• Click the <i class="fas fa-bars text-indigo-400"></i> button that appears to reopen navigation</li>
+                        <li>• Test on both desktop and mobile (resize window to test responsive behavior)</li>
+                        <li>• Navigation should automatically collapse on mobile screens</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 mb-6">
+                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Manual Test Controls</h2>
+                    <div class="flex gap-4 flex-wrap">
+                        <button onclick="window.NavigationToggle?.show()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                            Show Navigation
+                        </button>
+                        <button onclick="window.NavigationToggle?.hide()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+                            Hide Navigation
+                        </button>
+                        <button onclick="window.NavigationToggle?.toggle()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                            Toggle Navigation
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Status</h2>
+                    <div id="status-info" class="text-gray-300">
+                        <p>Navigation Toggle Script: <span id="script-status" class="text-yellow-400">Loading...</span></p>
+                        <p>Current State: <span id="nav-state" class="text-yellow-400">Unknown</span></p>
+                        <p>Screen Size: <span id="screen-size" class="text-yellow-400">Unknown</span></p>
+                        <p>Toggle Button Visible: <span id="toggle-visible" class="text-yellow-400">Unknown</span></p>
+                        <p>Navigation Loaded: <span id="nav-loaded" class="text-yellow-400">Unknown</span></p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-6 mt-6">
+                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Expected Behavior</h2>
+                    <div class="text-gray-300 space-y-2">
+                        <p><strong>Desktop (>768px):</strong></p>
+                        <ul class="ml-4 space-y-1">
+                            <li>• Navigation should be visible by default</li>
+                            <li>• Toggle button should be hidden</li>
+                            <li>• Clicking ❌ should hide navigation and show ☰ button</li>
+                        </ul>
+                        <p><strong>Mobile (≤768px):</strong></p>
+                        <ul class="ml-4 space-y-1">
+                            <li>• Navigation should be hidden by default</li>
+                            <li>• Toggle button should be visible</li>
+                            <li>• Clicking ☰ should show navigation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dist/data.js"></script>
+    <script src="dist/script.js"></script>
+    <script src="dist/navigation-toggle.js"></script>
+    
+    <script>
+        // Status monitoring
+        document.addEventListener('DOMContentLoaded', () => {
+            const updateStatus = () => {
+                const scriptStatus = document.getElementById('script-status');
+                const navState = document.getElementById('nav-state');
+                const screenSize = document.getElementById('screen-size');
+                const toggleVisible = document.getElementById('toggle-visible');
+                const navLoaded = document.getElementById('nav-loaded');
+                const mainContainer = document.getElementById('main-container');
+                const toggleBtn = document.getElementById('sidebar-toggle-btn');
+                const sidebar = document.getElementById('sidebar');
+                
+                // Check if NavigationToggle is available
+                if (window.NavigationToggle) {
+                    scriptStatus.textContent = 'Loaded ✓';
+                    scriptStatus.className = 'text-green-400';
+                } else {
+                    scriptStatus.textContent = 'Not Loaded ✗';
+                    scriptStatus.className = 'text-red-400';
+                }
+                
+                // Check navigation state
+                if (mainContainer) {
+                    if (mainContainer.classList.contains('sidebar-collapsed')) {
+                        navState.textContent = 'Hidden';
+                        navState.className = 'text-red-400';
+                    } else {
+                        navState.textContent = 'Visible';
+                        navState.className = 'text-green-400';
+                    }
+                }
+                
+                // Check toggle button visibility
+                if (toggleBtn) {
+                    const isVisible = toggleBtn.style.display !== 'none' && 
+                                     toggleBtn.style.opacity !== '0' && 
+                                     toggleBtn.style.visibility !== 'hidden';
+                    if (isVisible) {
+                        toggleVisible.textContent = 'Yes ✓';
+                        toggleVisible.className = 'text-green-400';
+                    } else {
+                        toggleVisible.textContent = 'No ✗';
+                        toggleVisible.className = 'text-red-400';
+                    }
+                } else {
+                    toggleVisible.textContent = 'Not Found ✗';
+                    toggleVisible.className = 'text-red-400';
+                }
+                
+                // Check if navigation is loaded
+                if (sidebar) {
+                    navLoaded.textContent = 'Yes ✓';
+                    navLoaded.className = 'text-green-400';
+                } else {
+                    navLoaded.textContent = 'No ✗';
+                    navLoaded.className = 'text-red-400';
+                }
+                
+                // Check screen size
+                const width = window.innerWidth;
+                if (width <= 768) {
+                    screenSize.textContent = `Mobile (${width}px)`;
+                    screenSize.className = 'text-orange-400';
+                } else {
+                    screenSize.textContent = `Desktop (${width}px)`;
+                    screenSize.className = 'text-blue-400';
+                }
+            };
+            
+            // Update status every second
+            setInterval(updateStatus, 1000);
+            updateStatus();
+            
+            // Update on resize
+            window.addEventListener('resize', updateStatus);
+        });
+    </script>
+</body>
+</html>

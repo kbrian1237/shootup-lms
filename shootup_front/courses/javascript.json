@@ -1,0 +1,1806 @@
+{
+	"title": "Javascript Adventure",
+	"category": "Web Development",
+	"level": "Beginner",
+	"rating": 4.5,
+	"banner": "https://placehold.co/1200x400/374151/ffffff?text=JavaScript",
+	"description": "Embark on an exciting journey to master JavaScript and build dynamic web experiences!",
+	"outline": [
+		{ "title": "Introduction", "topics": ["What is JavaScript?", "Client vs Server", "Why learn JS?"] },
+		{ "title": "Variables", "topics": ["let/const/var", "Scope", "Data Types"] },
+		{ "title": "Operators", "topics": ["Arithmetic", "Comparison", "Logical"] },
+		{ "title": "Data Types", "topics": ["Primitives", "Objects", "Arrays"] },
+		{ "title": "Functions", "topics": ["Declaration vs Expression", "Parameters & Arguments", "Return Values"] },
+		{ "title": "Arrays", "topics": ["Creation", "Accessing", "Methods"] },
+		{ "title": "Objects", "topics": ["Creation", "Properties", "Methods"] },
+		{ "title": "Conditionals", "topics": ["if/else", "switch"] },
+		{ "title": "Loops", "topics": ["for", "while", "do...while"] },
+		{ "title": "DOM Manipulation", "topics": ["Selecting Elements", "Modifying HTML", "Styling"] },
+		{ "title": "Events", "topics": ["Event Listeners", "Common Events"] },
+		{ "title": "Promises", "topics": ["Callbacks", "Promises basics"] },
+		{ "title": "Async/Await", "topics": ["Async functions", "await keyword"] },
+		{ "title": "Error Handling", "topics": ["try...catch", "finally"] },
+		{ "title": "Modules", "topics": ["import", "export", "ES6 Modules"] },
+		{ "title": "Classes", "topics": ["Class syntax", "Constructor", "Methods"] },
+		{ "title": "Closures", "topics": ["Scope Chains", "Private Variables"] },
+		{ "title": "Hoisting", "topics": ["var hoisting", "let/const TDZ"] },
+		{ "title": "Event Loop", "topics": ["Call Stack", "Callback Queue"] },
+		{ "title": "Prototypes", "topics": ["Prototype Chain", "Inheritance"] },
+		{ "title": "Debugging", "topics": ["console.log", "Breakpoints"] },
+		{ "title": "Final Project", "topics": ["Build a simple application"] }
+	],
+	"scheduleGroups": [
+		{
+			"day": 1,
+			"title": "JavaScript Foundations",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Introduction", "topic": "What is JavaScript?" },
+				{ "section": "Introduction", "topic": "Client vs Server" },
+				{ "section": "Introduction", "topic": "Why learn JS?" },
+				{ "section": "Variables", "topic": "let/const/var" }
+			]
+		},
+		{
+			"day": 2,
+			"title": "Variables and Data Types",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Variables", "topic": "Scope" },
+				{ "section": "Variables", "topic": "Data Types" },
+				{ "section": "Data Types", "topic": "Primitives" },
+				{ "section": "Data Types", "topic": "Objects" }
+			]
+		},
+		{
+			"day": 3,
+			"title": "Operators and Arrays",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Data Types", "topic": "Arrays" },
+				{ "section": "Operators", "topic": "Arithmetic" },
+				{ "section": "Operators", "topic": "Comparison" },
+				{ "section": "Operators", "topic": "Logical" }
+			]
+		},
+		{
+			"day": 4,
+			"title": "Functions and Control Flow",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Functions", "topic": "Declaration vs Expression" },
+				{ "section": "Functions", "topic": "Parameters & Arguments" },
+				{ "section": "Functions", "topic": "Return Values" },
+				{ "section": "Conditionals", "topic": "if/else" }
+			]
+		},
+		{
+			"day": 5,
+			"title": "Data Structures",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Conditionals", "topic": "switch" },
+				{ "section": "Arrays", "topic": "Creation" },
+				{ "section": "Arrays", "topic": "Accessing" },
+				{ "section": "Arrays", "topic": "Methods" }
+			]
+		},
+		{
+			"day": 6,
+			"title": "Objects and Loops",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Objects", "topic": "Creation" },
+				{ "section": "Objects", "topic": "Properties" },
+				{ "section": "Objects", "topic": "Methods" },
+				{ "section": "Loops", "topic": "for" }
+			]
+		},
+		{
+			"day": 7,
+			"title": "DOM and Events",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Loops", "topic": "while" },
+				{ "section": "Loops", "topic": "do...while" },
+				{ "section": "DOM Manipulation", "topic": "Selecting Elements" },
+				{ "section": "DOM Manipulation", "topic": "Modifying HTML" }
+			]
+		},
+		{
+			"day": 8,
+			"title": "Interactive JavaScript",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "DOM Manipulation", "topic": "Styling" },
+				{ "section": "Events", "topic": "Event Listeners" },
+				{ "section": "Events", "topic": "Common Events" },
+				{ "section": "Promises", "topic": "Callbacks" }
+			]
+		},
+		{
+			"day": 9,
+			"title": "Asynchronous JavaScript",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Promises", "topic": "Promises basics" },
+				{ "section": "Async/Await", "topic": "Async functions" },
+				{ "section": "Async/Await", "topic": "await keyword" },
+				{ "section": "Error Handling", "topic": "try...catch" }
+			]
+		},
+		{
+			"day": 10,
+			"title": "Modern JavaScript Features",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Error Handling", "topic": "finally" },
+				{ "section": "Modules", "topic": "import" },
+				{ "section": "Modules", "topic": "export" },
+				{ "section": "Modules", "topic": "ES6 Modules" }
+			]
+		},
+		{
+			"day": 11,
+			"title": "Advanced Concepts",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Classes", "topic": "Class syntax" },
+				{ "section": "Classes", "topic": "Constructor" },
+				{ "section": "Classes", "topic": "Methods" },
+				{ "section": "Closures", "topic": "Scope Chains" }
+			]
+		},
+		{
+			"day": 12,
+			"title": "JavaScript Internals",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Closures", "topic": "Private Variables" },
+				{ "section": "Hoisting", "topic": "var hoisting" },
+				{ "section": "Hoisting", "topic": "let/const TDZ" },
+				{ "section": "Event Loop", "topic": "Call Stack" }
+			]
+		},
+		{
+			"day": 13,
+			"title": "Prototypes and Debugging",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Event Loop", "topic": "Callback Queue" },
+				{ "section": "Prototypes", "topic": "Prototype Chain" },
+				{ "section": "Prototypes", "topic": "Inheritance" },
+				{ "section": "Debugging", "topic": "console.log" }
+			]
+		},
+		{
+			"day": 14,
+			"title": "Final Project",
+			"estimatedHours": 4,
+			"topics": [
+				{ "section": "Debugging", "topic": "Breakpoints" },
+				{ "section": "Final Project", "topic": "Build a simple application" }
+			]
+		}
+	],
+	"sections": [
+		{
+			"title": "Introduction to JavaScript",
+			"content": [
+				{ "type": "p", "text": "Welcome to this comprehensive course on Learning JavaScript! You've taken the first step towards mastering the language that powers the modern web and beyond." },
+				{ "type": "p", "text": "JavaScript is an incredibly versatile and essential programming language for anyone looking to build interactive websites, dynamic web applications, server-side services, mobile apps, and even games. It's a cornerstone technology alongside HTML and CSS, forming the \"three pillars\" of front-end web development. However, with the advent of Node.js, JavaScript has also become a major player in back-end development, allowing developers to use a single language across the entire stack." },
+				{ "type": "p", "text": "In this course, we will take you from the very basics to more advanced concepts, giving you the skills and confidence to start building your own projects. Here's a glimpse of the topics we'll cover:" },
+				{ "type": "ul", "listItems": [
+					"Understanding JavaScript fundamentals: variables, data types, operators, and control flow (if/else, loops).",
+					"Working with functions: defining, calling, and understanding scope.",
+					"Exploring objects and arrays: essential data structures in JavaScript.",
+					"Manipulating the Document Object Model (DOM): making your web pages interactive.",
+					"Handling events: responding to user actions like clicks and keyboard input.",
+					"Asynchronous JavaScript: understanding callbacks, Promises, and async/await for non-blocking operations.",
+					"Introduction to modern JavaScript features (ES6+): arrow functions, classes, modules, and more.",
+					"Brief overview of popular JavaScript frameworks and libraries (like React, Vue, or Angular) and how they build upon core JavaScript.",
+					"Basic debugging techniques and best practices."
+				]},
+				{ "type": "p", "text": "This introductory section will ensure you have a solid grasp of what JavaScript is and its importance before we dive into the core programming concepts. Complete the introductory quizzes to test your initial understanding and unlock the next section of the course!" }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the primary role of JavaScript in web development?",
+					"options": [
+						"Defining the structure of a webpage",
+						"Styling the appearance of a webpage",
+						"Adding interactivity and dynamic behavior to a webpage",
+						"Managing server-side databases"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. Where does client-side JavaScript primarily run?",
+					"options": [
+						"On the web server",
+						"In the user's web browser",
+						"In a mobile application",
+						"In a desktop operating system"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. Which of the following is a common use case for JavaScript?",
+					"options": [
+						"Validating form input before submission",
+						"Creating the basic layout of a page",
+						"Defining the content of a page",
+						"All of the above"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "4. JavaScript is often used in conjunction with which other web technologies?",
+					"options": [
+						"Python and Django",
+						"Ruby and Rails",
+						"HTML and CSS",
+						"SQL and Databases"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "5. Is JavaScript considered a front-end or back-end language, or both?",
+					"options": [
+						"Primarily back-end",
+						"Primarily front-end, but can be used for back-end (with Node.js)",
+						"Exclusively back-end",
+						"Neither front-end nor back-end"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		},
+		{
+			"title": "Variables and Data Types in JavaScript",
+			"content": [
+				{ "type": "p", "text": "Variables are essential containers for storing data in JavaScript. They allow us to label and refer to values, making our code dynamic and manageable. Beyond just declaring variables, understanding the different *types* of data they can hold is fundamental to programming in JavaScript." },
+				{ "type": "p", "text": "In this comprehensive section, we will dive deep into how variables are declared using <code>var</code>, <code>let</code>, and <code>const</code>, exploring their differences in scope and behavior. We will then thoroughly examine all the built-in JavaScript data types, understanding what kind of values they represent and how they are used." },
+				{ "type": "h3", "text": "Declaring Variables: `var`, `let`, and `const` Revisited" },
+				{ "type": "p", "text": "Modern JavaScript offers three primary keywords for declaring variables, each with distinct characteristics:" },
+				{ "type": "h4", "text": "`let`: The Modern Standard" },
+				{ "type": "p", "text": "Introduced in ECMAScript 2015 (ES6), <code>let</code> is the preferred way to declare variables that may need to be reassigned. Variables declared with <code>let</code> are **block-scoped**. This means they are only accessible within the block (defined by curly braces <code>{}</code>) where they are declared." },
+				{ "type": "code", "code": "function greet() {\n          let message = \"Hello\"; // message is block-scoped to the function\n          if (true) {\n            let greeting = \"Hi\"; // greeting is block-scoped to the if block\n            console.log(greeting); // Output: Hi\n          }\n          // console.log(greeting); // This would cause a ReferenceError\n          console.log(message); // Output: Hello\n        }\n        greet();\n        // console.log(message); // This would also cause a ReferenceError\n        " },
+				{ "type": "p", "text": "<code>let</code> variables are also not subject to \"hoisting\" in the same way as <code>var</code>. While the declaration is technically hoisted, accessing the variable before its declaration results in a `ReferenceError`. This period between hoisting and declaration is known as the **Temporal Dead Zone (TDZ)**." },
+				{ "type": "h4", "text": "`const`: For Constants" },
+				{ "type": "p", "text": "Also introduced in ES6, <code>const</code> is used to declare variables whose value should not be reassigned after initialization. Like <code>let</code>, variables declared with <code>const</code> are **block-scoped** and are subject to the Temporal Dead Zone." },
+				{ "type": "code", "code": "const PI = 3.14159;\n        // PI = 3.14; // TypeError: Assignment to constant variable.\n        \n        const person = { name: \"Alice\" };\n        person.name = \"Bob\"; // This is allowed!\n        console.log(person.name); // Output: Bob\n        // The *value* of person (the object reference) cannot be reassigned,\n        // but the *properties* of the object can be modified.\n        \n        // const city; // SyntaxError: Missing initializer in const declaration\n        " },
+				{ "type": "p", "text": "It's important to note that <code>const</code> prevents reassignment of the variable itself, not the immutability of the value it holds (especially true for objects and arrays)." },
+				{ "type": "h4", "text": "`var`: The Older Way (Use with Caution)" },
+				{ "type": "p", "text": "Before ES6, <code>var</code> was the only way to declare variables. Variables declared with <code>var</code> are **function-scoped** (or global-scoped if declared outside any function). This means they are accessible throughout the entire function in which they are declared, regardless of block structure." },
+				{ "type": "code", "code": "function exampleVar() {\n          var count = 1; // count is function-scoped\n          if (true) {\n            var total = 10; // total is also function-scoped to exampleVar\n            console.log(total); // Output: 10\n          }\n          console.log(total); // Output: 10 (Accessible outside the if block)\n        }\n        exampleVar();\n        // console.log(count); // ReferenceError: count is not defined\n        " },
+				{ "type": "p", "text": "Variables declared with <code>var</code> are subject to **hoisting**. This means the declaration (but not the assignment) is moved to the top of its scope during the compilation phase. This can lead to unexpected behavior if you use a variable before its declaration." },
+				{ "type": "code", "code": "console.log(hoistedVar); // Output: undefined\n        var hoistedVar = \"I am hoisted!\";\n        console.log(hoistedVar); // Output: I am hoisted! " },
+				{ "type": "h3", "text": "Quiz: Variables" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the main difference between `let` and `const`?", "2. Explain the concept of 'hoisting' with `var`.", "3. What is block scope, and which keywords use it?", "4. What is the Temporal Dead Zone (TDZ)?", "5. Can you reassign a `const` variable? What about its properties?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. Which keyword should you use for a variable that will not be reassigned?",
+					"options": [
+						"`var`",
+						"`let`",
+						"`const`",
+						"`static`"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. What is the scope of a variable declared with `let`?",
+					"options": [
+						"Global scope",
+						"Function scope",
+						"Block scope",
+						"Object scope"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "3. What will be the output of the following code snippet? `console.log(x); var x = 5;`",
+					"options": [
+						"`5`",
+						"`undefined`",
+						"A `ReferenceError`",
+						"An `Error`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. Which of the following statements is true about `const`?",
+					"options": [
+						"It prevents the variable from being reassigned.",
+						"It prevents the properties of an object from being modified.",
+						"It is function-scoped.",
+						"It is subject to hoisting and does not have a Temporal Dead Zone."
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "5. What happens if you try to access a `let` variable before its declaration?",
+					"options": [
+						"It returns `undefined`",
+						"It throws a `ReferenceError`",
+						"It returns `null`",
+						"It returns the value of the variable"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		},
+		{
+			"title": "Operators and Control Flow",
+			"content": [
+				{ "type": "p", "text": "Operators are symbols that tell the JavaScript engine to perform a specific action, such as arithmetic calculations, comparisons, or logical operations. Control flow statements, such as `if...else` and `switch` statements, allow us to control the order in which our code is executed based on certain conditions. In this section, we'll dive deep into both, covering the various types of operators available in JavaScript and how to use control flow statements to create dynamic and responsive programs." },
+				{ "type": "h3", "text": "Arithmetic Operators" },
+				{ "type": "p", "text": "These are used to perform mathematical calculations." },
+				{ "type": "ul", "listItems": [
+					"`+` Addition",
+					"`-` Subtraction",
+					"`*` Multiplication",
+					"`/` Division",
+					"`%` Modulus (Remainder)",
+					"`**` Exponentiation"
+				]},
+				{ "type": "code", "code": "let result = 10 + 5; // 15\nlet remainder = 10 % 3; // 1" },
+				{ "type": "h3", "text": "Comparison Operators" },
+				{ "type": "p", "text": "These are used to compare two values and return a boolean (`true` or `false`)." },
+				{ "type": "ul", "listItems": [
+					"`==` Equal to (loose equality)",
+					"`!=` Not equal to (loose inequality)",
+					"`===` Strict equal to (checks value and type)",
+					"`!==` Strict not equal to (checks value and type)",
+					"`>` Greater than",
+					"`<` Less than",
+					"`>=` Greater than or equal to",
+					"`<=` Less than or equal to"
+				]},
+				{ "type": "code", "code": "console.log(10 == '10'); // true\nconsole.log(10 === '10'); // false" },
+				{ "type": "h3", "text": "Logical Operators" },
+				{ "type": "p", "text": "These are used to combine conditional statements." },
+				{ "type": "ul", "listItems": [
+					"`&&` Logical AND",
+					"`||` Logical OR",
+					"`!` Logical NOT"
+				]},
+				{ "type": "code", "code": "let a = true, b = false;\nconsole.log(a && b); // false\nconsole.log(a || b); // true\nconsole.log(!a); // false" },
+				{ "type": "h3", "text": "Quiz: Operators" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the output of `5 + '5'`?", "2. Explain the difference between `==` and `===`.", "3. What is the result of `!(5 > 3)`?", "4. What operator do you use to check for a remainder?", "5. What is the value of `(true && false) || (true && true)`?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the strict equality operator in JavaScript?",
+					"options": [
+						"`==`",
+						"`!=`",
+						"`===`",
+						"`=`"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. What is the result of `10 > 5 && 8 < 12`?",
+					"options": [
+						"`true`",
+						"`false`",
+						"`10`",
+						"`8`"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "3. Which operator is used for addition?",
+					"options": [
+						"`*`",
+						"`-`",
+						"`/`",
+						"`+`"
+					],
+					"correctAnswer": "D"
+				},
+				{
+					"question": "4. What is the output of `'hello' + ' ' + 'world'`?",
+					"options": [
+						"`hello world`",
+						"`helloworld`",
+						"`hello world`",
+						"An error"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "5. What is the value of `5 % 2`?",
+					"options": [
+						"`0`",
+						"`1`",
+						"`2.5`",
+						"`5`"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		},
+		{
+			"title": "Data Types: Primitives, Objects, and Arrays",
+			"content": [
+				{ "type": "p", "text": "Understanding data types is crucial for writing effective JavaScript. Data types are a way to classify the different kinds of values we can work with. In JavaScript, data types are broadly categorized into two main groups: primitive types and object types. Primitive types are simple, while object types are more complex and can contain multiple values or functions." },
+				{ "type": "h3", "text": "Primitive Data Types" },
+				{ "type": "p", "text": "These are the fundamental building blocks of data in JavaScript. There are seven primitive data types:" },
+				{ "type": "ul", "listItems": [
+					"`String` (e.g., `'hello world'`)",
+					"`Number` (e.g., `42`, `3.14`)",
+					"`Boolean` (e.g., `true`, `false`)",
+					"`null` (a single value representing no value)",
+					"`undefined` (a variable that has been declared but not assigned a value)",
+					"`Symbol` (a unique and immutable primitive value, often used as object property keys)",
+					"`BigInt` (used for very large integer numbers)"
+				]},
+				{ "type": "code", "code": "let myString = 'Hello';\nlet myNumber = 10;\nlet myBoolean = true;\nlet myNull = null;\nlet myUndefined; // myUndefined is now undefined\nlet mySymbol = Symbol('description');\nlet myBigInt = 9007199254740991n;" },
+				{ "type": "h3", "text": "Object Data Types" },
+				{ "type": "p", "text": "Objects are a collection of related properties and methods. They are used to represent more complex, real-world entities. The most common types of objects include:" },
+				{ "type": "ul", "listItems": [
+					"`Object` literal (`{ key: value }`)",
+					"`Array` (`[item1, item2]`)",
+					"`Function` (a block of code designed to perform a particular task)"
+				]},
+				{ "type": "h4", "text": "Object Literals" },
+				{ "type": "p", "text": "An object literal is a comma-separated list of name-value pairs wrapped in curly braces." },
+				{ "type": "code", "code": "const person = {\n  firstName: 'Ada',\n  lastName: 'Lovelace',\n  age: 36,\n  isStudent: false\n};" },
+				{ "type": "h4", "text": "Arrays" },
+				{ "type": "p", "text": "Arrays are special kinds of objects used to store ordered collections of values. They are zero-indexed, meaning the first element is at index 0." },
+				{ "type": "code", "code": "const fruits = ['apple', 'banana', 'cherry'];\nconsole.log(fruits[0]); // Output: 'apple'\nconsole.log(fruits.length); // Output: 3" },
+				{ "type": "h4", "text": "Functions" },
+				{ "type": "p", "text": "We will cover functions in more detail in a later section, but for now, remember they are also a type of object in JavaScript." },
+				{ "type": "code", "code": "function greet(name) {\n  return 'Hello, ' + name;\n}" },
+				{ "type": "h3", "text": "Quiz: Data Types" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the difference between a primitive type and an object type?", "2. Can you list the 7 primitive data types in JavaScript?", "3. What is the type of `null` and why is this often a point of confusion?", "4. How can you check the type of a variable?", "5. What is an array used for?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. Which of the following is an object type?",
+					"options": [
+						"Number",
+						"Boolean",
+						"Array",
+						"String"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. What is the data type of a variable that has been declared but not assigned a value?",
+					"options": [
+						"`null`",
+						"`undefined`",
+						"An empty string",
+						"A `ReferenceError`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. Which operator is used to check the data type of a variable?",
+					"options": [
+						"`typeof`",
+						"`typeOf`",
+						"`instanceof`",
+						"`checkType`"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "4. What will be the output of `typeof null`?",
+					"options": [
+						"`'null'`",
+						"`'undefined'`",
+						"`'object'`",
+						"`'number'`"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "5. How do you access the first element of an array named `myArray`?",
+					"options": [
+						"`myArray.first()`",
+						"`myArray[1]`",
+						"`myArray[0]`",
+						"`myArray.0`"
+					],
+					"correctAnswer": "C"
+				}
+			]
+		},
+		{
+			"title": "Functions",
+			"content": [
+				{ "type": "p", "text": "Functions are a cornerstone of JavaScript. They are reusable blocks of code that perform a specific task. By using functions, you can make your code more organized, easier to read, and more efficient. In this section, we'll cover the essentials of functions, from how to define them to how to call them with arguments." },
+				{ "type": "h3", "text": "Function Declaration" },
+				{ "type": "p", "text": "This is the classic way to define a function. A function declaration is hoisted, meaning you can call it before it is defined in the code." },
+				{ "type": "code", "code": "function sayHello(name) {\n  return `Hello, ${name}!`;\n}\nconsole.log(sayHello('Alice')); // Output: Hello, Alice!" },
+				{ "type": "h3", "text": "Function Expression" },
+				{ "type": "p", "text": "A function expression is when you define a function and assign it to a variable. These are not hoisted, so you must define the function before you call it." },
+				{ "type": "code", "code": "const add = function(a, b) {\n  return a + b;\n};\nconsole.log(add(2, 3)); // Output: 5" },
+				{ "type": "h3", "text": "Arrow Functions (ES6)" },
+				{ "type": "p", "text": "Arrow functions provide a more concise syntax for writing function expressions. They are especially useful for one-line functions and for preserving the `this` context." },
+				{ "type": "code", "code": "const multiply = (a, b) => a * b;\nconsole.log(multiply(4, 5)); // Output: 20\n\nconst greet = name => `Hello, ${name}!`;\nconsole.log(greet('Bob')); // Output: Hello, Bob!" },
+				{ "type": "h3", "text": "Parameters and Arguments" },
+				{ "type": "p", "text": "Parameters are the names listed in the function definition. Arguments are the real values passed to the function when it is called." },
+				{ "type": "code", "code": "function subtract(a, b) { // a and b are parameters\n  return a - b;\n}\nconsole.log(subtract(10, 4)); // 10 and 4 are arguments" },
+				{ "type": "h3", "text": "Quiz: Functions" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is a function declaration, and when can you call it?", "2. What is the key difference between a function expression and a function declaration?", "3. What is the main advantage of using an arrow function for simple, single-line logic?", "4. What are parameters and arguments?", "5. What will this function return if you call it with no arguments: `function example(a) { return a; }`?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the primary purpose of using functions in JavaScript?",
+					"options": [
+						"To create objects",
+						"To make code reusable and organized",
+						"To define variables",
+						"To style web pages"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. Which of the following is a valid function declaration?",
+					"options": [
+						"`const greet = () => {};`",
+						"`function greet() {};`",
+						"`let greet = function() {};`",
+						"All of the above"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. What is the value of `x` after the following code runs? `let x = 10; function changeX(val) { x = val; } changeX(20);`",
+					"options": [
+						"`10`",
+						"`20`",
+						"An error",
+						"`undefined`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. In `function myFunction(param1) {}`, `param1` is a(n):",
+					"options": [
+						"Argument",
+						"Return value",
+						"Parameter",
+						"Variable"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "5. What is the value returned by `function add(a, b) { return a + b; }` if you call it as `add(3, 5)`?",
+					"options": [
+						"`'35'`",
+						"`8`",
+						"`3`",
+						"An error"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		},
+		{
+			"title": "Arrays",
+			"content": [
+				{ "type": "p", "text": "Arrays are a fundamental data structure in JavaScript, used to store ordered collections of data. You can think of an array as a list of items. In this section, we'll explore how to create arrays, access their elements, and use common methods to add, remove, and manipulate data." },
+				{ "type": "h3", "text": "Creating Arrays" },
+				{ "type": "p", "text": "You can create an array using an array literal, which is the most common and preferred method." },
+				{ "type": "code", "code": "let fruits = ['apple', 'banana', 'cherry'];" },
+				{ "type": "h3", "text": "Accessing Elements" },
+				{ "type": "p", "text": "Array elements are zero-indexed, meaning the first element is at index 0, the second at index 1, and so on. You can access an element by its index using bracket notation." },
+				{ "type": "code", "code": "let firstFruit = fruits[0]; // 'apple'\nlet lastFruit = fruits[fruits.length - 1]; // 'cherry'" },
+				{ "type": "h3", "text": "Modifying Elements" },
+				{ "type": "p", "text": "You can change the value of an element by assigning a new value to its index." },
+				{ "type": "code", "code": "let scores = [10, 20, 30];\nscores[1] = 25; // Change the second element\nconsole.log(scores); // Output: [10, 25, 30]" },
+				{ "type": "h3", "text": "Adding Elements" },
+				{ "type": "p", "text": "You can add elements to the end of an array using the `push()` method or by assigning a value to an index beyond the current length." },
+				{ "type": "code", "code": "let items = ['Pen', 'Paper'];\nitems.push('Eraser'); // Add to the end\nconsole.log(items); // Output: ['Pen', 'Paper', 'Eraser']\nitems[3] = 'Notebook'; // Add by assigning to a new index\nconsole.log(items); // Output: ['Pen', 'Paper', 'Eraser', 'Notebook']" },
+				{ "type": "p", "text": "You can add elements to the beginning of an array using the `unshift()` method." },
+				{ "type": "code", "code": "let queue = ['Person A', 'Person B'];\nqueue.unshift('Person C'); // Add to the beginning\nconsole.log(queue); // Output: ['Person C', 'Person A', 'Person B']" },
+				{ "type": "h3", "text": "Removing Elements" },
+				{ "type": "p", "text": "You can remove elements from the end of an array using the `pop()` method, which also returns the removed element." },
+				{ "type": "code", "code": "let stack = ['Item 1', 'Item 2', 'Item 3'];\nlet lastItem = stack.pop(); // Remove from the end\nconsole.log(stack); // Output: ['Item 1', 'Item 2']\nconsole.log(lastItem); // Output: 'Item 3'" },
+				{ "type": "h3", "text": "Quiz: Arrays" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. How do you create an array with three elements?", "2. How do you access the second element of an array?", "3. What is the `length` property of an empty array?", "4. What is the `push()` method used for?", "5. What is the `pop()` method used for?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. How do you create an empty array in JavaScript?",
+					"options": [
+						"`let myArray = {};`",
+						"`let myArray = [];`",
+						"`let myArray = new Array();`",
+						"`let myArray = null;`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. What is the index of the first element in an array?",
+					"options": [
+						"`1`",
+						"`0`",
+						"`'first'`",
+						"Arrays are not indexed"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. Which method adds an element to the end of an array?",
+					"options": [
+						"`shift()`",
+						"`pop()`",
+						"`unshift()`",
+						"`push()`"
+					],
+					"correctAnswer": "D"
+				},
+				{
+					"question": "4. What does the `pop()` method return?",
+					"options": [
+						"The new length of the array",
+						"The removed element",
+						"The original array",
+						"The new array"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "5. What is the value of `arr` after the following code runs? `let arr = [1, 2, 3]; arr[0] = 5;`",
+					"options": [
+						"`[1, 2, 3]`",
+						"`[5, 2, 3]`",
+						"`[5]`",
+						"An error"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		},
+		{
+			"title": "Objects",
+			"content": [
+				{ "type": "p", "text": "Objects are a foundational concept in JavaScript, used to store collections of data and more complex entities. Unlike arrays, which are ordered lists, objects are unordered collections of key-value pairs. In this section, you'll learn how to create objects, access and modify their properties, and iterate over their content." },
+				{ "type": "h3", "text": "Creating Objects" },
+				{ "type": "p", "text": "The most common way to create an object is using the object literal syntax, which consists of curly braces `{}` and a list of key-value pairs." },
+				{ "type": "code", "code": "let user = {\n  name: 'David',\n  age: 30,\n  city: 'San Francisco'\n};" },
+				{ "type": "h3", "text": "Accessing Properties" },
+				{ "type": "p", "text": "There are two main ways to access an object's properties: dot notation and bracket notation. Dot notation is generally preferred, but bracket notation is necessary when the property name is a variable or contains special characters." },
+				{ "type": "code", "code": "console.log(user.name); // Dot notation: Output: 'David'\nconsole.log(user['age']); // Bracket notation: Output: 30" },
+				{ "type": "h3", "text": "Adding Properties" },
+				{ "type": "p", "text": "You can add new properties to an object by simply assigning a value to a new key using either dot or bracket notation." },
+				{ "type": "code", "code": "let user = { name: 'David' };\nuser.email = 'david@example.com'; // Add email property using dot notation\nuser['city'] = 'New York'; // Add city property using bracket notation\nconsole.log(user); // Output: { name: 'David', email: 'david@example.com', city: 'New York' }" },
+				{ "type": "h3", "text": "Changing Properties" },
+				{ "type": "p", "text": "You can change the value of an existing property by assigning a new value to its key." },
+				{ "type": "code", "code": "let product = { name: 'Laptop', price: 1000 };\nproduct.price = 950; // Change the price\nconsole.log(product.price); // Output: 950" },
+				{ "type": "h3", "text": "Deleting Properties" },
+				{ "type": "p", "text": "You can remove a property from an object using the `delete` keyword." },
+				{ "type": "code", "code": "let settings = { theme: 'dark', notifications: true };\ndelete settings.notifications; // Remove the notifications property\nconsole.log(settings); // Output: { theme: 'dark' }" },
+				{ "type": "h3", "text": "Iterating Over Object Properties" },
+				{ "type": "p", "text": "You can loop through the properties of an object using a `for...in` loop:" },
+				{ "type": "code", "code": "let scores = { math: 90, science: 85, history: 92 };\nfor (let key in scores) {\n  console.log(`${key}: ${scores[key]}`);\n}\n// Output:\n// math: 90\n// science: 85\n// history: 92" },
+				{ "type": "h3", "text": "Quiz: Objects" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. How do you create an empty object literal?", "2. What are the two ways to access an object's properties?", "3. How do you add a new property to an existing object?", "4. How do you remove a property from an object?", "5. What is the purpose of a `for...in` loop?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is an object in JavaScript?",
+					"options": [
+						"An ordered list of values",
+						"A collection of key-value pairs",
+						"A single value",
+						"A function that returns a value"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. How do you access the 'name' property of an object named `person`?",
+					"options": [
+						"`person['name']`",
+						"`person.name`",
+						"`person(name)`",
+						"Both A and B"
+					],
+					"correctAnswer": "D"
+				},
+				{
+					"question": "3. What is the purpose of the `delete` keyword?",
+					"options": [
+						"To delete a variable",
+						"To remove a property from an object",
+						"To clear an array",
+						"To remove an object from memory"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. What is the output of `user.city` after the following code runs? `let user = { name: 'Alice', city: 'London' }; delete user.city;`",
+					"options": [
+						"`'London'`",
+						"`null`",
+						"`undefined`",
+						"An error"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "5. Which loop is typically used to iterate over the properties of an object?",
+					"options": [
+						"`for` loop",
+						"`for...of` loop",
+						"`for...in` loop",
+						"`while` loop"
+					],
+					"correctAnswer": "C"
+				}
+			]
+		},
+		{
+			"title": "Conditionals",
+			"content": [
+				{ "type": "p", "text": "Conditional statements are one of the most fundamental aspects of programming. They allow your code to make decisions based on whether a certain condition is true or false. In this section, we'll cover the two most common conditional statements: `if...else` and `switch`." },
+				{ "type": "h3", "text": "The `if...else` Statement" },
+				{ "type": "p", "text": "The `if` statement executes a block of code if a condition is true. The optional `else` block is executed if the condition is false. You can also chain multiple conditions using `else if`." },
+				{ "type": "code", "code": "let age = 18;\nif (age >= 18) {\n  console.log('You are an adult.');\n} else if (age >= 13) {\n  console.log('You are a teenager.');\n} else {\n  console.log('You are a child.');\n}" },
+				{ "type": "h3", "text": "The `switch` Statement" },
+				{ "type": "p", "text": "The `switch` statement is a more efficient way of handling multiple `if...else if` statements, especially when you are checking a single variable against many possible values. It's often more readable and can be faster." },
+				{ "type": "code", "code": "let day = 'Monday';\nswitch (day) {\n  case 'Monday':\n    console.log('Start of the week.');\n    break;\n  case 'Friday':\n    console.log('End of the week.');\n    break;\n  default:\n    console.log('Mid-week.');\n    break;\n}" },
+				{ "type": "p", "text": "The `break` keyword is essential to prevent the code from executing the next `case` block. The `default` case is executed if no other case matches." },
+				{ "type": "h3", "text": "Quiz: Conditionals" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. When would you use an `if` statement versus a `switch` statement?", "2. What is the purpose of the `else if` clause?", "3. What is the `break` keyword used for in a `switch` statement?", "4. What is the output of the following code? `let x = 10; if (x > 5) { console.log('A'); } else if (x > 15) { console.log('B'); }`", "5. What happens if you omit `break` from a `case` in a `switch` statement?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. In an `if...else` statement, which block of code is executed if the condition is `false`?",
+					"options": [
+						"The `if` block",
+						"The `else` block",
+						"Both blocks",
+						"Neither block"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. What is the output of the following code? `let fruit = 'apple'; switch(fruit) { case 'banana': console.log('Banana!'); break; case 'apple': console.log('Apple!'); break; default: console.log('Other!'); break; }`",
+					"options": [
+						"`Banana!`",
+						"`Apple!`",
+						"`Other!`",
+						"An error"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. The `switch` statement is best used for:",
+					"options": [
+						"Complex conditional logic with multiple conditions",
+						"Checking a single variable against multiple possible values",
+						"Looping through an array",
+						"Defining a function"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. What is the purpose of the `default` case in a `switch` statement?",
+					"options": [
+						"It is always executed.",
+						"It is executed if no other case matches.",
+						"It is only executed if there is no `break` keyword.",
+						"It is a required part of every `switch` statement."
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "5. What is the output of `if (5 > 10) { console.log('A'); } else { console.log('B'); }`?",
+					"options": [
+						"`A`",
+						"`B`",
+						"An error",
+						"Nothing"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		},
+		{
+			"title": "Loops",
+			"content": [
+				{ "type": "p", "text": "Loops are a powerful programming construct that allow you to repeatedly execute a block of code. This is invaluable for tasks like iterating through an array, performing an action a specific number of times, or running code until a certain condition is met. In this section, we'll cover the `for`, `while`, and `do...while` loops." },
+				{ "type": "h3", "text": "The `for` Loop" },
+				{ "type": "p", "text": "The `for` loop is one of the most common loops and is ideal when you know exactly how many times you want to loop. It consists of three parts: initialization, condition, and final expression." },
+				{ "type": "code", "code": "for (let i = 0; i < 5; i++) {\n  console.log('The number is ' + i);\n}\n// Output:\n// The number is 0\n// The number is 1\n// The number is 2\n// The number is 3\n// The number is 4" },
+				{ "type": "h3", "text": "The `while` Loop" },
+				{ "type": "p", "text": "The `while` loop executes a block of code as long as a specified condition is true. It is best used when the number of iterations is not known beforehand." },
+				{ "type": "code", "code": "let i = 0;\nwhile (i < 5) {\n  console.log('The number is ' + i);\n  i++;\n}" },
+				{ "type": "h3", "text": "The `do...while` Loop" },
+				{ "type": "p", "text": "The `do...while` loop is similar to the `while` loop, but it guarantees that the code block is executed at least once before the condition is checked." },
+				{ "type": "code", "code": "let i = 0;\ndo {\n  console.log('The number is ' + i);\n  i++;\n} while (i < 5);" },
+				{ "type": "h3", "text": "Control Statements: `break` and `continue`" },
+				{ "type": "p", "text": "The `break` statement is used to exit a loop prematurely. The `continue` statement is used to skip the current iteration and move to the next one." },
+				{ "type": "code", "code": "// Using break\nfor (let i = 0; i < 10; i++) {\n  if (i === 5) {\n    break;\n  }\n  console.log(i);\n}\n\n// Using continue\nfor (let i = 0; i < 10; i++) {\n  if (i === 5) {\n    continue;\n  }\n  console.log(i);\n}" },
+				{ "type": "h3", "text": "Quiz: Loops" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. When is a `for` loop a good choice?", "2. What is the primary difference between `while` and `do...while`?", "3. What is the output of a `for` loop that iterates from 1 to 5 and prints the number?", "4. What is the `break` statement used for?", "5. What is the `continue` statement used for?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. Which loop is best to use when you know the number of iterations beforehand?",
+					"options": [
+						"`while` loop",
+						"`for` loop",
+						"`do...while` loop",
+						"`for...in` loop"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. A `do...while` loop is guaranteed to execute its code block at least once. Is this statement true or false?",
+					"options": [
+						"True",
+						"False"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "3. What does the `break` statement do inside a loop?",
+					"options": [
+						"Skips the current iteration",
+						"Stops the loop entirely",
+						"Starts the loop over",
+						"Throws an error"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. What is the output of the following code? `for (let i = 0; i < 3; i++) { console.log(i); }`",
+					"options": [
+						"0 1 2 3",
+						"1 2 3",
+						"0 1 2",
+						"0"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "5. What is the purpose of the `continue` statement?",
+					"options": [
+						"To exit the loop",
+						"To skip the current iteration and move to the next",
+						"To restart the loop from the beginning",
+						"To stop the program"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		},
+		{
+			"title": "DOM Manipulation",
+			"content": [
+				{ "type": "p", "text": "The Document Object Model (DOM) is a programming interface for HTML and XML documents. It represents the page so that programs can change the document structure, style, and content. In short, DOM manipulation is how you make a webpage interactive and dynamic using JavaScript. In this section, we'll cover the basics of selecting elements, modifying their content and style, and creating new elements." },
+				{ "type": "h3", "text": "Selecting Elements" },
+				{ "type": "p", "text": "Before you can manipulate an element, you must first select it. The most common methods are:" },
+				{ "type": "ul", "listItems": [
+					"`document.getElementById('id-name')` (selects a single element by its ID)",
+					"`document.querySelector('css-selector')` (selects the first element that matches a CSS selector)",
+					"`document.querySelectorAll('css-selector')` (selects all elements that match a CSS selector)"
+				]},
+				{ "type": "code", "code": "const myDiv = document.getElementById('my-div');\nconst myParagraph = document.querySelector('.my-class p');\nconst allButtons = document.querySelectorAll('button');" },
+				{ "type": "h3", "text": "Modifying Content and Style" },
+				{ "type": "p", "text": "Once an element is selected, you can change its text content or its style." },
+				{ "type": "code", "code": "myDiv.textContent = 'New text content';\nmyParagraph.style.color = 'red';\nmyParagraph.style.fontSize = '20px';" },
+				{ "type": "h3", "text": "Creating and Appending Elements" },
+				{ "type": "p", "text": "You can dynamically create new elements and add them to the page using `document.createElement()` and `appendChild()`." },
+				{ "type": "code", "code": "const newParagraph = document.createElement('p');\nnewParagraph.textContent = 'I am a new paragraph!';\nmyDiv.appendChild(newParagraph);" },
+				{ "type": "h3", "text": "Quiz: DOM Manipulation" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the DOM?", "2. How do you select an element with an ID of 'main-header'?", "3. How do you select all elements with the class 'item'?", "4. How do you change the background color of an element named `myDiv` to 'blue'?", "5. How do you create and add a new `div` element to the body of the document?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the Document Object Model (DOM)?",
+					"options": [
+						"A way to write HTML and CSS",
+						"A database for web pages",
+						"A programming interface for web documents",
+						"A JavaScript library"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. Which method would you use to get a single element by its ID?",
+					"options": [
+						"`document.querySelector()`",
+						"`document.querySelectorAll()`",
+						"`document.getElementById()`",
+						"`document.getElementsByClassName()`"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "3. How do you change the text content of an element named `myHeading`?",
+					"options": [
+						"`myHeading.text = 'New Text';`",
+						"`myHeading.textContent = 'New Text';`",
+						"`myHeading.changeText('New Text');`",
+						"`myHeading.innerHTML = 'New Text';`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. How do you add a new element `newElement` as a child of an existing element `parentElement`?",
+					"options": [
+						"`parentElement.addChild(newElement);`",
+						"`parentElement.appendChild(newElement);`",
+						"`parentElement.add(newElement);`",
+						"`newElement.appendTo(parentElement);`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "5. What is the difference between `textContent` and `innerHTML`?",
+					"options": [
+						"`textContent` only handles text, while `innerHTML` can handle HTML tags.",
+						"`innerHTML` only handles text, while `textContent` can handle HTML tags.",
+						"There is no difference.",
+						"They are used for different types of elements."
+					],
+					"correctAnswer": "A"
+				}
+			]
+		},
+		{
+			"title": "Events",
+			"content": [
+				{ "type": "p", "text": "Events are actions or occurrences that happen in the browser, such as a user clicking a button, a page loading, or a form being submitted. JavaScript allows you to listen for these events and execute a function in response. This is a crucial part of making a web page interactive. In this section, we'll cover how to add event listeners and work with common events." },
+				{ "type": "h3", "text": "Adding Event Listeners" },
+				{ "type": "p", "text": "The `addEventListener()` method is the standard way to attach an event handler to an element. It takes two main arguments: the event name (a string, like `'click'`) and the function to be executed when the event occurs." },
+				{ "type": "code", "code": "const myButton = document.getElementById('myButton');\nmyButton.addEventListener('click', function() {\n  console.log('Button was clicked!');\n});" },
+				{ "type": "h3", "text": "Common Events" },
+				{ "type": "p", "text": "Some of the most frequently used events include:" },
+				{ "type": "ul", "listItems": [
+					"`click` (when a user clicks an element)",
+					"`mouseover` (when the mouse pointer is moved onto an element)",
+					"`mouseout` (when the mouse pointer is moved off an element)",
+					"`keydown` (when a key is pressed down)",
+					"`submit` (when a form is submitted)",
+					"`load` (when a page or image has finished loading)"
+				]},
+				{ "type": "h3", "text": "Event Object" },
+				{ "type": "p", "text": "When an event occurs, the event handler function receives an `event` object as its first argument. This object contains useful information about the event, such as the element that was clicked (`event.target`) or the key that was pressed." },
+				{ "type": "code", "code": "document.addEventListener('keydown', function(event) {\n  console.log('Key pressed:', event.key);\n});" },
+				{ "type": "h3", "text": "Quiz: Events" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is a DOM event?", "2. What is the `addEventListener()` method used for?", "3. How do you handle a click event on a button with the ID 'my-button'?", "4. What is the `event` object, and what kind of information does it contain?", "5. What is the difference between `mouseover` and `mouseout`?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is an event listener?",
+					"options": [
+						"A variable that stores event data",
+						"A function that is executed when an event occurs",
+						"A type of HTML element",
+						"A way to define a new event"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. Which of the following is a correct way to add a click event listener to an element named `myElement`?",
+					"options": [
+						"`myElement.onClick = function() {};`",
+						"`myElement.addEventListener('click', function() {});`",
+						"`myElement.click(function() {});`",
+						"`myElement.on('click', function() {});`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. What is the purpose of `event.preventDefault()`?",
+					"options": [
+						"To stop the event from bubbling up the DOM tree",
+						"To prevent the default action of the event from happening (e.g., a form submitting)",
+						"To prevent the event from being handled by any other listeners",
+						"To stop the event from being fired"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. What information can you typically find in the `event` object?",
+					"options": [
+						"The time the event occurred",
+						"The target element of the event",
+						"The type of event",
+						"All of the above"
+					],
+					"correctAnswer": "D"
+				},
+				{
+					"question": "5. What is the event that fires when a key is pressed down?",
+					"options": [
+						"`keyup`",
+						"`keypress`",
+						"`keydown`",
+						"`key`"
+					],
+					"correctAnswer": "C"
+				}
+			]
+		},
+		{
+			"title": "Promises",
+			"content": [
+				{ "type": "p", "text": "Promises are a modern and powerful way to handle asynchronous operations in JavaScript. Asynchronous operations are tasks that don't block the execution of the rest of your code, such as fetching data from a server or waiting for a timer. Before Promises, developers often used callbacks, which could lead to a hard-to-read pattern known as \"callback hell.\" In this section, we'll introduce you to the basic concepts of Promises and how they make asynchronous code more manageable." },
+				{ "type": "h3", "text": "What is a Promise?" },
+				{ "type": "p", "text": "A Promise is an object representing the eventual completion or failure of an asynchronous operation. A Promise can be in one of three states:" },
+				{ "type": "ul", "listItems": [
+					"`pending`: The initial state, neither fulfilled nor rejected.",
+					"`fulfilled`: The operation was completed successfully.",
+					"`rejected`: The operation failed."
+				]},
+				{ "type": "h3", "text": "Using Promises" },
+				{ "type": "p", "text": "Promises are often used with methods like `fetch()` to make network requests. The `.then()` method is used to handle the successful (`fulfilled`) result, and the `.catch()` method is used to handle a failure (`rejected`)." },
+				{ "type": "code", "code": "fetch('https://api.example.com/data')\n  .then(response => response.json())\n  .then(data => console.log(data))\n  .catch(error => console.error('Error fetching data:', error));" },
+				{ "type": "h3", "text": "Quiz: Promises" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is a Promise used for?", "2. What are the three states of a Promise?", "3. What is \"callback hell\"?", "4. What is the `.then()` method used for?", "5. What is the `.catch()` method used for?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. A Promise is used to handle:",
+					"options": [
+						"Synchronous code",
+						"Mathematical operations",
+						"Asynchronous operations",
+						"DOM manipulation"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. What are the three states of a Promise?",
+					"options": [
+						"start, middle, end",
+						"pending, fulfilled, rejected",
+						"loading, completed, failed",
+						"open, closed, error"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. Which method is used to handle a successful Promise result?",
+					"options": [
+						"`.catch()`",
+						"`.then()`",
+						"`.finally()`",
+						"`.success()`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. What is the purpose of the `.catch()` method?",
+					"options": [
+						"To handle successful results",
+						"To handle errors",
+						"To run code regardless of the outcome",
+						"To start the Promise"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "5. What is a common way to make an HTTP request using Promises?",
+					"options": [
+						"`XMLHttpRequest`",
+						"`fetch()`",
+						"A `for` loop",
+						"A `switch` statement"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		},
+		{
+			"title": "Async/Await",
+			"content": [
+				{ "type": "p", "text": "Async/Await is a modern JavaScript feature (ES2017) that provides a more elegant and readable way to work with Promises. It allows you to write asynchronous code that looks and behaves like synchronous code, making it easier to understand and debug. Under the hood, `async/await` is simply syntactic sugar for Promises." },
+				{ "type": "h3", "text": "`async` Functions" },
+				{ "type": "p", "text": "An `async` function is a function that is declared with the `async` keyword. It always returns a Promise. The value returned by the function is the fulfillment value of the Promise." },
+				{ "type": "code", "code": "async function fetchData() {\n  return 'Data fetched!';\n}\nfetchData().then(result => console.log(result)); // Output: Data fetched!" },
+				{ "type": "h3", "text": "`await` Keyword" },
+				{ "type": "p", "text": "The `await` keyword can only be used inside an `async` function. It pauses the execution of the `async` function until the Promise it's waiting for is resolved or rejected." },
+				{ "type": "code", "code": "function resolveAfter2Seconds() {\n  return new Promise(resolve => {\n    setTimeout(() => {\n      resolve('resolved');\n    }, 2000);\n  });\n}\n\nasync function asyncCall() {\n  console.log('calling');\n  const result = await resolveAfter2Seconds();\n  console.log(result); // Output: resolved (after 2 seconds)\n}\n\nasyncCall();" },
+				{ "type": "h3", "text": "Error Handling with `try...catch`" },
+				{ "type": "p", "text": "With `async/await`, error handling is simplified using `try...catch` blocks, which are familiar from synchronous programming." },
+				{ "type": "code", "code": "async function fetchDataWithError() {\n  try {\n    const response = await fetch('https://invalid.url/data');\n    const data = await response.json();\n    console.log(data);\n  } catch (error) {\n    console.error('An error occurred:', error);\n  }\n}" },
+				{ "type": "h3", "text": "Quiz: Async/Await" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the `async` keyword used for?", "2. Where can the `await` keyword be used?", "3. How do you handle errors in an `async` function?", "4. What is the key benefit of `async/await` over using `.then()` and `.catch()`?", "5. What is the value of a function that is declared with `async` but returns no value?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. An `async` function always returns a:",
+					"options": [
+						"Number",
+						"String",
+						"Promise",
+						"Boolean"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. The `await` keyword can only be used inside of an `async` function. Is this statement true or false?",
+					"options": [
+						"True",
+						"False"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "3. How is error handling typically done with `async/await`?",
+					"options": [
+						"Using `.catch()`",
+						"Using `try...catch` blocks",
+						"Using `if/else` statements",
+						"Errors cannot be handled with `async/await`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. What is the primary advantage of `async/await` over traditional Promises?",
+					"options": [
+						"It is faster",
+						"It is more readable and easier to debug",
+						"It works in all browsers",
+						"It is more memory-efficient"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "5. What does the `await` keyword do?",
+					"options": [
+						"It stops the program completely",
+						"It pauses the execution of the `async` function until a Promise is resolved",
+						"It immediately resolves a Promise",
+						"It throws an error"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		},
+		{
+			"title": "Error Handling",
+			"content": [
+				{ "type": "p", "text": "Error handling is a critical part of writing robust and reliable JavaScript applications. Unexpected errors can crash your program or lead to a poor user experience. In this section, we will learn how to anticipate and handle errors gracefully using the `try...catch...finally` statement." },
+				{ "type": "h3", "text": "The `try...catch` Statement" },
+				{ "type": "p", "text": "The `try` block contains the code you want to test for errors. The `catch` block is executed if an error occurs in the `try` block. It receives the error object as an argument, which contains information about the error that occurred." },
+				{ "type": "code", "code": "try {\n  // Code that might throw an error\n  let x = y + 1; // y is not defined, will throw a ReferenceError\n  console.log('This line will not run');\n} catch (error) {\n  // Code to handle the error\n  console.error('An error occurred:', error.message);\n}" },
+				{ "type": "h3", "text": "The `finally` Block" },
+				{ "type": "p", "text": "The `finally` block is optional, but if it exists, its code will always be executed, regardless of whether an error occurred in the `try` block or not. It's often used for cleanup tasks, such as closing files or connections." },
+				{ "type": "code", "code": "function runCode() {\n  try {\n    console.log('In the try block.');\n    throw new Error('Something went wrong!');\n  } catch (error) {\n    console.error('In the catch block:', error.message);\n  } finally {\n    console.log('In the finally block.');\n  }\n}\nrunCode();\n// Output:\n// In the try block.\n// In the catch block: Something went wrong!\n// In the finally block." },
+				{ "type": "h3", "text": "Quiz: Error Handling" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the purpose of the `try` block?", "2. What is the purpose of the `catch` block?", "3. When is the `finally` block executed?", "4. How can you intentionally throw an error?", "5. What happens if you don't use `try...catch` and an error occurs?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the `try` block used for in a `try...catch` statement?",
+					"options": [
+						"To catch errors",
+						"To execute code that might throw an error",
+						"To execute code after an error has occurred",
+						"To handle successful operations"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. The code inside the `finally` block is executed:",
+					"options": [
+						"Only if an error occurs",
+						"Only if no error occurs",
+						"Always",
+						"Never"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "3. Which keyword is used to intentionally throw an error?",
+					"options": [
+						"`catch`",
+						"`try`",
+						"`throw`",
+						"`error`"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "4. What does the `catch` block receive as an argument?",
+					"options": [
+						"A string with the error message",
+						"A number representing the error code",
+						"The `error` object",
+						"Nothing"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "5. What is the output of the following code? `try { console.log('A'); } finally { console.log('B'); }`",
+					"options": [
+						"`A`",
+						"`B`",
+						"`A` followed by `B`",
+						"An error"
+					],
+					"correctAnswer": "C"
+				}
+			]
+		},
+		{
+			"title": "Modules",
+			"content": [
+				{ "type": "p", "text": "As your JavaScript applications grow in size, it becomes important to organize your code into separate, manageable files. Modules allow you to do just that, by letting you export functionality from one file and import it into another. This helps prevent naming conflicts, improves code readability, and makes your code easier to maintain. In this section, we'll cover the basics of ES6 modules using `import` and `export`." },
+				{ "type": "h3", "text": "`export` Keyword" },
+				{ "type": "p", "text": "The `export` keyword is used to make a variable, function, or class available for use in other modules. You can use a named export or a default export." },
+				{ "type": "code", "code": "// file: math.js\n\nexport const PI = 3.14159;\n\nexport function add(a, b) {\n  return a + b;\n}\n\n// A default export\nconst subtract = (a, b) => a - b;\nexport default subtract;" },
+				{ "type": "h3", "text": "`import` Keyword" },
+				{ "type": "p", "text": "The `import` keyword is used to bring functionality from other modules into your current file. You must specify the path to the file you are importing from." },
+				{ "type": "code", "code": "// file: app.js\n\n// Import named exports\nimport { PI, add } from './math.js';\nconsole.log(PI); // 3.14159\nconsole.log(add(5, 5)); // 10\n\n// Import the default export\nimport mySubtract from './math.js';\nconsole.log(mySubtract(10, 3)); // 7" },
+				{ "type": "h3", "text": "Quiz: Modules" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the purpose of JavaScript modules?", "2. What are the two types of `export` statements?", "3. How do you import a named export?", "4. How do you import a default export?", "5. What is the benefit of organizing code into modules?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the purpose of the `export` keyword?",
+					"options": [
+						"To import a module",
+						"To make a variable or function available to other modules",
+						"To declare a variable",
+						"To execute a function"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. How would you import a named export `myFunction` from a file named `utils.js`?",
+					"options": [
+						"`import myFunction from './utils.js';`",
+						"`import { myFunction } from './utils.js';`",
+						"`import * as utils from './utils.js';`",
+						"`include 'utils.js';`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. A `default` export is typically used for:",
+					"options": [
+						"A single, primary value from a module",
+						"Multiple values from a module",
+						"Functions only",
+						"Variables only"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "4. What is a key benefit of using modules?",
+					"options": [
+						"Faster code execution",
+						"Preventing global variable pollution",
+						"Automatic code formatting",
+						"It is required by all browsers"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "5. You must specify the file path when importing a module. Is this statement true or false?",
+					"options": [
+						"True",
+						"False"
+					],
+					"correctAnswer": "A"
+				}
+			]
+		},
+		{
+			"title": "Classes",
+			"content": [
+				{ "type": "p", "text": "Classes are a feature introduced in ES6 that provide a much cleaner and more familiar way to create objects and deal with inheritance. While they are a new syntax, they are fundamentally based on JavaScript's existing prototype-based inheritance model. In this section, we'll cover the basics of creating classes, defining constructors, and adding methods." },
+				{ "type": "h3", "text": "Defining a Class" },
+				{ "type": "p", "text": "You define a class using the `class` keyword. The class name should be in `PascalCase`." },
+				{ "type": "code", "code": "class Car {\n  constructor(make, model) {\n    this.make = make;\n    this.model = model;\n  }\n\n  drive() {\n    console.log(`Driving the ${this.make} ${this.model}.`);\n  }\n}" },
+				{ "type": "h3", "text": "`constructor` Method" },
+				{ "type": "p", "text": "The `constructor` is a special method that is automatically called when a new instance of the class is created. It's used to initialize the object's properties." },
+				{ "type": "code", "code": "class Person {\n  constructor(name, age) {\n    this.name = name;\n    this.age = age;\n  }\n}" },
+				{ "type": "h3", "text": "Creating Instances" },
+				{ "type": "p", "text": "You create a new instance of a class using the `new` keyword." },
+				{ "type": "code", "code": "const myCar = new Car('Ford', 'Mustang');\nconsole.log(myCar.make); // Output: 'Ford'\nmyCar.drive(); // Output: 'Driving the Ford Mustang.'" },
+				{ "type": "h3", "text": "Inheritance with `extends` and `super`" },
+				{ "type": "p", "text": "Classes can inherit from other classes using the `extends` keyword. The `super()` method is used inside the constructor of the child class to call the parent class's constructor." },
+				{ "type": "code", "code": "class ElectricCar extends Car {\n  constructor(make, model, battery) {\n    super(make, model);\n    this.battery = battery;\n  }\n}" },
+				{ "type": "h3", "text": "Quiz: Classes" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the purpose of a class?", "2. What is the `constructor` method used for?", "3. How do you create a new instance of a class?", "4. What is the `extends` keyword used for?", "5. When do you need to use `super()`?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the primary purpose of a class in JavaScript?",
+					"options": [
+						"To declare variables",
+						"To create objects with a shared structure and behavior",
+						"To perform asynchronous operations",
+						"To manipulate the DOM"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. The `constructor` method is automatically called when:",
+					"options": [
+						"A class is defined",
+						"A new instance of the class is created",
+						"A method is called",
+						"The program starts"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. Which keyword is used to create a new instance of a class?",
+					"options": [
+						"`class`",
+						"`new`",
+						"`function`",
+						"`this`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. How can a class `Dog` inherit from a class `Animal`?",
+					"options": [
+						"`class Dog implements Animal {}`",
+						"`class Dog uses Animal {}`",
+						"`class Dog extends Animal {}`",
+						"`class Dog has Animal {}`"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "5. In a child class, what is the purpose of calling `super()` in the constructor?",
+					"options": [
+						"To call a method on the child class",
+						"To initialize the child class's properties",
+						"To call the parent class's constructor",
+						"To define a new method"
+					],
+					"correctAnswer": "C"
+				}
+			]
+		},
+		{
+			"title": "Closures",
+			"content": [
+				{ "type": "p", "text": "A closure is a function that has access to its outer function's scope, even after the outer function has finished executing. This concept is a core feature of JavaScript and is essential for understanding how variables and scope work. In this section, we'll explore what closures are and how they are used to create private variables and other powerful patterns." },
+				{ "type": "h3", "text": "Understanding Closures" },
+				{ "type": "p", "text": "A closure is created whenever a function is defined inside another function. The inner function has access to the variables of the outer function, even after the outer function has returned. This is because the inner function retains a reference to its outer scope." },
+				{ "type": "code", "code": "function outer() {\n  let outerVariable = 'I am from the outer function.';\n\n  function inner() {\n    // The inner function has access to outerVariable\n    console.log(outerVariable);\n  }\n\n  return inner;\n}\n\nconst myClosure = outer();\nmyClosure(); // Output: I am from the outer function." },
+				{ "type": "p", "text": "In this example, the `outer()` function has already finished executing, but the `inner()` function (stored in `myClosure`) still has access to `outerVariable`." },
+				{ "type": "h3", "text": "Practical Use Case: Private Variables" },
+				{ "type": "p", "text": "Closures are often used to create a form of data privacy, as they allow you to create variables that are only accessible within a specific scope, even though they are used by a function that is exposed to the outside world. This is a common pattern for creating module-like structures." },
+				{ "type": "code", "code": "function createCounter() {\n  let count = 0; // This variable is 'private'\n\n  return {\n    increment: function() {\n      count++;\n    },\n    getCount: function() {\n      return count;\n    }\n  };\n}\n\nconst counter = createCounter();\ncounter.increment();\nconsole.log(counter.getCount()); // Output: 1\n// console.log(counter.count); // Output: undefined (count is not directly accessible)" },
+				{ "type": "h3", "text": "Quiz: Closures" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is a closure?", "2. How is a closure created?", "3. What is a practical use case for closures?", "4. In the `createCounter()` example, why is `count` not directly accessible from outside the function?", "5. What is the key concept that makes closures possible in JavaScript?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is a closure in JavaScript?",
+					"options": [
+						"A function that returns a value",
+						"A function that is not executed",
+						"A function that has access to its outer function's scope",
+						"A function with no parameters"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. When is a closure created?",
+					"options": [
+						"When a function is declared",
+						"When a function is executed",
+						"When a function is defined inside another function and the inner function is returned",
+						"When a variable is declared"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "3. What is a key benefit of using closures?",
+					"options": [
+						"To make code run faster",
+						"To create private variables and encapsulate data",
+						"To make code more concise",
+						"To simplify object creation"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. What will be the output of `myClosure()` in the following code? `function outer() { let x = 10; function myClosure() { return x; } return myClosure; } const closure = outer();`",
+					"options": [
+						"`10`",
+						"`undefined`",
+						"An error",
+						"Nothing"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "5. What is a common name for the pattern of using a closure to create a module-like structure?",
+					"options": [
+						"The Module Pattern",
+						"The Factory Pattern",
+						"The Singleton Pattern",
+						"The Observer Pattern"
+					],
+					"correctAnswer": "A"
+				}
+			]
+		},
+		{
+			"title": "Hoisting",
+			"content": [
+				{ "type": "p", "text": "Hoisting is a JavaScript mechanism where variable and function declarations are moved to the top of their containing scope during the compilation phase. This means that you can use a variable or function before you've declared it in your code. However, the behavior of hoisting is different for `var`, `let`, and `const`." },
+				{ "type": "h3", "text": "Hoisting with `var`" },
+				{ "type": "p", "text": "Variables declared with `var` are hoisted to the top of their function scope. Their declaration is hoisted, but their assignment is not. This means a `var` variable is initialized with `undefined`." },
+				{ "type": "code", "code": "console.log(hoistedVar); // Output: undefined\nvar hoistedVar = 'I am hoisted!';\nconsole.log(hoistedVar); // Output: I am hoisted!" },
+				{ "type": "h3", "text": "Hoisting with `let` and `const`" },
+				{ "type": "p", "text": "Variables declared with `let` and `const` are also hoisted, but they are not initialized. They are in a 'Temporal Dead Zone' (TDZ) from the start of the block until they are declared. Accessing them in the TDZ will result in a `ReferenceError`." },
+				{ "type": "code", "code": "// console.log(hoistedLet); // ReferenceError: Cannot access 'hoistedLet' before initialization\n// let hoistedLet = 'I am not fully hoisted';\n\n// console.log(hoistedConst); // ReferenceError: Cannot access 'hoistedConst' before initialization\n// const hoistedConst = 'I am also not fully hoisted';" },
+				{ "type": "h3", "text": "Function Hoisting" },
+				{ "type": "p", "text": "Function declarations are fully hoisted, which means you can call a function before its declaration in the code. Function expressions, however, are not." },
+				{ "type": "code", "code": "hoistedFunction(); // Output: 'I am a hoisted function!'\nfunction hoistedFunction() {\n  console.log('I am a hoisted function!');\n}\n\n// notHoistedFunction(); // TypeError: notHoistedFunction is not a function\nconst notHoistedFunction = function() {\n  console.log('I am not hoisted.');\n};" },
+				{ "type": "h3", "text": "Quiz: Hoisting" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is hoisting?", "2. What is the key difference between hoisting for `var` and `let`/`const`?", "3. What is the Temporal Dead Zone (TDZ)?", "4. Can you call a function declaration before it's defined? Why or why not?", "5. What happens when you try to access a `let` variable before its declaration?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What does hoisting do?",
+					"options": [
+						"It moves variable and function declarations to the top of their scope.",
+						"It moves variable and function assignments to the top of their scope.",
+						"It allows you to use `var` and `let` interchangeably.",
+						"It prevents the use of global variables."
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "2. What is the output of `console.log(a); var a = 10;`?",
+					"options": [
+						"`10`",
+						"`undefined`",
+						"An error",
+						"`null`"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. What is the Temporal Dead Zone (TDZ) associated with?",
+					"options": [
+						"`var`",
+						"`let` and `const`",
+						"Function declarations",
+						"Objects"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. Can a function expression be called before it is defined?",
+					"options": [
+						"Yes",
+						"No",
+						"Only in strict mode",
+						"Only if it's an arrow function"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "5. What is the result of trying to access a `let` variable in the TDZ?",
+					"options": [
+						"The variable's value will be `undefined`",
+						"The program will crash",
+						"A `ReferenceError` will be thrown",
+						"The variable will be initialized to `null`"
+					],
+					"correctAnswer": "C"
+				}
+			]
+		},
+		{
+			"title": "Event Loop",
+			"content": [
+				{ "type": "p", "text": "The Event Loop is a crucial concept for understanding how JavaScript handles asynchronous operations, especially in a browser environment. It's not part of the JavaScript engine itself but is a part of the browser or Node.js runtime. It's responsible for managing the execution of your code, handling asynchronous tasks, and processing events. In this section, we'll give you a high-level overview of the Event Loop, the Call Stack, and the Callback Queue." },
+				{ "type": "h3", "text": "The Call Stack" },
+				{ "type": "p", "text": "The Call Stack is a data structure that keeps track of function calls. When a function is called, it is added to the stack. When the function returns, it is removed from the stack. JavaScript is single-threaded, so it can only execute one thing at a time." },
+				{ "type": "h3", "text": "The Web APIs" },
+				{ "type": "p", "text": "The browser provides a set of APIs (e.g., `setTimeout`, `fetch`, DOM events) that can handle asynchronous tasks. When an asynchronous function is called, it is passed to the appropriate Web API, which then handles it outside of the main Call Stack." },
+				{ "type": "h3", "text": "The Callback Queue (or Task Queue)" },
+				{ "type": "p", "text": "Once an asynchronous task (like a `setTimeout`) is complete, its callback function is placed in the Callback Queue. This queue is a list of functions waiting to be executed." },
+				{ "type": "h3", "text": "The Event Loop" },
+				{ "type": "p", "text": "The Event Loop's job is to continuously check if the Call Stack is empty. If the Call Stack is empty, it takes the first function from the Callback Queue and pushes it onto the Call Stack for execution. This is how JavaScript handles non-blocking asynchronous operations without freezing the browser." },
+				{ "type": "code", "code": "console.log('First message');\n\nsetTimeout(() => {\n  console.log('Message from setTimeout');\n}, 0);\n\nconsole.log('Second message');\n\n// Output:\n// First message\n// Second message\n// Message from setTimeout" },
+				{ "type": "p", "text": "Even with a 0ms delay, the `setTimeout` callback goes to the queue and waits for the Call Stack to be empty. The `console.log` statements are synchronous and run immediately, so they execute first." },
+				{ "type": "h3", "text": "Quiz: Event Loop" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the Event Loop responsible for?", "2. What is the Call Stack, and how does it relate to JavaScript's single-threaded nature?", "3. What happens to a `setTimeout` function when it is called?", "4. What is the Callback Queue, and when does the Event Loop check it?", "5. What is the output of `console.log('A'); setTimeout(() => console.log('B'), 0); console.log('C');`?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. The Event Loop is a mechanism for handling:",
+					"options": [
+						"Synchronous code",
+						"Errors",
+						"Asynchronous callbacks",
+						"Variable declarations"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. What is the Call Stack?",
+					"options": [
+						"A list of all variables in your program",
+						"A queue for asynchronous tasks",
+						"A mechanism that keeps track of function calls",
+						"A storage space for objects"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "3. When a `setTimeout` with a 0ms delay is called, its callback function goes to the:",
+					"options": [
+						"Call Stack immediately",
+						"The browser's Web APIs",
+						"The Callback Queue",
+						"The garbage collector"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "4. When does the Event Loop push a function from the Callback Queue to the Call Stack?",
+					"options": [
+						"As soon as the function is available",
+						"When the Callback Queue is empty",
+						"When the Call Stack is empty",
+						"After a 1-second delay"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "5. What is the output of `console.log('A'); setTimeout(() => console.log('B'), 0); console.log('C');`?",
+					"options": [
+						"`A`, `B`, `C`",
+						"`C`, `B`, `A`",
+						"`A`, `C`, `B`",
+						"`B`, `A`, `C`"
+					],
+					"correctAnswer": "C"
+				}
+			]
+		},
+		{
+			"title": "Prototypes",
+			"content": [
+				{ "type": "p", "text": "Prototypes are a fundamental but often misunderstood concept in JavaScript. Every JavaScript object has a special hidden property called `[[Prototype]]`, which is either `null` or references another object. This referenced object is called the prototype. When you try to access a property on an object, if it can't find it on the object itself, it will look on the prototype, then on the prototype's prototype, and so on. This is known as the **prototype chain** and is the basis of inheritance in JavaScript." },
+				{ "type": "h3", "text": "The Prototype Chain" },
+				{ "type": "p", "text": "Think of the prototype chain as a linked list of objects. When you access `myArray.push()`, for example, JavaScript first looks for a `push` property on `myArray`. It doesn't find one, so it looks at `myArray`'s prototype, which is `Array.prototype`. It finds the `push` method there and executes it. The chain eventually ends with `Object.prototype`, which has a `null` prototype." },
+				{ "type": "code", "code": "let animal = {\n  eats: true\n};\n\nlet rabbit = {\n  jumps: true\n};\n\nrabbit.__proto__ = animal; // Set animal as rabbit's prototype\n\nconsole.log(rabbit.eats); // Output: true (found on the prototype chain)\nconsole.log(rabbit.jumps); // Output: true (found on the object itself)" },
+				{ "type": "h3", "text": "Prototypes and Classes" },
+				{ "type": "p", "text": "Classes, which we covered earlier, are essentially syntactic sugar for the prototype-based inheritance model. When you use `class` and `extends`, JavaScript is setting up the prototype chain for you behind the scenes." },
+				{ "type": "code", "code": "class Animal {\n  eats() {\n    console.log('nom nom');\n  }\n}\n\nclass Rabbit extends Animal {\n  jumps() {\n    console.log('boing');\n  }\n}\n\nlet r = new Rabbit();\nr.eats(); // Output: 'nom nom'\n// The `eats` method is found on Animal's prototype, which is in the prototype chain of Rabbit." },
+				{ "type": "h3", "text": "Quiz: Prototypes" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is a prototype in JavaScript?", "2. What is the prototype chain?", "3. How does JavaScript find a property on an object if it's not directly on the object itself?", "4. How do classes relate to prototypes?", "5. What is the prototype of `Object.prototype`?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the `[[Prototype]]` property of a JavaScript object?",
+					"options": [
+						"A property that stores a value",
+						"A reference to another object",
+						"A function that returns a value",
+						"A string with the object's name"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. What is the prototype chain?",
+					"options": [
+						"A linked list of objects that JavaScript uses for inheritance",
+						"A series of function calls",
+						"A list of all the properties of an object",
+						"A way to create new objects"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "3. The prototype of `Array.prototype` is:",
+					"options": [
+						"`null`",
+						"`Array`",
+						"`Object.prototype`",
+						"`undefined`"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "4. What is the value of `animal.eats` in the following code? `let animal = { eats: true }; let rabbit = { jumps: true }; rabbit.__proto__ = animal;`",
+					"options": [
+						"`true`",
+						"`false`",
+						"`undefined`",
+						"An error"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "5. What is the primary purpose of the prototype chain?",
+					"options": [
+						"To store data",
+						"To create a new object",
+						"To provide inheritance",
+						"To manage asynchronous operations"
+					],
+					"correctAnswer": "C"
+				}
+			]
+		},
+		{
+			"title": "Debugging",
+			"content": [
+				{ "type": "p", "text": "Debugging is the process of finding and fixing errors or bugs in your code. It's an essential skill for every developer. While `console.log()` is a useful tool, modern browsers offer powerful debugging tools that can save you a lot of time and frustration. In this section, we'll cover the basics of using the browser's developer tools to debug your JavaScript code." },
+				{ "type": "h3", "text": "Using `console.log()`" },
+				{ "type": "p", "text": "The `console.log()` function is the simplest way to debug. You can use it to print the value of variables or messages at different points in your code to see what's happening." },
+				{ "type": "code", "code": "let a = 10;\nlet b = 5;\nconsole.log('Value of a:', a);\nlet sum = a + b;\nconsole.log('The sum is:', sum);" },
+				{ "type": "h3", "text": "The Browser's Developer Tools" },
+				{ "type": "p", "text": "Most modern browsers have a set of developer tools built in. You can usually open them by pressing `F12` or `Ctrl+Shift+I` (Windows/Linux) or `Cmd+Opt+I` (Mac). The `Sources` tab is where you'll find your code, and the `Console` tab is where you'll see your `console.log()` output and any errors." },
+				{ "type": "h3", "text": "Breakpoints" },
+				{ "type": "p", "text": "A breakpoint is an intentional stopping or pausing place in a program. When you set a breakpoint, the code will pause its execution at that point, allowing you to inspect the values of variables, step through the code line by line, and understand the flow of your program. To set a breakpoint, click on the line number in the `Sources` tab." },
+				{ "type": "h3", "text": "Quiz: Debugging" },
+				{ "type": "p", "text": "Answer the following questions to unlock the next section:" },
+				{ "type": "ul", "listItems": ["1. What is the primary purpose of debugging?", "2. What is a simple but effective way to debug code without using the browser's tools?", "3. How do you open the developer tools in your browser?", "4. What is a breakpoint, and what is its purpose?", "5. When you're paused at a breakpoint, what can you do?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the primary goal of debugging?",
+					"options": [
+						"To add new features to your code",
+						"To improve the performance of your code",
+						"To find and fix errors in your code",
+						"To write documentation for your code"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. What is a common and simple way to check the value of a variable during execution?",
+					"options": [
+						"Using `debugger;`",
+						"Using `console.log()`",
+						"Setting a breakpoint",
+						"Writing a unit test"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. What is a breakpoint in the context of debugging?",
+					"options": [
+						"A syntax error in your code",
+						"A stopping point where you can pause code execution",
+						"A tool to automatically fix errors",
+						"A way to delete code"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. What is the keyboard shortcut to open developer tools in Chrome on Windows/Linux?",
+					"options": [
+						"`F12`",
+						"`Ctrl + S`",
+						"`Ctrl + A`",
+						"`Ctrl + P`"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "5. What can you do when your code is paused at a breakpoint?",
+					"options": [
+						"Inspect variable values",
+						"Step through the code line by line",
+						"Modify the code on the fly",
+						"All of the above"
+					],
+					"correctAnswer": "D"
+				}
+			]
+		},
+		{
+			"title": "Final Project",
+			"content": [
+				{ "type": "p", "text": "Congratulations on making it to the final project! This is where you'll apply all the skills you've learned throughout the course to build a practical, real-world application. Your task is to build a fully functional calculator using HTML, CSS, and JavaScript. This project will test your knowledge of DOM manipulation, event handling, operators, and control flow." },
+				{ "type": "p", "text": "The project will be broken down into a series of steps to guide you through the process, but feel free to add your own creative touches to make it unique. You should already have the HTML and CSS files needed for this project. Your main task is to write the JavaScript code to bring the calculator to life." },
+				{ "type": "h3", "text": "Project Requirements" },
+				{ "type": "ul", "listItems": [
+					"Handle button clicks for numbers (`0-9`), operators (`+`, `-`, `*`, `/`), and special keys (`.`, `C`, `=`).",
+					"Update the display as the user inputs numbers and operators.",
+					"Implement the core calculator logic to perform addition, subtraction, multiplication, and division.",
+					"Handle the `=` key to compute the final result.",
+					"Implement the `C` key to clear the calculator display and reset the state."
+				]},
+				{ "type": "h3", "text": "Tips for Success" },
+				{ "type": "ul", "listItems": [
+					"Use `addEventListener()` on the button elements to handle clicks.",
+					"Use variables to keep track of the first number, the operator, and the second number.",
+					"Convert the string values from the display to numbers before performing calculations.",
+					"Use `if/else` or a `switch` statement to determine which operation to perform."
+				]},
+				{ "type": "p", "text": "Once you have a working calculator, you've successfully completed the course! Click the 'Check Solution' button to confirm your work and celebrate your achievement." },
+				{ "type": "h3", "text": "Quiz: Final Project" },
+				{ "type": "p", "text": "Answer these questions based on the concepts you'll apply in the calculator project:" },
+				{ "type": "ul", "listItems": ["1. What is the primary technology you will use to make the calculator buttons respond to user clicks?", "2. How will you typically get a reference to the calculator display element in your JavaScript code?", "3. What is the purpose of state variables like `firstOperand` and `operator` in the calculator logic?", "4. When a number button is clicked after an operator has been selected, how should the display typically behave?", "5. What is the purpose of the `C` button?"] }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the primary technology you will use to make the calculator buttons respond to user clicks?",
+					"options": [
+						"CSS Selectors",
+						"DOM Manipulation",
+						"Event Handling",
+						"Asynchronous JavaScript"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "2. How will you typically get a reference to the calculator display element in your JavaScript code?",
+					"options": [
+						"`document.querySelector('.calculator-display')`",
+						"`document.getElementsByClassName('calculator-display')`",
+						"`document.getElementById('calculator-display')`",
+						"Any of the above methods could work."
+					],
+					"correctAnswer": "D"
+				},
+				{
+					"question": "3. What is the purpose of state variables like `firstOperand` and `operator` in the calculator logic?",
+					"options": [
+						"To store the final result of the calculation.",
+						"To keep track of the calculation's progress and the operation to perform.",
+						"To style the calculator buttons.",
+						"To handle asynchronous network requests."
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "4. When a number button is clicked after an operator has been selected, how should the display typically behave?",
+					"options": [
+						"The number should replace the currently displayed value.",
+						"The number should be appended to the currently displayed value.",
+						"The number should be ignored.",
+						"The operator should be replaced."
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "5. What is the purpose of the 'C' button?",
+					"options": [
+						"To perform a calculation",
+						"To change the theme of the calculator",
+						"To clear the calculator display and reset the state",
+						"To save the current calculation"
+					],
+					"correctAnswer": "C"
+				}
+			]
+		}
+	]
+}

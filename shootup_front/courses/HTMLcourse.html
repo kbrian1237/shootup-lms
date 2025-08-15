@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn HTML - Course</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link id="layout" rel="stylesheet" href="defaultStyle.css">
+    <style>
+        /* Add any specific styles needed for this course here */
+        /* For example, styles for potential visualizations or unique elements */
+    </style>
+</head>
+<body>
+    <div id="loader-overlay" class="hidden">
+        <div class="spinner"><p style="color: gold; justify-self: center;">learn</p></div>
+    </div>
+
+    <header>
+        <h1>Learn HTML</h1>
+        <p>Master the Building Blocks of the Web!</p>
+        <button id="settingsButton">Settings</button>
+    </header>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span> <h2>Settings</h2>
+            <div class="settings">
+                 <div class="theme-select">
+                    <label for="theme-select">Theme:</label>
+                    <select id="theme-select">
+                        <option value="default">Default</option>
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="forest">Forest</option>
+                    </select>
+                </div>
+                <div class="font-select">
+                    <label for="font-select">Font:</label>
+                    <select id="font-select">
+                        <option value="Segoe UI, Tahoma, Geneva, Verdana, sans-serif">Default</option>
+                        <option value="Roboto, sans-serif">Roboto</option>
+                        <option value="Open Sans, sans-serif">Open Sans</option>
+                        <option value="Lato, sans-serif">Lato</option>
+                        <option value="Montserrat, sans-serif">Montserrat</option>
+                        <option value="Merriweather, serif">Merriweather</option>
+                    </select>
+                </div>
+                <div class="style-select">
+                    <label for="style-select">Style:</label>
+                    <select id="style-select">
+                        <option value="default">Default</option>
+                        <option value="retro">retro</option>
+                        <option value="futuristic">futuristic</option>
+                        <option value="cyber">cyberpunk</option>
+                        <option value="lux">luxurious</option>
+                        <option value="minimalistic">minimalistic</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-container">
+        <ul class="nav-tabs">
+            <li data-target="intro">
+                <button class="nav-btn active" data-target="intro">Introduction</button>
+            </li>
+            <li data-target="html-basics">
+                <button class="nav-btn" data-target="html-basics">HTML Basics</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="text-formatting">
+                <button class="nav-btn" data-target="text-formatting">Text Formatting</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="lists">
+                <button class="nav-btn" data-target="lists">Lists</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="links-images">
+                <button class="nav-btn" data-target="links-images">Links & Images</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="tables">
+                <button class="nav-btn" data-target="tables">Tables</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="forms-basics">
+                <button class="nav-btn" data-target="forms-basics">Forms Basics</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="form-inputs">
+                <button class="nav-btn" data-target="form-inputs">Form Input Types</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="semantic-html">
+                <button class="nav-btn" data-target="semantic-html">Semantic HTML</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="div-span">
+                <button class="nav-btn" data-target="div-span">Div & Span</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="iframes">
+                <button class="nav-btn" data-target="iframes">Iframes</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+             <li data-target="html5-structure">
+                <button class="nav-btn" data-target="html5-structure">HTML5 Structure</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="html-apis">
+                <button class="nav-btn" data-target="html-apis">HTML APIs</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="svg-canvas">
+                <button class="nav-btn" data-target="svg-canvas">SVG & Canvas</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="web-storage">
+                <button class="nav-btn" data-target="web-storage">Web Storage</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="accessibility">
+                <button class="nav-btn" data-target="accessibility">Accessibility (ARIA)</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="seo-meta">
+                <button class="nav-btn" data-target="seo-meta">SEO & Meta Tags</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+             <li data-target="performance">
+                <button class="nav-btn" data-target="performance">Performance Optimization</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+             <li data-target="microdata">
+                <button class="nav-btn" data-target="microdata">Microdata & Schema.org</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+             <li data-target="web-components">
+                <button class="nav-btn" data-target="web-components">Web Components</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="best-practices">
+                <button class="nav-btn" data-target="best-practices">Best Practices & Validation</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="elements-table">
+                <button class="nav-btn" data-target="elements-table">HTML Elements Table</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="final">
+                <button class="nav-btn" data-target="final">Final Project</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <section id="intro" class="lesson-section active">
+            <h2 class="lesson-title">Introduction to HTML</h2>
+            <div class="lesson-content">
+                <p>Welcome to the Learn HTML course! HTML, which stands for HyperText Markup Language, is the standard markup language for creating web pages and web applications.</p>
+                <p>It provides the structure of content on the web. Think of it as the skeleton of a webpage. You use HTML to define headings, paragraphs, images, links, and much more.</p>
+                <p>In this course, you will start with the very basics of HTML, understanding its core concepts and syntax, and gradually move towards more advanced topics like semantic HTML, forms, multimedia, and best practices.</p>
+                <p>By the end of this course, you will have a solid foundation in HTML and be able to create well-structured and meaningful web pages.</p>
+                <h3>What You Will Learn:</h3>
+                <ul>
+                    <li>The fundamental structure of an HTML document.</li>
+                    <li>Common HTML tags and their uses.</li>
+                    <li>Creating headings, paragraphs, lists, and links.</li>
+                    <li>Adding images and other media.</li>
+                    <li>Building tables and forms.</li>
+                    <li>Understanding semantic HTML for better structure and SEO.</li>
+                    <li>Introduction to HTML5 features and APIs.</li>
+                    <li>Best practices for writing clean and accessible HTML.</li>
+                </ul>
+                <p>Let's get started on your journey to becoming an HTML pro!</p>
+            </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Introduction Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section!</p>
+                <div class="quiz" id="quiz-intro-1"></div>
+                <div class="quiz" id="quiz-intro-2"></div>
+                <div class="quiz" id="quiz-intro-3"></div>
+                <div class="quiz" id="quiz-intro-4"></div>
+                <div class="quiz" id="quiz-intro-5"></div>
+            </div>
+        </section>
+
+        <section id="html-basics" class="lesson-section">
+            <h2 class="lesson-title">HTML Basics: Structure and Tags</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Basics Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Basics Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="text-formatting" class="lesson-section">
+            <h2 class="lesson-title">Text Formatting Elements</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Formatting Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Formatting Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+         <section id="lists" class="lesson-section">
+            <h2 class="lesson-title">Working with Lists</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Lists Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Lists Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+         <section id="links-images" class="lesson-section">
+            <h2 class="lesson-title">Links and Images</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Links/Images Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Links/Images Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+         <section id="tables" class="lesson-section">
+            <h2 class="lesson-title">Creating Tables</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Tables Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Tables Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="forms-basics" class="lesson-section">
+            <h2 class="lesson-title">Forms: Structure and Attributes</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Forms Basics Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Forms Basics Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="form-inputs" class="lesson-section">
+            <h2 class="lesson-title">Form Input Types</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Input Types Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Input Types Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="semantic-html" class="lesson-section">
+            <h2 class="lesson-title">Semantic HTML5</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Semantic HTML Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Semantic HTML Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="div-span" class="lesson-section">
+            <h2 class="lesson-title">Block vs Inline: Div and Span</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Div/Span Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Div/Span Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="iframes" class="lesson-section">
+            <h2 class="lesson-title">Using Iframes</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Iframes Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Iframes Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="html5-structure" class="lesson-section">
+            <h2 class="lesson-title">Advanced HTML5 Page Structure</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> HTML5 Structure Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> HTML5 Structure Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="html-apis" class="lesson-section">
+            <h2 class="lesson-title">Introduction to HTML APIs</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> HTML APIs Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> HTML APIs Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="svg-canvas" class="lesson-section">
+            <h2 class="lesson-title">Drawing with SVG and Canvas</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> SVG/Canvas Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> SVG/Canvas Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="web-storage" class="lesson-section">
+            <h2 class="lesson-title">Client-Side Storage: Web Storage API</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Web Storage Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Web Storage Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="accessibility" class="lesson-section">
+            <h2 class="lesson-title">Web Accessibility (ARIA)</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Accessibility Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Accessibility Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="seo-meta" class="lesson-section">
+            <h2 class="lesson-title">SEO and Meta Tags</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> SEO Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> SEO Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+         <section id="performance" class="lesson-section">
+            <h2 class="lesson-title">HTML Performance Optimization</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Performance Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Performance Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+         <section id="microdata" class="lesson-section">
+            <h2 class="lesson-title">Microdata and Schema.org</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Microdata Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Microdata Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+         <section id="web-components" class="lesson-section">
+            <h2 class="lesson-title">Introduction to Web Components</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Web Components Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Web Components Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="best-practices" class="lesson-section">
+            <h2 class="lesson-title">HTML Best Practices and Validation</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Best Practices Exercise</h3>
+                <p class="exercise-instruction">Complete the following exercise:</p>
+                </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Best Practices Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section:</p>
+                 </div>
+        </section>
+
+        <section id="elements-table" class="lesson-section">
+            <h2 class="lesson-title">Comprehensive HTML Elements Table</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Elements Table Quiz</h3>
+                <p class="exercise-instruction">Answer the following questions:</p>
+                 </div>
+        </section>
+
+        <section id="final" class="lesson-section">
+            <h2 class="lesson-title">Final HTML Project</h2>
+            <div class="lesson-content">
+                </div>
+             <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Final Project Challenge</h3>
+                <p class="exercise-instruction">Complete the final project:</p>
+                 </div>
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Final Project Quizzes</h2>
+                <p class="exercise-instruction">Answer the following questions to complete the course:</p>
+                 </div>
+        </section>
+
+        <div class="progress-container">
+            <h3 class="progress-title">Your Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="progress-text"><span id="progress-percent">0</span>% Complete</p>
+        </div>
+
+        <div class="achievement-badge" id="achievement-badge">
+            <span class="badge-icon">🏆</span>
+            <span class="badge-text">New Achievement Unlocked!</span>
+        </div>
+
+    </div>
+
+    <button class="floating-btn" id="note-tablet-toggle" title="Open Notes">
+        <i class="fas fa-clipboard"></i>
+    </button>
+
+    <div class="note-tablet-panel" id="note-tablet-panel">
+        <div class="note-tablet-header">
+            <h4>My Notes & Scratchpad</h4>
+            <button id="close-note-tablet" title="Close Notes">&times;</button>
+        </div>
+        <div class="note-tablet-content">
+             <div class="note-tablet-controls" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e0dcd7; align-items: center;">
+                 <button id="add-heading-btn" title="Add Heading" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">H</button>
+                 <button id="add-list-btn" title="Add List Item" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">• List</button>
+                 <button id="add-bold-btn" title="Bold Text" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;"><b>B</b></button>
+                 <button id="add-italic-btn" title="Italic Text" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;"><i>I</i></button>
+                 <button id="add-underline-btn" title="Underline Text" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;"><u>U</u></button>
+                 <button id="add-hr-btn" title="Insert Horizontal Rule" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">HR</button>
+                 <button id="clear-notes-btn" title="Clear All Notes" style="background-color: #dc3545; color: white; border: 1px solid #dc3545; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">Clear</button>
+             </div>
+            <textarea id="note-textarea" placeholder="Write your notes here..."></textarea>
+            <div class="note-code-playground">
+                <div class="code-editor-header">
+                    <span class="code-editor-title">Code Scratchpad</span>
+                    <button class="run-btn" onclick="runCode('note-code-input', 'note-code-vis')">Run Code</button>
+                    <button class="reset-btn" onclick="resetCode('note-code-input')">Reset</button>
+                </div>
+                <textarea class="code-input" id="note-code-input" placeholder="// Write and run small code snippets here..."></textarea>
+                 <div class="simulation-visual" id="note-code-vis">
+                     <div class="terminal" id="note-code-terminal"></div>
+                 </div>
+            </div>
+        </div>
+         <div class="note-tablet-footer">
+             <button id="download-notes-btn" class="check-btn">Download Notes</button>
+         </div>
+    </div>
+
+    <footer>
+        <button id="toggle-achievements-btn" class="footer-btn">
+            Achievements <i class="fas fa-chevron-up" id="achievements-toggle-icon"></i>
+        </button>
+        <div id="achievements-panel" class="achievements-panel">
+            <h4>Unlocked Achievements:</h4>
+            <ul id="achievement-list">
+                </ul>
+        </div>
+    </footer>
+
+    <script src="courseScript.js"></script>
+    <script>
+        // Define unlocked sections, quiz correctness, and navigation map for THIS course
+        // This structure should match the one expected by courseScript.js
+
+        let unlockedSections = ['intro']; // 'intro' is unlocked by default
+
+        // Track correct answers for quizzes by their name attribute, grouped by section
+        let sectionQuizCorrect = {
+            'intro': {
+                'intro-quiz-1': false, 'intro-quiz-2': false, 'intro-quiz-3': false, 'intro-quiz-4': false, 'intro-quiz-5': false
+            },
+            'html-basics': { 'html-basics-quiz-1': false, 'html-basics-quiz-2': false, 'html-basics-quiz-3': false, 'html-basics-quiz-4': false, 'html-basics-quiz-5': false },
+            'text-formatting': { 'text-formatting-quiz-1': false, 'text-formatting-quiz-2': false, 'text-formatting-quiz-3': false, 'text-formatting-quiz-4': false, 'text-formatting-quiz-5': false },
+            'lists': { 'lists-quiz-1': false, 'lists-quiz-2': false, 'lists-quiz-3': false, 'lists-quiz-4': false, 'lists-quiz-5': false },
+            'links-images': { 'links-images-quiz-1': false, 'links-images-quiz-2': false, 'links-images-quiz-3': false, 'links-images-quiz-4': false, 'links-images-quiz-5': false },
+            'tables': { 'tables-quiz-1': false, 'tables-quiz-2': false, 'tables-quiz-3': false, 'tables-quiz-4': false, 'tables-quiz-5': false },
+            'forms-basics': { 'forms-basics-quiz-1': false, 'forms-basics-quiz-2': false, 'forms-basics-quiz-3': false, 'forms-basics-quiz-4': false, 'forms-basics-quiz-5': false },
+            'form-inputs': { 'form-inputs-quiz-1': false, 'form-inputs-quiz-2': false, 'form-inputs-quiz-3': false, 'form-inputs-quiz-4': false, 'form-inputs-quiz-5': false },
+            'semantic-html': { 'semantic-html-quiz-1': false, 'semantic-html-quiz-2': false, 'semantic-html-quiz-3': false, 'semantic-html-quiz-4': false, 'semantic-html-quiz-5': false },
+            'div-span': { 'div-span-quiz-1': false, 'div-span-quiz-2': false, 'div-span-quiz-3': false, 'div-span-quiz-4': false, 'div-span-quiz-5': false },
+            'iframes': { 'iframes-quiz-1': false, 'iframes-quiz-2': false, 'iframes-quiz-3': false, 'iframes-quiz-4': false, 'iframes-quiz-5': false },
+            'html5-structure': { 'html5-structure-quiz-1': false, 'html5-structure-quiz-2': false, 'html5-structure-quiz-3': false, 'html5-structure-quiz-4': false, 'html5-structure-quiz-5': false },
+            'html-apis': { 'html-apis-quiz-1': false, 'html-apis-quiz-2': false, 'html-apis-quiz-3': false, 'html-apis-quiz-4': false, 'html-apis-quiz-5': false },
+            'svg-canvas': { 'svg-canvas-quiz-1': false, 'svg-canvas-quiz-2': false, 'svg-canvas-quiz-3': false, 'svg-canvas-quiz-4': false, 'svg-canvas-quiz-5': false },
+            'web-storage': { 'web-storage-quiz-1': false, 'web-storage-quiz-2': false, 'web-storage-quiz-3': false, 'web-storage-quiz-4': false, 'web-storage-quiz-5': false },
+            'accessibility': { 'accessibility-quiz-1': false, 'accessibility-quiz-2': false, 'accessibility-quiz-3': false, 'accessibility-quiz-4': false, 'accessibility-quiz-5': false },
+            'seo-meta': { 'seo-meta-quiz-1': false, 'seo-meta-quiz-2': false, 'seo-meta-quiz-3': false, 'seo-meta-quiz-4': false, 'seo-meta-quiz-5': false },
+            'performance': { 'performance-quiz-1': false, 'performance-quiz-2': false, 'performance-quiz-3': false, 'performance-quiz-4': false, 'performance-quiz-5': false },
+            'microdata': { 'microdata-quiz-1': false, 'microdata-quiz-2': false, 'microdata-quiz-3': false, 'microdata-quiz-4': false, 'microdata-quiz-5': false },
+            'web-components': { 'web-components-quiz-1': false, 'web-components-quiz-2': false, 'web-components-quiz-3': false, 'web-components-quiz-4': false, 'web-components-quiz-5': false },
+            'best-practices': { 'best-practices-quiz-1': false, 'best-practices-quiz-2': false, 'best-practices-quiz-3': false, 'best-practices-quiz-4': false, 'best-practices-quiz-5': false },
+            'elements-table': { 'elements-table-quiz-1': false, 'elements-table-quiz-2': false, 'elements-table-quiz-3': false, 'elements-table-quiz-4': false, 'elements-table-quiz-5': false },
+            'final': { 'final-quiz-1': false, 'final-quiz-2': false, 'final-quiz-3': false, 'final-quiz-4': false, 'final-quiz-5': false }
+        };
+
+        // List of unlocked achievement names
+        let achievements = [];
+
+        // Mapping of section IDs to the next section ID to unlock
+        // This defines the learning path
+        const nextSectionMap = {
+            'intro': 'html-basics',
+            'html-basics': 'text-formatting',
+            'text-formatting': 'lists',
+            'lists': 'links-images',
+            'links-images': 'tables',
+            'tables': 'forms-basics',
+            'forms-basics': 'form-inputs',
+            'form-inputs': 'semantic-html',
+            'semantic-html': 'div-span',
+            'div-span': 'iframes',
+            'iframes': 'html5-structure',
+            'html5-structure': 'html-apis',
+            'html-apis': 'svg-canvas',
+            'svg-canvas': 'web-storage',
+            'web-storage': 'accessibility',
+            'accessibility': 'seo-meta',
+            'seo-meta': 'performance',
+            'performance': 'microdata',
+            'microdata': 'web-components',
+            'web-components': 'best-practices',
+            'best-practices': 'elements-table', // Unlock elements table after best practices
+            'elements-table': 'final', // Unlock final after elements table
+            'final': null // Final section doesn't unlock another section
+        };
+
+        // Mapping of section IDs to achievement titles for completing quizzes
+        const sectionAchievementMap = {
+            'intro': 'HTML Intro Master',
+            'html-basics': 'HTML Basics Expert',
+            'text-formatting': 'Text Formatter',
+            'lists': 'List Maker',
+            'links-images': 'Media Linker',
+            'tables': 'Table Weaver',
+            'forms-basics': 'Form Builder I',
+            'form-inputs': 'Form Builder II',
+            'semantic-html': 'Semantic Sensei',
+            'div-span': 'Layout Master',
+            'iframes': 'Embedding Pro',
+            'html5-structure': 'HTML5 Architect',
+            'html-apis': 'API Explorer',
+            'svg-canvas': 'Graphic Artist',
+            'web-storage': 'Data Keeper',
+            'accessibility': 'Inclusive Designer',
+            'seo-meta': 'Web Optimizer',
+            'performance': 'Speed Demon',
+            'microdata': 'Structured Data Pro',
+            'web-components': 'Component Creator',
+            'best-practices': 'Clean Coder',
+            'elements-table': 'Element Encyclopedia', // Achievement for completing elements table section
+            'final': 'HTML Champion' // Overall champion for completing the final project/course
+        };
+
+        // Placeholder check functions for exercises/challenges
+        // These would need to be implemented with actual logic
+        function checkIntroExercise() { console.log('Checking Introduction exercise...'); /* Add logic */ }
+        function checkBasicsExercise() { console.log('Checking HTML Basics exercise...'); /* Add logic */ }
+        function checkFormattingExercise() { console.log('Checking Text Formatting exercise...'); /* Add logic */ }
+        function checkListsExercise() { console.log('Checking Lists exercise...'); /* Add logic */ }
+        function checkLinksImagesExercise() { console.log('Checking Links & Images exercise...'); /* Add logic */ }
+        function checkTablesExercise() { console.log('Checking Tables exercise...'); /* Add logic */ }
+        function checkFormsBasicsExercise() { console.log('Checking Forms Basics exercise...'); /* Add logic */ }
+        function checkInputTypesExercise() { console.log('Checking Form Input Types exercise...'); /* Add logic */ }
+        function checkSemanticHtmlExercise() { console.log('Checking Semantic HTML exercise...'); /* Add logic */ }
+        function checkDivSpanExercise() { console.log('Checking Div & Span exercise...'); /* Add logic */ }
+        function checkIframesExercise() { console.log('Checking Iframes exercise...'); /* Add logic */ }
+        function checkHtml5StructureExercise() { console.log('Checking HTML5 Structure exercise...'); /* Add logic */ }
+        function checkHtmlApisExercise() { console.log('Checking HTML APIs exercise...'); /* Add logic */ }
+        function checkSvgCanvasExercise() { console.log('Checking SVG & Canvas exercise...'); /* Add logic */ }
+        function checkWebStorageExercise() { console.log('Checking Web Storage exercise...'); /* Add logic */ }
+        function checkAccessibilityExercise() { console.log('Checking Accessibility exercise...'); /* Add logic */ }
+        function checkSeoMetaExercise() { console.log('Checking SEO & Meta Tags exercise...'); /* Add logic */ }
+        function checkPerformanceExercise() { console.log('Checking Performance Optimization exercise...'); /* Add logic */ }
+        function checkMicrodataExercise() { console.log('Checking Microdata exercise...'); /* Add logic */ }
+        function checkWebComponentsExercise() { console.log('Checking Web Components exercise...'); /* Add logic */ }
+        function checkBestPracticesExercise() { console.log('Checking Best Practices exercise...'); /* Add logic */ }
+        function checkElementsTableExercise() { console.log('Checking Elements Table exercise...'); /* Add logic */ }
+        function checkFinalProjectExercise() { console.log('Checking Final Project exercise...'); /* Add logic */ }
+
+
+        // Placeholder check functions for quizzes (similar to checkQuiz in courseScript.js)
+        // These would call the main checkQuiz function with the correct answer
+        function checkIntroQuiz1() { checkQuiz('intro-quiz-1', 'CORRECT_ANSWER_FOR_Q1'); } // Replace CORRECT_ANSWER_FOR_Q1
+        // ... add check functions for all other quizzes
+        function checkHtmlBasicsQuiz1() { checkQuiz('html-basics-quiz-1', 'CORRECT_ANSWER'); }
+        // ... and so on for all 22 sections * 5 quizzes each (if applicable)
+
+        // NOTE: The actual quiz questions and options need to be added to the HTML
+        // within the respective quiz divs (e.g., <div class="quiz" id="quiz-intro-1">...</div>)
+        // and the checkQuiz calls in the buttons need the correct quiz name and answer.
+        // The structure above only provides the framework.
+
+    </script>
+</body>
+</html>

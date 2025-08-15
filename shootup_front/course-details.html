@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShootUp - Course Details</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dist/style.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+
+    <!-- Main container for the entire layout -->
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+
+        <!-- Placeholder for the navigation sidebar -->
+        <div id="navigation-placeholder"></div>
+
+        <!-- Main Content Area -->
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <!-- Toggle button for sidebar -->
+            <button id="sidebar-toggle-btn" class="absolute top-8 left-8 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none transition-all duration-300 ease-in-out hidden btn-primary" title="Show Navigation">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+            
+            <!-- Course Details View (initially visible) -->
+            <div id="course-details-view" class="w-full h-full p-8">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Back button -->
+                    <button onclick="history.back()" class="mb-6 flex items-center text-indigo-400 hover:text-indigo-300 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Back to Courses
+                    </button>
+                    
+                    <!-- Course Header -->
+                    <div id="course-header" class="mb-8">
+                        <div class="flex flex-col lg:flex-row gap-8">
+                            <div class="lg:w-1/3">
+                                <img id="course-image" src="" alt="Course Image" class="w-full h-64 object-cover rounded-xl shadow-lg">
+                            </div>
+                            <div class="lg:w-2/3">
+                                <h1 id="course-title" class="text-4xl font-bold mb-4 text-white"></h1>
+                                <p id="course-description" class="text-gray-300 mb-4 text-lg leading-relaxed"></p>
+                                <div class="flex flex-wrap gap-4 mb-6">
+                                    <div class="bg-indigo-600 px-4 py-2 rounded-full">
+                                        <span id="course-category" class="font-medium"></span>
+                                    </div>
+                                    <div class="bg-gray-700 px-4 py-2 rounded-full">
+                                        <span id="course-level" class="font-medium"></span>
+                                    </div>
+                                    <div class="bg-yellow-600 px-4 py-2 rounded-full flex items-center">
+                                        <i class="fas fa-star mr-2"></i>
+                                        <span id="course-rating" class="font-medium"></span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Progress Bar -->
+                                <div class="mb-6">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium text-gray-300">Progress</span>
+                                        <span id="progress-text" class="text-sm font-medium text-indigo-400">0% Complete</span>
+                                    </div>
+                                    <div class="w-full bg-gray-700 rounded-full h-3">
+                                        <div id="progress-bar" class="bg-indigo-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Action Buttons -->
+                                <div class="flex gap-4">
+                                    <button id="start-course-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors flex items-center">
+                                        <i class="fas fa-play mr-2"></i>
+                                        <span id="btn-text">Start Course</span>
+                                    </button>
+                                    <button class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
+                                        <i class="fas fa-bookmark mr-2"></i>
+                                        Save for Later
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Requirements -->
+                    <div class="bg-gray-800 rounded-xl p-6 mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-white">Requirements</h3>
+                        <p id="course-requirements" class="text-gray-300"></p>
+                    </div>
+                    
+                    <!-- Course Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-xl p-6 text-center">
+                            <i class="fas fa-thumbs-up text-3xl text-indigo-400 mb-3"></i>
+                            <div id="course-likes" class="text-2xl font-bold text-white mb-1"></div>
+                            <div class="text-gray-400">Likes</div>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl p-6 text-center">
+                            <i class="fas fa-comments text-3xl text-green-400 mb-3"></i>
+                            <div id="course-comments" class="text-2xl font-bold text-white mb-1"></div>
+                            <div class="text-gray-400">Comments</div>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl p-6 text-center">
+                            <i class="fas fa-clock text-3xl text-yellow-400 mb-3"></i>
+                            <div class="text-2xl font-bold text-white mb-1">Self-paced</div>
+                            <div class="text-gray-400">Duration</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Course Content View (initially hidden) -->
+            <div id="course-view" class="hidden w-full h-full">
+                <iframe id="course-iframe" class="w-full h-full border-0"></iframe>
+            </div>
+        </main>
+    </div>
+
+    <!-- The main script file with data and general functionality -->
+    <script src="dist/data.js"></script>
+    <script src="dist/script.js"></script>
+    <script src="dist/progress-sync.js"></script>
+    
+    <!-- Inline script to handle course-specific logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const courseId = params.get('id') || 'course_js';
+            
+            // Show loading state immediately
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="flex items-center justify-center h-full">
+                    <div class="text-center">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 mx-auto mb-4"></div>
+                        <p class="text-gray-300">Loading course details...</p>
+                    </div>
+                </div>
+            `;
+
+            // Function to populate course with fallback data
+            const populateCourseData = (course) => {
+                try {
+                    // Restore the original content structure
+                    content.innerHTML = `
+                        <div id="course-details-view" class="w-full h-full p-8">
+                            <div class="max-w-4xl mx-auto">
+                                <button onclick="history.back()" class="mb-6 flex items-center text-indigo-400 hover:text-indigo-300 transition-colors">
+                                    <i class="fas fa-arrow-left mr-2"></i>
+                                    Back to Courses
+                                </button>
+                                
+                                <div id="course-header" class="mb-8">
+                                    <div class="flex flex-col lg:flex-row gap-8">
+                                        <div class="lg:w-1/3">
+                                            <img id="course-image" src="" alt="Course Image" class="w-full h-64 object-cover rounded-xl shadow-lg">
+                                        </div>
+                                        <div class="lg:w-2/3">
+                                            <h1 id="course-title" class="text-4xl font-bold mb-4 text-white"></h1>
+                                            <p id="course-description" class="text-gray-300 mb-4 text-lg leading-relaxed"></p>
+                                            <div class="flex flex-wrap gap-4 mb-6">
+                                                <div class="bg-indigo-600 px-4 py-2 rounded-full">
+                                                    <span id="course-category" class="font-medium"></span>
+                                                </div>
+                                                <div class="bg-gray-700 px-4 py-2 rounded-full">
+                                                    <span id="course-level" class="font-medium"></span>
+                                                </div>
+                                                <div class="bg-yellow-600 px-4 py-2 rounded-full flex items-center">
+                                                    <i class="fas fa-star mr-2"></i>
+                                                    <span id="course-rating" class="font-medium"></span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-6">
+                                                <div class="flex justify-between items-center mb-2">
+                                                    <span class="text-sm font-medium text-gray-300">Progress</span>
+                                                    <span id="progress-text" class="text-sm font-medium text-indigo-400">0% Complete</span>
+                                                </div>
+                                                <div class="w-full bg-gray-700 rounded-full h-3">
+                                                    <div id="progress-bar" class="bg-indigo-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="flex gap-4">
+                                                <button id="start-course-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors flex items-center">
+                                                    <i class="fas fa-play mr-2"></i>
+                                                    <span id="btn-text">Start Course</span>
+                                                </button>
+                                                <button class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors">
+                                                    <i class="fas fa-bookmark mr-2"></i>
+                                                    Save for Later
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-800 rounded-xl p-6 mb-8">
+                                    <h3 class="text-xl font-semibold mb-4 text-white">Requirements</h3>
+                                    <p id="course-requirements" class="text-gray-300"></p>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                    <div class="bg-gray-800 rounded-xl p-6 text-center">
+                                        <i class="fas fa-thumbs-up text-3xl text-indigo-400 mb-3"></i>
+                                        <div id="course-likes" class="text-2xl font-bold text-white mb-1"></div>
+                                        <div class="text-gray-400">Likes</div>
+                                    </div>
+                                    <div class="bg-gray-800 rounded-xl p-6 text-center">
+                                        <i class="fas fa-comments text-3xl text-green-400 mb-3"></i>
+                                        <div id="course-comments" class="text-2xl font-bold text-white mb-1"></div>
+                                        <div class="text-gray-400">Comments</div>
+                                    </div>
+                                    <div class="bg-gray-800 rounded-xl p-6 text-center">
+                                        <i class="fas fa-clock text-3xl text-yellow-400 mb-3"></i>
+                                        <div class="text-2xl font-bold text-white mb-1">Self-paced</div>
+                                        <div class="text-gray-400">Duration</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="course-view" class="hidden w-full h-full">
+                            <iframe id="course-iframe" class="w-full h-full border-0"></iframe>
+                        </div>
+                    `;
+
+                    // Populate course details
+                    document.getElementById('course-title').textContent = course.title;
+                    document.getElementById('course-description').textContent = course.description;
+                    document.getElementById('course-category').textContent = course.category;
+                    document.getElementById('course-level').textContent = course.level;
+                    document.getElementById('course-rating').textContent = course.rating;
+                    document.getElementById('course-requirements').textContent = course.requirements;
+                    document.getElementById('course-likes').textContent = course.likes.toLocaleString();
+                    document.getElementById('course-comments').textContent = course.comments;
+                    document.getElementById('course-image').src = course.image;
+                    document.getElementById('course-image').alt = course.title;
+                    
+                    // Update page title
+                    document.title = `${course.title} - ShootUp`;
+                    
+                    // Get and display progress using unified system
+                    const progressValue = window.ProgressSync ? window.ProgressSync.getCourseProgress(courseId) : 0;
+                    const progressBar = document.getElementById('progress-bar');
+                    const progressText = document.getElementById('progress-text');
+                    
+                    // Set up progress display
+                    if (progressBar) {
+                        progressBar.style.width = `${progressValue}%`;
+                        progressBar.parentElement.setAttribute('data-progress-course', courseId);
+                    }
+                    if (progressText) {
+                        progressText.textContent = `${progressValue}% Complete`;
+                        progressText.setAttribute('data-progress-text', 'true');
+                    }
+                    
+                    // Update button text based on progress
+                    const btnText = document.getElementById('btn-text');
+                    const startBtn = document.getElementById('start-course-btn');
+                    if (progressValue > 0) {
+                        btnText.textContent = 'Continue Course';
+                        startBtn.innerHTML = '<i class="fas fa-play mr-2"></i><span>Continue Course</span>';
+                    } else {
+                        btnText.textContent = 'Start Course';
+                        startBtn.innerHTML = '<i class="fas fa-play mr-2"></i><span>Start Course</span>';
+                    }
+                    
+                    // Handle start/continue course button
+                    document.getElementById('start-course-btn').addEventListener('click', () => {
+                        const courseDetailsView = document.getElementById('course-details-view');
+                        const courseView = document.getElementById('course-view');
+                        const courseIframe = document.getElementById('course-iframe');
+                        
+                        // Hide course details and show course content
+                        courseDetailsView.classList.add('hidden');
+                        courseView.classList.remove('hidden');
+                        
+                        // Load the course content
+                        courseIframe.src = `courses/courseTemp.html?id=${courseId}`;
+                    });
+                } catch (error) {
+                    console.error('Error populating course data:', error);
+                    content.innerHTML = '<p class="text-center text-red-500 p-8">Error displaying course data.</p>';
+                }
+            };
+
+            // Fallback course data
+            const fallbackCourse = {
+                title: 'Learn JavaScript',
+                description: 'Master the fundamentals of JavaScript, from variables and functions to asynchronous programming and DOM manipulation.',
+                category: 'Web Development',
+                level: 'Beginner',
+                rating: 4.5,
+                requirements: 'Basic HTML and CSS',
+                likes: 1200,
+                comments: 34,
+                image: 'https://images.unsplash.com/photo-1426024120108-99cc76989c71?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTAwNDR8MHwxfHNlYXJjaHw4fHxlZHVjYXRpb24lMjB0ZWNobm9sb2d5JTIwbGVhcm5pbmclMjBjb3Vyc2V8ZW58MHwwfHxibHVlfDE3NTUyNDIxMzB8MA&ixlib=rb-4.1.0&q=85'
+            };
+
+            // Try to load data, but use fallback if it fails
+            try {
+                const data = await window.ShootUpData.load();
+                const course = window.ShootUpData.getCourseById(data, courseId);
+                
+                if (course) {
+                    populateCourseData(course);
+                } else {
+                    console.warn('Course not found, using fallback data');
+                    populateCourseData(fallbackCourse);
+                }
+            } catch (error) {
+                console.warn('Failed to load course data, using fallback:', error);
+                populateCourseData(fallbackCourse);
+            }
+        });
+        
+        // Listen for messages from course iframe
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'showNavigation') {
+                // Show navigation when requested from course iframe
+                if (window.NavigationToggle) {
+                    window.NavigationToggle.show();
+                }
+            } else if (event.data && event.data.type === 'progressUpdate') {
+                // Handle progress updates from course iframe
+                const { courseId, progress } = event.data;
+                if (courseId && typeof progress === 'number') {
+                    // Update progress display in real-time
+                    const progressBar = document.getElementById('progress-bar');
+                    const progressText = document.getElementById('progress-text');
+                    
+                    if (progressBar) {
+                        progressBar.style.width = `${progress}%`;
+                    }
+                    if (progressText) {
+                        progressText.textContent = `${progress}% Complete`;
+                    }
+                    
+                    // Update button text based on new progress
+                    const btnText = document.getElementById('btn-text');
+                    if (btnText) {
+                        btnText.textContent = progress > 0 ? 'Continue Course' : 'Start Course';
+                    }
+                    
+                    console.log(`Course details progress updated: ${progress}%`);
+                }
+            }
+        });
+        
+        // Listen for custom progress update events
+        window.addEventListener('courseProgressUpdate', (event) => {
+            const { courseId, progress } = event.detail;
+            const currentCourseId = new URLSearchParams(window.location.search).get('id');
+            
+            if (courseId === currentCourseId) {
+                const progressBar = document.getElementById('progress-bar');
+                const progressText = document.getElementById('progress-text');
+                
+                if (progressBar) {
+                    progressBar.style.width = `${progress}%`;
+                }
+                if (progressText) {
+                    progressText.textContent = `${progress}% Complete`;
+                }
+            }
+        });
+    </script>
+    <script src="dist/navigation-toggle.js"></script>
+</body>
+</html>

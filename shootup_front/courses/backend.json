@@ -1,0 +1,76 @@
+{
+	"title": "Backend Development Mastery",
+	"category": "Web Development",
+	"level": "Intermediate",
+	"rating": 4.2,
+	"banner": "https://placehold.co/1200x400/1f2937/ffffff?text=Backend+Development",
+	"description": "Master backend development with Node.js, databases, APIs, and deployment strategies!",
+	"outline": [
+		{ "title": "Backend Fundamentals", "topics": ["What is Backend?", "Client-Server Architecture", "HTTP Protocol", "REST APIs"] },
+		{ "title": "Node.js Basics", "topics": ["Node.js Installation", "NPM Package Manager", "Modules & Require", "File System"] },
+		{ "title": "Express.js Framework", "topics": ["Express Setup", "Routing", "Middleware", "Request/Response"] },
+		{ "title": "Database Fundamentals", "topics": ["SQL vs NoSQL", "Database Design", "CRUD Operations", "Relationships"] },
+		{ "title": "MongoDB Integration", "topics": ["MongoDB Setup", "Mongoose ODM", "Schema Design", "Queries"] },
+		{ "title": "Authentication", "topics": ["JWT Tokens", "Password Hashing", "Session Management", "OAuth"] },
+		{ "title": "API Development", "topics": ["RESTful APIs", "API Documentation", "Error Handling", "Validation"] },
+		{ "title": "Security Best Practices", "topics": ["Input Sanitization", "CORS", "Rate Limiting", "HTTPS"] },
+		{ "title": "Testing", "topics": ["Unit Testing", "Integration Testing", "Test-Driven Development", "Mocking"] },
+		{ "title": "Deployment", "topics": ["Environment Variables", "Docker", "Cloud Deployment", "CI/CD"] },
+		{ "title": "Performance Optimization", "topics": ["Caching", "Database Indexing", "Load Balancing", "Monitoring"] },
+		{ "title": "Real-time Features", "topics": ["WebSockets", "Socket.io", "Real-time Chat", "Live Updates"] },
+		{ "title": "Microservices", "topics": ["Service Architecture", "API Gateway", "Service Communication", "Scalability"] },
+		{ "title": "Final Project", "topics": ["Full-Stack Application", "API Integration", "Deployment", "Documentation"] }
+	],
+	"sections": [
+		{
+			"title": "Introduction to Backend Development",
+			"content": [
+				{ "type": "p", "text": "Welcome to Backend Development Mastery! This comprehensive course will take you from backend basics to advanced server-side programming concepts." },
+				{ "type": "p", "text": "Backend development is the server-side of web development that focuses on databases, server logic, APIs, and system architecture. You'll learn to build robust, scalable applications that power modern web and mobile applications." },
+				{ "type": "p", "text": "Throughout this course, you'll master:" },
+				{ "type": "ul", "listItems": [
+					"Node.js and Express.js for server development",
+					"Database design and management with MongoDB",
+					"RESTful API development and documentation",
+					"Authentication and security best practices",
+					"Testing strategies and deployment techniques",
+					"Performance optimization and scalability",
+					"Real-time features and microservices architecture"
+				]},
+				{ "type": "p", "text": "By the end of this course, you'll be able to build complete backend systems that can handle real-world applications and scale to serve thousands of users!" }
+			],
+			"quizzes": [
+				{
+					"question": "1. What is the primary role of backend development?",
+					"options": [
+						"Creating user interfaces",
+						"Managing server-side logic and databases",
+						"Styling web pages",
+						"Client-side scripting"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "2. Which protocol is commonly used for web communication?",
+					"options": [
+						"FTP",
+						"SMTP",
+						"HTTP/HTTPS",
+						"SSH"
+					],
+					"correctAnswer": "C"
+				},
+				{
+					"question": "3. What does API stand for?",
+					"options": [
+						"Application Programming Interface",
+						"Advanced Programming Integration",
+						"Automated Process Integration",
+						"Application Process Interface"
+					],
+					"correctAnswer": "A"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,2984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>backend adventure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link id="layout" rel="stylesheet" href="defaultStyle.css">
+    <style>
+        /* General styles for visualizations */
+        .server-visualization, .database-visual, .api-visual, .middleware-chain-visual, .simulation-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            max-width: 600px;
+            min-height:20% ;
+        }
+
+        /* Server rack visualization */
+        .server-rack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .server-blade {
+            width: 100px;
+            height: 30px;
+            background-color: #007bff;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .server-light {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .server-light.active {
+            background-color: #28a745;
+        }
+
+        /* Database visualization */
+        .database-visual {
+            width: 80px;
+            height: 80px;
+            background-color: #28a745;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* API visualization */
+        .api-visual {
+            width: 100px;
+            height: 50px;
+            background-color: #ffc107;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            font-weight: bold;
+            font-size: 1rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Middleware chain visualization */
+        .middleware-chain-visual {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .middleware-step {
+            width: 50px;
+            height: 50px;
+            background-color: #007bff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .middleware-arrow {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        /* Terminal simulation */
+        .terminal {
+            width: 100%;
+            height: 150px;
+            background-color: #333;
+            color: #fff;
+            font-family: monospace;
+            font-size: 0.9rem;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-y: auto;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #28a745;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Achievement badge */
+        .achievement-badge {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ffc107;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeInOut 3s ease;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            10%, 90% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader-overlay" class="hidden">
+        <div class="spinner"><p style="color: gold; justify-self: center;">learn</p></div>
+    </div>
+    <header>
+        <h1>Backend Adventure</h1>
+        <p>Learn Server Development Through Interactive Challenges!</p>
+        <button id="settingsButton">Settings</button>
+
+    </header>
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span> <h2>Settings</h2>
+
+            <div class="settings">
+                 <div class="theme-select">
+                    <label for="theme-select">Theme:</label>
+                    <select id="theme-select">
+                        <option value="default">Default</option>
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="forest">Forest</option>
+                    </select>
+                </div>
+                <div class="font-select">
+                    <label for="font-select">Font:</label>
+                    <select id="font-select">
+                        <option style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" value="Segoe UI, Tahoma, Geneva, Verdana, sans-serif">Default</option>
+                        <option style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;" value="Roboto, sans-serif">Roboto</option>
+                        <option style="font-family: open sans, sans-serif;" value="Open Sans, sans-serif">Open Sans</option>
+                        <option style="font-family: lato, sans-serif;" value="Lato, sans-serif">Lato</option>
+                        <option style="font-family: montserrat;" value="Montserrat, sans-serif">Montserrat</option>
+                        <option style="font-family: merriweather;" value="Merriweather, serif">Merriweather</option>
+                    </select>
+                </div>
+                <div class="style-select">
+                        <label for="style-select">Style:</label>
+                        <select id="style-select">
+                            <option value="default">Default</option>
+                            <option value="retro">retro</option>
+                            <option value="futuristic">futuristic</option>
+                            <option value="cyber">cyberpunk</option>
+                            <option value="lux">luxurious</option>
+                            <option value="minimalistic">minimalistic</option>
+                            
+                        </select>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="nav-container">
+        <ul class="nav-tabs">
+            <li data-target="intro">
+                <button class="nav-btn active" data-target="intro">Introduction</button>
+            </li>
+            <li data-target="setup">
+                <button class="nav-btn" data-target="setup">Environment Setup</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="hello">
+                <button class="nav-btn" data-target="hello">Hello Server</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="routes">
+                <button class="nav-btn" data-target="routes">Routing</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="middleware">
+                <button class="nav-btn" data-target="middleware">Middleware</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="async">
+                <button class="nav-btn" data-target="async">Async Programming</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="database">
+                <button class="nav-btn" data-target="database">Database</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="api">
+                <button class="nav-btn" data-target="api">REST API</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="auth">
+                <button class="nav-btn" data-target="auth">Authentication</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="error">
+                <button class="nav-btn" data-target="error">Error Handling</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="testing">
+                <button class="nav-btn" data-target="testing">Testing & Debugging</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="deploy">
+                <button class="nav-btn" data-target="deploy">Deployment</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+            <li data-target="final">
+                <button class="nav-btn" data-target="final">Final Project</button>
+                <i class="fas fa-lock lock-icon"></i>
+            </li>
+        </ul>
+        
+    </div>
+
+    <div class="container">
+        <section id="intro" class="lesson-section active">
+            <h2 class="lesson-title">Welcome to Backend Development!</h2>
+            <div class="lesson-content">
+                <div class="server-visualization">
+                    <div class="server-rack">
+                        <div class="server-blade">
+                            <div class="server-light active"></div>
+                        </div>
+                        <div class="server-blade">
+                            <div class="server-light"></div>
+                        </div>
+                        <div class="server-blade">
+                            <div class="server-light"></div>
+                        </div>
+                    </div>
+                    <div class="database-visual pulse"></div>
+                    <div class="api-visual pulse"></div>
+                </div>
+                <h3>What is Backend Development?</h3>
+                <p>Welcome to Backend Adventure! This project is designed to take you on an exciting journey into the world behind the scenes of every website and application you use daily. While frontend development focuses on what users see and interact with in their browsers, backend development is the engine that powers it all. It's where the logic lives, where data is stored and managed, and where the crucial tasks of security and performance are handled.</p>
+
+                <p>Think of a website like a restaurant. The frontend is the dining area, the menu, and the waiter interacting with you. The backend is the kitchen – the chefs, the ingredients, the recipes, and the inventory management. Without a functional kitchen (backend), the dining area (frontend) can't serve any food (data or functionality).</p>
+
+                <p>In this interactive learning experience, you will not just read about backend concepts; you will actively build and experiment with them. We'll start with the fundamentals of setting up a server and then gradually move on to more complex topics like handling requests, interacting with databases, building robust APIs, securing your applications, and finally, getting your backend live for the world to see.</p>
+
+                <h3>Why is Backend Development Important?</h3>
+                <p>Backend development is critical for several reasons:</p>
+                <ul>
+                    <li><strong>Data Management:</strong> It handles how data is stored, retrieved, updated, and deleted, ensuring data integrity and availability.</li>
+                    <li><strong>Business Logic:</strong> Complex operations, calculations, and decision-making processes happen on the backend.</li>
+                    <li><strong>Security:</strong> Protecting user data and preventing malicious attacks is a primary responsibility of the backend.</li>
+                    <li><strong>Performance:</strong> An efficient backend ensures that applications are fast and responsive, providing a good user experience.</li>
+                    <li><strong>Scalability:</strong> As user traffic grows, the backend needs to be able to handle the increased load.</li>
+                </ul>
+
+                <h3>What You'll Learn in this Adventure:</h3>
+                <p>This adventure is structured to guide you through the core aspects of backend development. You will gain practical experience in:</p>
+                <ul>
+                    <li><strong>Creating Web Servers:</strong> Setting up and configuring servers to listen for and respond to incoming requests.</li>
+                    <li><strong>Working with Databases:</strong> Learning how to connect to, query, and manage data in databases like MongoDB.</li>
+                    <li><strong>Building RESTful APIs:</strong> Designing and implementing APIs that allow different parts of an application (or different applications) to communicate.</li>
+                    <li><strong>User Authentication and Authorization:</strong> Implementing secure ways to verify user identities and control access to resources.</li>
+                    <li><strong>Deploying Your Applications:</strong> Getting your backend code running on a live server so it's accessible to users.</li>
+                </ul>
+
+                <h3>How This Interactive Experience Works:</h3>
+                <p>This platform is designed for hands-on learning:</p>
+                <ul>
+                    <li><strong>Interactive Lessons:</strong> Each section introduces a key backend concept with clear explanations.</li>
+                    <li><strong>Code Editor:</strong> You will write and modify code directly in the provided editor.</li>
+                    <li><strong>Server Visualization:</strong> See how your code affects the server and data flow in real-time.</li>
+                    <li><strong>Challenges and Quizzes:</strong> Test your understanding and earn achievements by completing practical exercises.</li>
+                </ul>
+                <p>Get ready to dive deep and build the skills to create powerful and dynamic web applications from the ground up!</p>
+
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Quick Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions to unlock the next section!</p>
+
+                <div class="quiz" id="quiz-intro-1">
+                    <p><strong>1. What is the primary role of backend development?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="intro-quiz-1" value="A"> Designing user interfaces</label><br>
+                        <label><input type="radio" name="intro-quiz-1" value="B"> Handling server-side logic and data</label><br>
+                        <label><input type="radio" name="intro-quiz-1" value="C"> Creating animations in the browser</label><br>
+                        <label><input type="radio" name="intro-quiz-1" value="D"> Writing HTML and CSS</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('intro-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-intro-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-intro-2">
+                    <p><strong>2. Which of these is a key responsibility of the backend?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="intro-quiz-2" value="A"> Styling elements with CSS</label><br>
+                        <label><input type="radio" name="intro-quiz-2" value="B"> Managing databases</label><br>
+                        <label><input type="radio" name="intro-quiz-2" value="C"> Making website layouts responsive</label><br>
+                        <label><input type="radio" name="intro-quiz-2" value="D"> Adding interactive elements with JavaScript (frontend)</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('intro-quiz-2', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-intro-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-intro-3">
+                    <p><strong>3. What does the backend handle regarding user data?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="intro-quiz-3" value="A"> Displaying it attractively</label><br>
+                        <label><input type="radio" name="intro-quiz-3" value="B"> Storing and securing it</label><br>
+                        <label><input type="radio" name="intro-quiz-3" value="C"> Validating form inputs in the browser</label><br>
+                        <label><input type="radio" name="intro-quiz-3" value="D"> Creating pop-up messages</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('intro-quiz-3', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-intro-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-intro-4">
+                    <p><strong>4. Building RESTful APIs is a common task in:</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="intro-quiz-4" value="A"> Frontend development</label><br>
+                        <label><input type="radio" name="intro-quiz-4" value="B"> UI/UX design</label><br>
+                        <label><input type="radio" name="intro-quiz-4" value="C"> Backend development</label><br>
+                        <label><input type="radio" name="intro-quiz-4" value="D"> Database administration only</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('intro-quiz-4', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-intro-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-intro-5">
+                    <p><strong>5. Why is scalability important for the backend?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="intro-quiz-5" value="A"> To make the website look good</label><br>
+                        <label><input type="radio" name="intro-quiz-5" value="B"> To handle increased user traffic</label><br>
+                        <label><input type="radio" name="intro-quiz-5" value="C"> To add more features easily</label><br>
+                        <label><input type="radio" name="intro-quiz-5" value="D"> To reduce the amount of code</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('intro-quiz-5', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-intro-quiz-5"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="setup" class="lesson-section">
+            <h2 class="lesson-title">Environment Setup</h2>
+            <div class="lesson-content">
+                <p>Before you can start building your backend applications, you need to set up your development environment. This typically involves installing the necessary tools and software on your computer.</p>
+
+                <p>For Node.js backend development, the primary tools you'll need are Node.js itself and npm (Node Package Manager), which is usually installed along with Node.js. Node.js is a JavaScript runtime environment that allows you to run JavaScript code outside of a web browser. npm is used to install, manage, and share packages (libraries and frameworks) that your project will depend on.</p>
+
+                <p>You might also need a code editor (like VS Code, Sublime Text, or Atom), a terminal or command prompt, and potentially version control software like Git.</p>
+
+                <p>Setting up your environment correctly is a crucial first step to avoid issues later in the development process. Let's check your understanding of these basic tools.</p>
+
+                </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Setup Quizzes</h3>
+                <p class="exercise-instruction">Answer the following questions about environment setup:</p>
+
+                <div class="quiz" id="quiz-setup-1">
+                    <p><strong>1. What is Node.js?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="setup-quiz-1" value="A"> A database system</label><br>
+                        <label><input type="radio" name="setup-quiz-1" value="B"> A CSS framework</label><br>
+                        <label><input type="radio" name="setup-quiz-1" value="C"> A JavaScript runtime environment</label><br>
+                        <label><input type="radio" name="setup-quiz-1" value="D"> A frontend library</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('setup-quiz-1', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-setup-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-setup-2">
+                    <p><strong>2. What does npm stand for?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="setup-quiz-2" value="A"> New Project Manager</label><br>
+                        <label><input type="radio" name="setup-quiz-2" value="B"> Node Package Manager</label><br>
+                        <label><input type="radio" name="setup-quiz-2" value="C"> Network Protocol Manager</label><br>
+                        <label><input type="radio" name="setup-quiz-2" value="D"> Native Programming Module</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('setup-quiz-2', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-setup-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-setup-3">
+                    <p><strong>3. Which command is typically used to install packages using npm?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="setup-quiz-3" value="A"> <code>npm get</code></label><br>
+                        <label><input type="radio" name="setup-quiz-3" value="B"> <code>npm start</code></label><br>
+                        <label><input type="radio" name="setup-quiz-3" value="C"> <code>npm install</code></label><br>
+                        <label><input type="radio" name="setup-quiz-3" value="D"> <code>npm build</code></label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('setup-quiz-3', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-setup-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-setup-4">
+                    <p><strong>4. Why is a code editor important for backend development?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="setup-quiz-4" value="A"> It runs your server code directly</label><br>
+                        <label><input type="radio" name="setup-quiz-4" value="B"> It's where you write and manage your code files</label><br>
+                        <label><input type="radio" name="setup-quiz-4" value="C"> It visualizes the server architecture</label><br>
+                        <label><input type="radio" name="setup-quiz-4" value="D"> It handles database connections automatically</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('setup-quiz-4', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-setup-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-setup-5">
+                    <p><strong>5. What is the purpose of a <code>package.json</code> file in a Node.js project?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="setup-quiz-5" value="A"> To store user data</label><br>
+                        <label><input type="radio" name="setup-quiz-5" value="B"> To define project metadata and dependencies</label><br>
+                        <label><input type="radio" name="setup-quiz-5" value="C"> To write server-side logic</label><br>
+                        <label><input type="radio" name="setup-quiz-5" value="D"> To style the frontend</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('setup-quiz-5', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-setup-quiz-5"></div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="hello" class="lesson-section">
+            <h2 class="lesson-title">Hello Server!</h2>
+            <div class="lesson-content">
+                <p>Welcome to your first step into the backend world: creating a web server! At its core, a web server is a program that waits for requests from clients (like web browsers) and sends back responses. This interaction is the foundation of how the internet works.</p>
+
+                <p>When you type a URL into your browser, your browser sends an HTTP request to a server located somewhere on the internet. The server processes this request and sends back an HTTP response, which can include HTML, CSS, JavaScript, images, or data. Your browser then renders this response to display the web page.</p>
+
+                <p>In this lesson, you'll use Node.js and its built-in <code>http</code> module to create a simple server. This server will listen on a specific port number (like 3000 or 8080) for incoming connections. When a request arrives, your server code will execute, process the request, and construct a response to send back to the client.</p>
+
+                <p>Understanding how to set up a basic server is crucial. It's the entry point for all backend logic, data handling, and API development that you'll explore in later sections. Let's get started by writing some code to bring your first server to life!</p>
+
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Node.js Server</span>
+                            <button class="run-btn" onclick="runCode('hello-code', 'hello-vis')">Run Server</button>
+                            <button class="reset-btn" onclick="resetCode('hello-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="hello-code">const http = require('http');
+
+// Create a server object
+const server = http.createServer((req, res) => {
+    // Set response header
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+
+    // Send response
+    res.end('Hello from the server!');
+});
+
+// Start the server on port 3000
+server.listen(3000, () => {
+    console.log('Server running on port 3000');
+});</textarea>
+                    </div>
+                    <div class="server-visualization" id="hello-vis">
+                        <div class="server-rack">
+                            <div class="server-blade">
+                                <div class="server-light" id="hello-server-light"></div>
+                            </div>
+                        </div>
+                        <div class="terminal" id="hello-terminal"></div>
+                        <button class="check-btn" onclick="sendRequest('hello')" style="margin-top: 10px;">Send Request</button>
+                    </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Server Challenge</h3>
+                 <p class="exercise-instruction">Modify the server code above to:</p>
+                 <ol>
+                     <li>Respond with "Welcome to my server!" instead of "Hello from the server!"</li>
+                     <li>Change the port the server listens on from 3000 to 8080.</li>
+                     <li>Add a <code>console.log</code> statement inside the <code>createServer</code> callback function that prints "Request received!" every time the server gets a request.</li>
+                 </ol>
+                 <button class="check-btn" onclick="checkHelloExercise()">Check Solution</button>
+                 <div class="feedback" id="feedback-hello-challenge"></div> 
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Server Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of basic server concepts:</p>
+
+                <div class="quiz" id="quiz-hello-1">
+                    <p><strong>1. What protocol do web browsers typically use to request information from a web server?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="hello-quiz-1" value="A"> FTP</label><br>
+                        <label><input type="radio" name="hello-quiz-1" value="B"> SMTP</label><br>
+                        <label><input type="radio" name="hello-quiz-1" value="C"> HTTP</label><br>
+                        <label><input type="radio" name="hello-quiz-1" value="D"> SSH</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('hello-quiz-1', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-hello-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-hello-2">
+                    <p><strong>2. In server-client communication, which one initiates the request?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="hello-quiz-2" value="A"> The Server</label><br>
+                        <label><input type="radio" name="hello-quiz-2" value="B"> The Client</label><br>
+                        <label><input type="radio" name="hello-quiz-2" value="C"> Both simultaneously</label><br>
+                        <label><input type="radio" name="hello-quiz-2" value="D"> A database</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('hello-quiz-2', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-hello-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-hello-3">
+                    <p><strong>3. What is the primary role of a port number when a server is listening?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="hello-quiz-3" value="A"> To specify the server's IP address</label><br>
+                        <label><input type="radio" name="hello-quiz-3" value="B"> To identify the specific application or service on the server</label><br>
+                        <label><input type="radio" name="hello-quiz-3" value="C"> To encrypt the communication</label><br>
+                        <label><input type="radio" name="hello-quiz-3" value="D"> To determine the client's location</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('hello-quiz-3', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-hello-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-hello-4">
+                    <p><strong>4. What does a web server send back to the client after processing a request?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="hello-quiz-4" value="A"> An HTTP request</label><br>
+                        <label><input type="radio" name="hello-quiz-4" value="B"> A database query</label><br>
+                        <label><input type="radio" name="hello-quiz-4" value="C"> An error log</label><br>
+                        <label><input type="radio" name="hello-quiz-4" value="D"> An HTTP response</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('hello-quiz-4', 'D')">Check Answer</button>
+                    <div class="feedback" id="feedback-hello-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-hello-5">
+                    <p><strong>5. The Node.js <code>http</code> module is used for:</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="hello-quiz-5" value="A"> Managing databases</label><br>
+                        <label><input type="radio" name="hello-quiz-5" value="B"> Building web servers</label><br>
+                        <label><input type="radio" name="hello-quiz-5" value="C"> Styling web pages</label><br>
+                        <label><input type="radio" name="hello-quiz-5" value="D"> Handling frontend interactions</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('hello-quiz-5', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-hello-quiz-5"></div>
+                </div>
+
+                
+            </div>
+        </section>
+
+        <section id="routes" class="lesson-section">
+            <h2 class="lesson-title">Routing Requests</h2>
+            <div class="lesson-content">
+                <h3>What is Routing?</h3>
+                <p>Routing is a fundamental concept in backend development that determines how an application responds to a client request for a specific endpoint (URL) and HTTP method (like GET, POST, PUT, DELETE). Essentially, it's the process of directing incoming requests to the appropriate code that will handle them.</p>
+
+                <p>When a server receives a request, it looks at the URL path (e.g., `/users`, `/products/123`) and the HTTP method. Based on predefined routes, the server decides which function or block of code should be executed to process that specific request. This allows you to build complex applications that can handle different types of requests for various resources.</p>
+
+                <h3>Understanding HTTP Methods</h3>
+                <p>Understanding the different HTTP methods is crucial for designing effective APIs. GET requests are typically used to retrieve data, POST requests to send data to create a new resource, PUT requests to update an existing resource, and DELETE requests to remove a resource. By using the appropriate method, you make your API more predictable and easier for developers to understand and use.</p>
+
+                <h3>Routing in Node.js vs. Frameworks</h3>
+                <p>In Node.js, you can implement routing manually using the built-in <code>http</code> module by checking <code>req.url</code> and <code>req.method</code>, as shown in the playground code. This gives you fine-grained control but can become cumbersome for applications with many different routes. For more complex applications, frameworks like Express.js provide more robust and easier-to-manage routing systems. These frameworks often allow you to define routes using clear syntax, handle different HTTP methods easily, organize your route handlers effectively, and include middleware for tasks like parsing request bodies or handling authentication.</p>
+
+                <h3>Importance of Effective Routing</h3>
+                <p>Effective routing is essential for building organized, maintainable, and scalable backend applications. It ensures that requests are handled correctly and that your application responds appropriately based on the client's intent. Let's explore how this works in practice and test your knowledge with some questions.</p>
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Node.js with Routing</span>
+                            <button class="run-btn" onclick="runCode('routes-code', 'routes-vis')">Run Server</button>
+                            <button class="reset-btn" onclick="resetCode('routes-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="routes-code">const http = require('http');
+
+const server = http.createServer((req, res) => {
+    // Check the request URL and method for routing
+    if (req.method === 'GET' && req.url === '/') {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end('<h1>Welcome to the Home Page</h1>');
+    }
+    // About page
+    else if (req.method === 'GET' && req.url === '/about') {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end('<h1>About Us</h1><p>Learn about our company</p>');
+    }
+    // Example of a simple API endpoint
+    else if (req.method === 'GET' && req.url === '/api/status') {
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({ status: 'OK', timestamp: new Date().toISOString() }));
+    }
+    // 404 Not Found for any other GET request
+    else if (req.method === 'GET') {
+         res.writeHead(404, {'Content-Type': 'text/html'});
+         res.end('<h1>404 Not Found</h1><p>The requested page was not found.</p>');
+    }
+    // Handle other methods or paths if needed, otherwise 404
+    else {
+        res.writeHead(404, {'Content-Type': 'text/html'});
+        res.end('<h1>404 Not Found</h1><p>The requested resource was not found or the method is not supported.</p>');
+    }
+});
+
+server.listen(3000, () => {
+    console.log('Server running with routes on port 3000');
+});</textarea>
+                    </div>
+                    <div class="server-visualization" id="routes-vis">
+                        <div class="server-rack">
+                            <div class="server-blade">
+                                <div class="server-light" id="routes-server-light"></div>
+                            </div>
+                        </div>
+                        <div class="terminal" id="routes-terminal"></div>
+                        <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                            <button class="check-btn" onclick="sendRequest('routes', '/', 'GET')">GET / (Home)</button>
+                            <button class="check-btn" onclick="sendRequest('routes', '/about', 'GET')">GET /about</button>
+                             <button class="check-btn" onclick="sendRequest('routes', '/api/status', 'GET')">GET /api/status</button>
+                            <button class="check-btn" onclick="sendRequest('routes', '/contact', 'GET')">GET /contact (404)</button>
+                             <button class="check-btn" onclick="sendRequest('routes', '/', 'POST')">POST / (404)</button>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Routing Challenge</h3>
+                <p class="exercise-instruction">Enhance the routing code above to:</p>
+                <ol>
+                    <li>Add a '/contact' route that responds with "Contact Information".</li>
+                    <li>Add a '/api/data' route that responds with a JSON object like <code>{ message: "Sample API Data" }</code>. Remember to set the <code>Content-Type</code> header to <code>application/json</code>.</li>
+                    <li>Add a redirect from '/home' to '/' using a 302 status code and setting the 'Location' header.</li>
+                </ol>
+                <button class="check-btn" onclick="checkRoutesExercise()">Check Solution</button>
+                <div class="feedback" id="feedback-routes-challenge"></div> 
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Routing Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of routing concepts:</p>
+
+                <div class="quiz" id="quiz-routes-1">
+                    <p><strong>1. What does 'routing' in backend development primarily involve?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="routes-quiz-1" value="A"> Styling the user interface</label><br>
+                        <label><input type="radio" name="routes-quiz-1" value="B"> Directing incoming requests to the correct code handler</label><br>
+                        <label><input type="radio" name="routes-quiz-1" value="C"> Managing client-side state</label><br>
+                        <label><input type="radio" name="routes-quiz-1" value="D"> Connecting to external APIs</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('routes-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-routes-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-routes-2">
+                    <p><strong>2. Which HTTP method is typically used to retrieve data from a server?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="routes-quiz-2" value="A"> POST</label><br>
+                        <label><input type="radio" name="routes-quiz-2" value="B"> PUT</label><br>
+                        <label><input type="radio" name="routes-quiz-2" value="C"> GET</label><br>
+                        <label><input type="radio" name="routes-quiz-2" value="D"> DELETE</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('routes-quiz-2', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-routes-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-routes-3">
+                    <p><strong>3. What is the main advantage of using a framework like Express.js for routing in a large application?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="routes-quiz-3" value="A"> It eliminates the need for JavaScript</label><br>
+                        <label><input type="radio" name="routes-quiz-3" value="B"> It provides a more structured and manageable way to define routes</label><br>
+                        <label><input type="radio" name="routes-quiz-3" value="C"> It automatically generates HTML pages</label><br>
+                        <label><input type="radio" name="routes-quiz-3" value="D"> It only works with GET requests</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('routes-quiz-3', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-routes-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-routes-4">
+                    <p><strong>4. What information from the incoming request does the Node.js <code>http</code> module provide for manual routing?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="routes-quiz-4" value="A"> <code>req.cookies</code> and <code>req.session</code></label><br>
+                        <label><input type="radio" name="routes-quiz-4" value="B"> <code>req.url</code> and <code>req.method</code></label><br>
+                        <label><input type="radio" name="routes-quiz-4" value="C"> <code>req.params</code> and <code>req.query</code></label><br>
+                        <label><input type="radio" name="routes-quiz-4" value="D"> <code>req.body</code> and <code>req.files</code></label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('routes-quiz-4', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-routes-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-routes-5">
+                    <p><strong>5. What is the purpose of setting the <code>Content-Type</code> header in a server response?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="routes-quiz-5" value="A"> To specify the client's browser type</label><br>
+                        <label><input type="radio" name="routes-quiz-5" value="B"> To indicate the type of content being sent in the response body</label><br>
+                        <label><input type="radio" name="routes-quiz-5" value="C"> To define the server's port number</label><br>
+                        <label><input type="radio" name="routes-quiz-5" value="D"> To encrypt the response data</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('routes-quiz-5', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-routes-quiz-5"></div>
+                </div>
+
+                
+                 
+                </div>
+        </section>
+
+        <section id="middleware" class="lesson-section">
+            <h2 class="lesson-title">Middleware</h2>
+            <div class="lesson-content">
+                <h3>What is Middleware?</h3>
+                <p>Middleware functions are functions that have access to the request object (<code>req</code>), the response object (<code>res</code>), and the next middleware function in the application's request-response cycle. They are executed in sequence, one after another, as a request travels through the application to its final destination (the route handler).</p>
+
+                <p>Think of middleware as a series of checkpoints or processing steps that an incoming request must pass through before it reaches the code that generates the final response. Each middleware function can perform tasks, modify the request or response objects, or even end the request-response cycle and send a response back to the client.</p>
+
+                <h3>How Middleware Works (The Chain)</h3>
+                <p>When a request arrives at the server, it first enters the middleware chain. The server passes the request and response objects to the first middleware function. If that function doesn't end the cycle, it calls the <code>next()</code> function to pass control to the next middleware function in the stack. This continues until a middleware function or a route handler sends a response.</p>
+
+                <p>The order in which you define middleware is very important, as they are executed sequentially. Middleware defined earlier in your application will run before middleware defined later.</p>
+
+                <h3>Common Use Cases for Middleware</h3>
+                <p>Middleware is incredibly versatile and is used for a wide range of tasks in backend applications, such as:</p>
+                <ul>
+                    <li><strong>Logging:</strong> Logging details about incoming requests (e.g., URL, method, timestamp).</li>
+                    <li><strong>Authentication and Authorization:</strong> Verifying user credentials and checking if a user has permission to access a specific resource.</li>
+                    <li><strong>Body Parsing:</strong> Parsing the body of incoming requests (e.g., JSON or URL-encoded data) and making it available on <code>req.body</code>.</li>
+                    <li><strong>Error Handling:</strong> Catching and processing errors that occur during the request-response cycle.</li>
+                    <li><strong>Static File Serving:</strong> Serving static files like HTML, CSS, and JavaScript.</li>
+                </ul>
+
+                <h3>Implementing Middleware (Conceptual)</h3>
+                <p>While the exact implementation varies depending on the framework (Express.js makes it very easy), the core idea is a function that takes <code>req</code>, <code>res</code>, and <code>next</code> as arguments. Here's a conceptual look:</p>
+                <pre><code class="language-javascript">function myMiddleware(req, res, next) {
+    // Do something with the request or response
+    console.log('Request received!');
+    // Call next() to pass control to the next middleware or route handler
+    next();
+}
+
+// In a framework, you might 'use' middleware like this:
+// app.use(myMiddleware);
+
+// Then define your routes
+// app.get('/', (req, res) => { ... });
+</code></pre>
+                <p>In this lesson, we'll focus on understanding the concept and its applications. While the playground might not fully simulate a complex middleware chain, the quizzes will test your grasp of the core ideas.</p>
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Middleware Concept Simulation</span>
+                            <button class="run-btn" onclick="runCode('middleware-code', 'middleware-vis')">Run Simulation</button>
+                            <button class="reset-btn" onclick="resetCode('middleware-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="middleware-code">// This is a conceptual simulation.
+// Imagine a request entering this chain:
+
+function firstMiddleware(req, res, next) {
+    console.log('Middleware 1 executed');
+    // Modify req or res if needed
+    req.timestamp = new Date().toISOString();
+    next(); // Pass to the next step
+}
+
+function secondMiddleware(req, res, next) {
+    console.log('Middleware 2 executed');
+    // Check something, maybe authentication
+    // if (!req.isAuthenticated) {
+    //     res.writeHead(401).end('Unauthorized');
+    //     return; // End the cycle
+    // }
+    next(); // Pass to the next step
+}
+
+function finalRouteHandler(req, res) {
+    console.log('Final route handler executed');
+    // Use data added by middleware
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end(`Request processed at ${req.timestamp}`);
+}
+
+// Conceptual execution:
+// request -> firstMiddleware -> secondMiddleware -> finalRouteHandler -> response
+
+// Note: This code won't run a live server, it's for illustrating the flow.
+</textarea>
+                    </div>
+                    <div class="server-visualization" id="middleware-vis">
+                        <div class="server-rack">
+                            <div class="server-blade">
+                                <div class="server-light" id="middleware-server-light"></div>
+                            </div>
+                        </div>
+                        <div class="middleware-chain-visual">
+                            <div class="middleware-step">M1</div>
+                            <div class="middleware-arrow">→</div>
+                            <div class="middleware-step">M2</div>
+                            <div class="middleware-arrow">→</div>
+                            <div class="middleware-step">Handler</div>
+                        </div>
+                        <div class="terminal" id="middleware-terminal"></div>
+                        <button class="check-btn" onclick="sendRequest('middleware', '/simulated-route')">Send Simulated Request</button>
+                    </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Middleware Challenge</h3>
+                <p class="exercise-instruction">Conceptually, how would you use middleware to check if a user is authenticated before allowing them to access a protected route?</p>
+                <div class="feedback" id="feedback-middleware-challenge"></div>
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Middleware Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of middleware:</p>
+
+                <div class="quiz" id="quiz-middleware-1">
+                    <p><strong>1. Which objects do middleware functions typically have access to?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="middleware-quiz-1" value="A"> Database connection and external API keys</label><br>
+                        <label><input type="radio" name="middleware-quiz-1" value="B"> Request (<code>req</code>), Response (<code>res</code>), and the next function (<code>next</code>)</label><br>
+                        <label><input type="radio" name="middleware-quiz-1" value="C"> Frontend HTML, CSS, and JavaScript files</label><br>
+                        <label><input type="radio" name="middleware-quiz-1" value="D"> User interface elements and styling information</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('middleware-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-middleware-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-middleware-2">
+                    <p><strong>2. What is the purpose of calling the <code>next()</code> function within a middleware function?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="middleware-quiz-2" value="A"> To send the final response to the client</label><br>
+                        <label><input type="radio" name="middleware-quiz-2" value="B"> To stop the request-response cycle immediately</label><br>
+                        <label><input type="radio" name="middleware-quiz-2" value="C"> To pass control to the next middleware function or route handler</label><br>
+                        <label><input type="radio" name="middleware-quiz-2" value="D"> To log an error to the console</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('middleware-quiz-2', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-middleware-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-middleware-3">
+                    <p><strong>3. Which of the following is a common task performed by middleware?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="middleware-quiz-3" value="A"> Designing database schemas</label><br>
+                        <label><input type="radio" name="middleware-quiz-3" value="B"> Handling user interface animations</label><br>
+                        <label><input type="radio" name="middleware-quiz-3" value="C"> Parsing the body of incoming requests</label><br>
+                        <label><input type="radio" name="middleware-quiz-3" value="D"> Writing complex algorithms for data processing</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('middleware-quiz-3', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-middleware-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-middleware-4">
+                    <p><strong>4. In a middleware chain, the order in which middleware functions are defined:</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="middleware-quiz-4" value="A"> Does not matter</label><br>
+                        <label><input type="radio" name="middleware-quiz-4" value="B"> Determines the order in which they are executed</label><br>
+                        <label><input type="radio" name="middleware-quiz-4" value="C"> Only affects error handling</label><br>
+                        <label><input type="radio" name="middleware-quiz-4" value="D"> Is determined by the client request</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('middleware-quiz-4', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-middleware-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-middleware-5">
+                    <p><strong>5. If a middleware function does NOT call <code>next()</code> or send a response, what happens?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="middleware-quiz-5" value="A"> The next middleware function in the chain is executed</label><br>
+                        <label><input type="radio" name="middleware-quiz-5" value="B"> The server automatically sends a default response</label><br>
+                        <label><input type="radio" name="middleware-quiz-5" value="C"> The request hangs indefinitely, and the client receives no response</label><br>
+                        <label><input type="radio" name="middleware-quiz-5" value="D"> An automatic error is logged</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('middleware-quiz-5', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-middleware-quiz-5"></div>
+                </div>
+
+                
+            </div>
+        </section>
+
+        <section id="async" class="lesson-section">
+            <h2 class="lesson-title">Async Programming</h2>
+            <div class="lesson-content">
+                <h3>What is Asynchronous Programming?</h3>
+                <p>In traditional synchronous programming, tasks are executed sequentially, one after another. A program waits for one task to complete before moving on to the next. This can be inefficient, especially in backend development where operations like reading from a database, making API calls, or reading files can take time. If your server has to wait for each of these operations to finish before handling the next request, it can quickly become unresponsive.</p>
+
+                <p>Asynchronous programming allows your program to start a task (like a database query) and then move on to other tasks without waiting for the first one to complete. When the asynchronous task finishes, it notifies the program (usually through a callback, promise, or async/await), and the program can then handle the result.</p>
+
+                <h3>Why is Async Important in Backend?</h3>
+                <p>Backend servers often need to handle many requests concurrently. If these requests involve time-consuming operations, synchronous programming would block the server, preventing it from handling new requests. Asynchronous programming is crucial for building scalable and responsive backend applications because it allows the server to continue processing other requests while waiting for I/O (Input/Output) operations to complete.</p>
+
+                <h3>Callbacks, Promises, and Async/Await</h3>
+                <p>JavaScript (and Node.js) provides several patterns for handling asynchronous operations:</p>
+                <ul>
+                    <li><strong>Callbacks:</strong> Functions passed as arguments to other functions, to be executed later when the asynchronous task finishes. Can lead to "callback hell" with complex nested operations.</li>
+                    <li><strong>Promises:</strong> Objects representing the eventual completion (or failure) of an asynchronous operation and its resulting value. Provide a more structured way to handle asynchronous code, improving readability and error handling compared to callbacks.</li>
+                    <li><strong>Async/Await:</strong> Syntax built on Promises that makes asynchronous code look and behave more like synchronous code, further improving readability and making error handling with <code>try...catch</code> easier. This is the modern and preferred approach for handling asynchronous operations in Node.js.</li>
+                </ul>
+
+                <h3>Handling Asynchronous Operations (Conceptual)</h3>
+                <p>Let's look at a conceptual example of how an asynchronous operation might work:</p>
+                <pre><code class="language-javascript">// Imagine this function simulates reading from a database
+function readFromDatabase(query, callback) {
+    console.log('Starting database read...');
+    // Simulate a delay (database operation takes time)
+    setTimeout(() => {
+        const result = { data: 'some data from DB' };
+        console.log('Database read finished.');
+        callback(null, result); // Call the callback with result
+    }, 1000); // 1 second delay
+}
+
+console.log('Before async operation');
+
+readFromDatabase('SELECT * FROM users', (error, data) => {
+    if (error) {
+        console.error('Error reading database:', error);
+    } else {
+        console.log('Received data:', data);
+    }
+});
+
+console.log('After starting async operation');
+// The program continues executing here immediately, without waiting
+</code></pre>
+                <p>Notice how "After starting async operation" is logged before "Database read finished." This demonstrates the non-blocking nature of asynchronous code.</p>
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Async Simulation</span>
+                            <button class="run-btn" onclick="runCode('async-code', 'async-vis')">Run Simulation</button>
+                            <button class="reset-btn" onclick="resetCode('async-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="async-code">// This is a conceptual simulation of an async task
+
+function simulateAsyncTask(duration) {
+    return new Promise((resolve, reject) => {
+        console.log(\`Starting async task for ${duration}ms...\`);
+        setTimeout(() => {
+            console.log(\`Async task finished after ${duration}ms.\`);
+            resolve(\`Task completed in ${duration}ms\`);
+        }, duration);
+    });
+}
+
+async function runTasks() {
+    console.log('Executing tasks...');
+    const result1 = await simulateAsyncTask(1500); // Wait for this one
+    console.log('Result 1:', result1);
+
+    const result2 = await simulateAsyncTask(1000); // Wait for this one too
+    console.log('Result 2:', result2);
+
+    console.log('All tasks finished.');
+}
+
+runTasks();
+
+console.log('Program continues while async tasks run...');
+
+// Observe the order of console logs in the terminal simulation.
+</textarea>
+                    </div>
+                    <div class="server-visualization" id="async-vis">
+                         <div class="terminal" id="async-terminal"></div>
+                         </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Async Challenge</h3>
+                <p class="exercise-instruction">Modify the simulated async code in the playground:</p>
+                <ol>
+                    <li>Add a third simulated task that takes 500ms.</li>
+                    <li>Ensure the tasks still run in sequence using <code>await</code>.</li>
+                    <li>Add a final console log after the third task completes.</li>
+                </ol>
+                <button class="check-btn" onclick="checkAsyncChallenge()">Check Solution</button>
+                 <div class="feedback" id="feedback-async-challenge"></div>
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Async Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of asynchronous programming:</p>
+
+                <div class="quiz" id="quiz-async-1">
+                    <p><strong>1. In synchronous programming, how are tasks executed?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="async-quiz-1" value="A"> Simultaneously</label><br>
+                        <label><input type="radio" name="async-quiz-1" value="B"> Randomly</label><br>
+                        <label><input type="radio" name="async-quiz-1" value="C"> Sequentially</label><br>
+                        <label><input type="radio" name="async-quiz-1" value="D"> Only when the server is idle</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('async-quiz-1', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-async-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-async-2">
+                    <p><strong>2. What is a key benefit of asynchronous programming in backend development?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="async-quiz-2" value="A"> It makes code shorter</label><br>
+                        <label><input type="radio" name="async-quiz-2" value="B"> It prevents the server from blocking while waiting for long operations</label><br>
+                        <label><input type="radio" name="async-quiz-2" value="C"> It automatically handles database backups</label><br>
+                        <label><input type="radio" name="async-quiz-2" value="D"> It improves frontend performance</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('async-quiz-2', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-async-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-async-3">
+                    <p><strong>3. Which of the following is a modern pattern for handling asynchronous operations in JavaScript?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="async-quiz-3" value="A"> Callbacks</label><br>
+                        <label><input type="radio" name="async-quiz-3" value="B"> Promises</label><br>
+                        <label><input type="radio" name="async-quiz-3" value="C"> Async/Await</label><br>
+                        <label><input type="radio" name="async-quiz-3" value="D"> All of the above</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('async-quiz-3', 'D')">Check Answer</button>
+                    <div class="feedback" id="feedback-async-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-async-4">
+                    <p><strong>4. What does the <code>await</code> keyword do in an <code>async</code> function?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="async-quiz-4" value="A"> It stops the entire program until the promise resolves</label><br>
+                        <label><input type="radio" name="async-quiz-4" value="B"> It makes the function return immediately</label><br>
+                        <label><input type="radio" name="async-quiz-4" value="C"> It pauses the execution of the <code>async</code> function until the promise settles (resolves or rejects)</label><br>
+                        <label><input type="radio" name="async-quiz-4" value="D"> It throws an error if the promise is pending</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('async-quiz-4', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-async-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-async-5">
+                    <p><strong>5. Which pattern is often associated with the term "callback hell"?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="async-quiz-5" value="A"> Promises</label><br>
+                        <label><input type="radio" name="async-quiz-5" value="B"> Async/Await</label><br>
+                        <label><input type="radio" name="async-quiz-5" value="C"> Synchronous code</label><br>
+                        <label><input type="radio" name="async-quiz-5" value="D"> Callbacks</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('async-quiz-5', 'D')">Check Answer</button>
+                    <div class="feedback" id="feedback-async-quiz-5"></div>
+                </div>
+            </div>
+
+                
+        </section>
+
+
+        <section id="database" class="lesson-section">
+            <h2 class="lesson-title">Database Connections</h2>
+            <div class="lesson-content">
+                <h3>Why Databases are Essential</h3>
+                <p>Most real-world web applications need to store and manage data. This could be user information, blog posts, product details, orders, or any other kind of persistent data. Databases provide a structured and efficient way to store, retrieve, update, and delete this data, ensuring its integrity and availability.</p>
+
+                <p>Without a database, your server would lose all information every time it restarts. Databases allow your application to remember things and provide dynamic content based on stored information.</p>
+
+                <h3>SQL vs. NoSQL Databases</h3>
+                <p>There are two main categories of databases:</p>
+                <ul>
+                    <li><strong>SQL (Relational) Databases:</strong> These databases store data in tables with predefined schemas (columns and data types). Relationships between tables are defined using keys. Examples include PostgreSQL, MySQL, and SQLite. They are great for structured data and complex queries.</li>
+                    <li><strong>NoSQL (Non-Relational) Databases:</strong> These databases offer more flexible schemas and can store data in various formats like documents (MongoDB), key-value pairs (Redis), wide-column stores (Cassandra), or graphs (Neo4j). They are often chosen for their scalability, flexibility, and performance with large amounts of unstructured or semi-structured data.</li>
+                </ul>
+                <p>The choice between SQL and NoSQL depends on the specific needs of your application.</p>
+
+                <h3>Interacting with Databases (CRUD)</h3>
+                <p>Regardless of the database type, the fundamental operations you perform on data are often referred to as CRUD:</p>
+                <ul>
+                    <li><strong>Create:</strong> Adding new data records.</li>
+                    <li><strong>Read:</strong> Retrieving existing data.</li>
+                    <li><strong>Update:</strong> Modifying existing data.</li>
+                    <li><strong>Delete:</strong> Removing data records.
+                </ul>
+                <p>Backend applications use database drivers or Object-Relational Mappers (ORMs) / Object-Document Mappers (ODMs) to interact with the database using code.</p>
+
+                <h3>Using an ODM (Mongoose Example)</h3>
+                <p>In Node.js, Mongoose is a popular ODM for MongoDB. It provides a schema-based solution to model your application data, enforces structure, and provides helpful methods for interacting with the database.</p>
+                <pre><code class="language-javascript">// Conceptual Mongoose example
+const mongoose = require('mongoose');
+
+// Define a schema (structure of your data)
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: { type: String, required: true, unique: true },
+    age: Number
+});
+
+// Create a model (represents a collection in the database)
+const User = mongoose.model('User', userSchema);
+
+// Example CRUD operations (conceptual)
+async function createUser(userData) {
+    const newUser = new User(userData);
+    await newUser.save(); // Save to database
+    console.log('User created:', newUser);
+}
+
+async function findUserById(id) {
+    const user = await User.findById(id); // Read from database
+    console.log('Found user:', user);
+}
+
+// ... update and delete operations
+</code></pre>
+                <p>The playground below uses a basic Mongoose connection and simple routes to demonstrate creating and reading data.</p>
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Node.js with MongoDB (Mongoose)</span>
+                            <button class="run-btn" onclick="runCode('database-code', 'database-vis')">Run Server</button>
+                            <button class="reset-btn" onclick="resetCode('database-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="database-code">const express = require('express');
+const mongoose = require('mongoose');
+
+const app = express();
+app.use(express.json()); // Middleware to parse JSON request bodies
+
+// Connect to MongoDB - NOTE: This requires a running MongoDB instance
+// For this simulation, we'll just check if the connection code is present.
+mongoose.connect('mongodb://localhost:27017/mydb', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected...'))
+.catch(err => console.log(err));
+
+// Define a schema
+const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true }
+});
+
+// Create a model
+const User = mongoose.model('User', userSchema);
+
+// Route to create a user (POST request)
+app.post('/users', async (req, res) => {
+    try {
+        // In a real app, you'd get data from req.body
+        const user = new User({
+            name: req.body.name || 'Default Name', // Use req.body for simulation
+            email: req.body.email || `test${Date.now()}@example.com` // Use req.body for simulation
+        });
+        await user.save();
+        res.status(201).json(user); // Send created user with 201 status
+    } catch (err) {
+        res.status(400).json({ message: err.message }); // Handle errors
+    }
+});
+
+// Route to get all users (GET request)
+app.get('/users', async (req, res) => {
+    try {
+        const users = await User.find(); // Find all users
+        res.json(users); // Send users as JSON
+    } catch (err) {
+        res.status(500).json({ message: err.message }); // Handle errors
+    }
+});
+
+// Route to get a single user by ID (GET request with parameter)
+app.get('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id); // Find user by ID from URL parameters
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+app.listen(3000, () => {
+    console.log('Server with database running on port 3000');
+});</textarea>
+                    </div>
+                    <div class="server-visualization" id="database-vis">
+                        <div class="server-rack">
+                            <div class="server-blade">
+                                <div class="server-light" id="database-server-light"></div>
+                            </div>
+                        </div>
+                        <div class="database-visual" id="database-visual"></div>
+                        <div class="terminal" id="database-terminal"></div>
+                        <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                            <button class="check-btn" onclick="sendRequest('database', '/users', 'POST')">POST /users (Create User)</button>
+                            <button class="check-btn" onclick="sendRequest('database', '/users', 'GET')">GET /users (Get All)</button>
+                             <button class="check-btn" onclick="sendRequest('database', '/users/123', 'GET')">GET /users/:id (Simulated)</button>
+                            </div>
+                    </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Database Challenge</h3>
+                <p class="exercise-instruction">Enhance the database code in the playground:</p>
+                <ol>
+                    <li>Implement a route to update a user by ID (using a PUT request to <code>/users/:id</code>).</li>
+                    <li>Implement a route to delete a user by ID (using a DELETE request to <code>/users/:id</code>).</li>
+                    <li>Add basic error handling for cases where a user is not found for update or delete operations.</li>
+                </ol>
+                <button class="check-btn" onclick="checkDatabaseExercise()">Check Solution</button>
+                 <div class="feedback" id="feedback-database-challenge"></div>
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Database Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of database concepts:</p>
+
+                <div class="quiz" id="quiz-database-1">
+                    <p><strong>1. What is the primary purpose of using a database in a backend application?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="database-quiz-1" value="A"> To improve the website's loading speed</label><br>
+                        <label><input type="radio" name="database-quiz-1" value="B"> To store and manage application data persistently</label><br>
+                        <label><input type="radio" name="database-quiz-1" value="C"> To handle user interface interactions</label><br>
+                        <label><input type="radio" name="database-quiz-1" value="D"> To define the server's port number</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('database-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-database-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-database-2">
+                    <p><strong>2. Which category of database stores data in tables with predefined schemas?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="database-quiz-2" value="A"> NoSQL Databases</label><br>
+                        <label><input type="radio" name="database-quiz-2" value="B"> Graph Databases</label><br>
+                        <label><input type="radio" name="database-quiz-2" value="C"> Key-Value Stores</label><br>
+                        <label><input type="radio" name="database-quiz-2" value="D"> SQL Databases</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('database-quiz-2', 'D')">Check Answer</button>
+                    <div class="feedback" id="feedback-database-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-database-3">
+                    <p><strong>3. What does the 'R' in CRUD stand for?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="database-quiz-3" value="A"> Remove</label><br>
+                        <label><input type="radio" name="database-quiz-3" value="B"> Route</label><br>
+                        <label><input type="radio" name="database-quiz-3" value="C"> Read</label><br>
+                        <label><input type="radio" name="database-quiz-3" value="D"> Respond</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('database-quiz-3', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-database-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-database-4">
+                    <p><strong>4. Mongoose is a popular ODM (Object-Document Mapper) for which type of database?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="database-quiz-4" value="A"> PostgreSQL</label><br>
+                        <label><input type="radio" name="database-quiz-4" value="B"> MySQL</label><br>
+                        <label><input type="radio" name="database-quiz-4" value="C"> MongoDB</label><br>
+                        <label><input type="radio" name="database-quiz-4" value="D"> SQLite</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('database-quiz-4', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-database-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-database-5">
+                    <p><strong>5. Which CRUD operation is typically performed using an HTTP POST request?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="database-quiz-5" value="A"> Read</label><br>
+                        <label><input type="radio" name="database-quiz-5" value="B"> Update</label><br>
+                        <label><input type="radio" name="database-quiz-5" value="C"> Delete</label><br>
+                        <label><input type="radio" name="database-quiz-5" value="D"> Create</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('database-quiz-5', 'D')">Check Answer</button>
+                    <div class="feedback" id="feedback-database-quiz-5"></div>
+                </div>
+            </div>
+
+                
+        </section>
+
+        <section id="api" class="lesson-section">
+            <h2 class="lesson-title">REST API</h2>
+            <div class="lesson-content">
+                <h3>What is a REST API?</h3>
+                <p>REST (Representational State Transfer) is an architectural style for designing networked applications. REST APIs (Application Programming Interfaces) are a common way for different software systems to communicate with each other over the internet. They are widely used for building web services where a frontend application (like a browser or mobile app) needs to interact with a backend server to access or manipulate data.</p>
+
+                <p>A REST API is essentially a set of rules and constraints that define how clients can request data from and send data to a server. It's a standardized way to build web services that are scalable, maintainable, and easy to integrate with.</p>
+
+                <h3>Key Principles of REST</h3>
+                <p>REST is based on several key principles:</p>
+                <ul>
+                    <li><strong>Client-Server:</strong> The client (e.g., browser) and server are separate and independent. The client is concerned with the user interface, and the server is concerned with data storage and business logic.</li>
+                    <li><strong>Stateless:</strong> Each request from a client to the server must contain all the information needed to understand and complete the request. The server does not store any client state between requests.</li>
+                    <li><strong>Cacheable:</strong> Responses from the server can be cached by the client to improve performance.</li>
+                    <li><strong>Layered System:</strong> A client cannot ordinarily tell whether it is connected directly to the end server, or to an intermediary.</li>
+                    <li><strong>Code on Demand (Optional):</strong> Servers can temporarily extend or customize client functionality by transferring executable code (e.g., JavaScript).</li>
+                    <li><strong>Uniform Interface:</strong> This is the most important principle, defining how clients interact with the server. It includes constraints like:
+                        <ul>
+                            <li>Identification of Resources (using URIs)</li>
+                            <li>Manipulation of Resources through Representations (e.g., sending JSON to create a resource)</li>
+                            <li>Self-descriptive Messages (each message contains enough information to describe how to process the message)</li>
+                            <li>Hypermedia as the Engine of Application State (HATEOAS - clients navigate through the API using links provided in responses)</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Endpoints and Resources</h3>
+                <p>In a REST API, data and functionality are exposed as <strong>resources</strong>. A resource is typically identified by a unique Uniform Resource Identifier (URI), which is often a URL. For example, `/users` might represent a collection of users, and `/users/123` might represent a specific user with the ID 123.</p>
+
+                <p>These URIs are called <strong>endpoints</strong>. Clients interact with these endpoints using standard HTTP methods (GET, POST, PUT, DELETE) to perform actions on the resources.</p>
+
+                <h3>HTTP Methods and CRUD (API Context)</h3>
+                <p>The HTTP methods map nicely to the CRUD operations we discussed in the database section when designing REST APIs:</p>
+                <ul>
+                    <li><strong>GET:</strong> Retrieve a resource or a collection of resources (Read).</li>
+                    <li><strong>POST:</strong> Create a new resource (Create).</li>
+                    <li><strong>PUT:</strong> Update an existing resource (Update) - typically replaces the entire resource.</li>
+                    <li><strong>PATCH:</strong> Update an existing resource (Update) - typically applies partial updates.</li>
+                    <li><strong>DELETE:</strong> Remove a resource (Delete).</li>
+                </ul>
+
+                <h3>Data Format (JSON)</h3>
+                <p>JSON (JavaScript Object Notation) is the most common data format used for sending and receiving data in REST APIs. It's lightweight, human-readable, and easily parsed by most programming languages.</p>
+                <pre><code class="language-json">{
+    "id": 1,
+    "name": "John Doe",
+    "email": "john.doe@example.com"
+}
+</code></pre>
+
+                <p>Building a REST API involves defining your resources, designing your endpoints, implementing the logic for each HTTP method at each endpoint, and handling data in a format like JSON. Frameworks like Express.js make this much easier by providing tools for routing, handling requests and responses, and integrating with middleware.</p>
+
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Simple Express.js API</span>
+                            <button class="run-btn" onclick="runCode('api-code', 'api-vis')">Run Server</button>
+                            <button class="reset-btn" onclick="resetCode('api-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="api-code">const express = require('express');
+const app = express();
+const port = 3000;
+
+app.use(express.json()); // Middleware to parse JSON bodies
+
+// Sample data (in-memory, not persistent)
+let items = [
+    { id: 1, name: 'Item 1', description: 'This is item 1' },
+    { id: 2, name: 'Item 2', description: 'This is item 2' }
+];
+
+// GET all items
+app.get('/items', (req, res) => {
+    res.json(items); // Send the items array as JSON
+});
+
+// GET a single item by ID
+app.get('/items/:id', (req, res) => {
+    const id = parseInt(req.params.id); // Get ID from URL parameters
+    const item = items.find(item => item.id === id);
+
+    if (item) {
+        res.json(item); // Send the found item as JSON
+    } else {
+        res.status(404).json({ message: 'Item not found' }); // Send 404 if not found
+    }
+});
+
+// POST a new item
+app.post('/items', (req, res) => {
+    const newItem = {
+        id: items.length + 1, // Simple ID generation
+        name: req.body.name,
+        description: req.body.description
+    };
+    items.push(newItem); // Add new item to the array
+    res.status(201).json(newItem); // Send the new item with 201 Created status
+});
+
+// PUT update an item by ID
+app.put('/items/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const itemIndex = items.findIndex(item => item.id === id);
+
+    if (itemIndex > -1) {
+        items[itemIndex] = {
+            ...items[itemIndex], // Keep existing properties
+            name: req.body.name || items[itemIndex].name, // Update name if provided
+            description: req.body.description || items[itemIndex].description // Update description if provided
+        };
+        res.json(items[itemIndex]); // Send the updated item
+    } else {
+        res.status(404).json({ message: 'Item not found' });
+    }
+});
+
+// DELETE an item by ID
+app.delete('/items/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const initialLength = items.length;
+    items = items.filter(item => item.id !== id); // Filter out the item
+
+    if (items.length < initialLength) {
+        res.json({ message: 'Item deleted' }); // Success message
+    } else {
+        res.status(404).json({ message: 'Item not found' });
+    }
+});
+
+
+app.listen(port, () => {
+    console.log(`API server running on port ${port}`);
+});
+</textarea>
+                    </div>
+                    <div class="server-visualization" id="api-vis">
+                        <div class="server-rack">
+                            <div class="server-blade">
+                                <div class="server-light" id="api-server-light"></div>
+                            </div>
+                        </div>
+                         <div class="api-visual" id="api-visual"></div>
+                        <div class="terminal" id="api-terminal"></div>
+                        <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                            <button class="check-btn" onclick="sendRequest('api', '/items', 'GET')">GET /items</button>
+                            <button class="check-btn" onclick="sendRequest('api', '/items/1', 'GET')">GET /items/:id (1)</button>
+                             <button class="check-btn" onclick="sendRequest('api', '/items', 'POST')">POST /items</button>
+                             <button class="check-btn" onclick="sendRequest('api', '/items/1', 'PUT')">PUT /items/:id (1)</button>
+                             <button class="check-btn" onclick="sendRequest('api', '/items/2', 'DELETE')">DELETE /items/:id (2)</button>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> REST API Challenge</h3>
+                <p class="exercise-instruction">Modify the Express.js code in the playground:</p>
+                <ol>
+                    <li>Add a new endpoint <code>/items/search</code> that accepts a GET request with a query parameter (e.g., <code>/items/search?name=Item</code>) and returns items whose name includes the search term.</li>
+                    <li>Ensure the search is case-insensitive.</li>
+                    <li>Add error handling if no search term is provided.</li>
+                </ol>
+                <button class="check-btn" onclick="checkApiExercise()">Check Solution</button>
+                 <div class="feedback" id="feedback-api-challenge"></div>
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> REST API Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of REST API concepts:</p>
+
+                <div class="quiz" id="quiz-api-1">
+                    <p><strong>1. What does REST stand for?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="api-quiz-1" value="A"> Readable Elegant Server Technology</label><br>
+                        <label><input type="radio" name="api-quiz-1" value="B"> Representational State Transfer</label><br>
+                        <label><input type="radio" name="api-quiz-1" value="C"> Resource Endpoint Service Type</label><br>
+                        <label><input type="radio" name="api-quiz-1" value="D"> Rapid Endpoint System Tools</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('api-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-api-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-api-2">
+                    <p><strong>2. Which REST principle states that the server should not store any client state between requests?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="api-quiz-2" value="A"> Client-Server</label><br>
+                        <label><input type="radio" name="api-quiz-2" value="B"> Cacheable</label><br>
+                        <label><input type="radio" name="api-quiz-2" value="C"> Stateless</label><br>
+                        <label><input type="radio" name="api-quiz-2" value="D"> Uniform Interface</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('api-quiz-2', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-api-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-api-3">
+                    <p><strong>3. In a REST API, what is typically identified by a URI (like <code>/users/123</code>)?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="api-quiz-3" value="A"> A database table</label><br>
+                        <label><input type="radio" name="api-quiz-3" value="B"> A server function</label><br>
+                        <label><input type="radio" name="api-quiz-3" value="C"> A resource</label><br>
+                        <label><input type="radio" name="api-quiz-3" value="D"> A middleware function</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('api-quiz-3', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-api-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-api-4">
+                    <p><strong>4. Which HTTP method is used to send data to create a new resource via a REST API?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="api-quiz-4" value="A"> GET</label><br>
+                        <label><input type="radio" name="api-quiz-4" value="B"> PUT</label><br>
+                        <label><input type="radio" name="api-quiz-4" value="C"> DELETE</label><br>
+                        <label><input type="radio" name="api-quiz-4" value="D"> POST</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('api-quiz-4', 'D')">Check Answer</button>
+                    <div class="feedback" id="feedback-api-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-api-5">
+                    <p><strong>5. What is the most common data format for exchanging data in REST APIs?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="api-quiz-5" value="A"> XML</label><br>
+                        <label><input type="radio" name="api-quiz-5" value="B"> HTML</label><br>
+                        <label><input type="radio" name="api-quiz-5" value="C"> JSON</label><br>
+                        <label><input type="radio" name="api-quiz-5" value="D"> YAML</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('api-quiz-5', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-api-quiz-5"></div>
+                </div>
+            </div>
+
+                
+        </section>
+
+        <section id="auth" class="lesson-section">
+            <h2 class="lesson-title">Authentication</h2>
+            <div class="lesson-content">
+                <h3>What is Authentication?</h3>
+                <p>Authentication is the process of verifying the identity of a user or system. In the context of web applications, this typically means confirming that a user is who they claim to be, usually by requiring them to provide credentials like a username and password.</p>
+
+                <p>Authentication is a critical security measure. It ensures that only legitimate users can access parts of your application or data that are intended for them. Without proper authentication, sensitive information could be exposed, or unauthorized actions could be performed.</p>
+
+                <h3>Authentication vs. Authorization</h3>
+                <p>It's important to distinguish between authentication and authorization:</p>
+                <ul>
+                    <li><strong>Authentication:</strong> Verifies *who* the user is. (e.g., "Are you John Doe?")</li>
+                    <li><strong>Authorization:</strong> Determines *what* an authenticated user is allowed to do. (e.g., "Can John Doe view this page or modify this data?")</li>
+                </ul>
+                <p>Authentication is usually the first step, followed by authorization to control access to specific resources or functionalities.</p>
+
+                <h3>Common Authentication Methods</h3>
+                <p>Several methods are used for authentication in backend development:</p>
+                <ul>
+                    <li><strong>Session-Based Authentication:</strong> After a user logs in, the server creates a session for them, storing session information (like user ID) on the server and sending a session ID (usually in a cookie) to the client. Subsequent requests from the client include the session ID, allowing the server to identify the user.</li>
+                    <li><strong>Token-Based Authentication (e.g., JWT):</strong> After a user logs in, the server issues a token (like a JSON Web Token - JWT) to the client. This token contains information about the user and is signed by the server to prevent tampering. The client sends this token with subsequent requests, and the server verifies the token's validity to authenticate the user. This is often used in modern APIs as it's stateless on the server side.</li>
+                    <li><strong>OAuth / OpenID Connect:</strong> Protocols used for delegated authorization and authentication, often allowing users to log in using their accounts from other services (like Google, Facebook).</li>
+                </ul>
+
+                <h3>Implementing Authentication</h3>
+                <p>Implementing authentication involves several steps:</p>
+                <ol>
+                    <li>Collecting user credentials (e.g., from a login form).</li>
+                    <li>Verifying credentials against stored user information (often involves hashing passwords for security).</li>
+                    <li>Establishing a session or issuing a token upon successful verification.</li>
+                    <li>Protecting routes or endpoints by checking for valid session information or tokens on incoming requests.</li>
+                </ol>
+                <p>The playground below provides a simplified example focusing on the concept of checking a token.</p>
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Authentication Simulation (Token Check)</span>
+                            <button class="run-btn" onclick="runCode('auth-code', 'auth-vis')">Run Simulation</button>
+                            <button class="reset-btn" onclick="resetCode('auth-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="auth-code">// This simulates a function to check a token
+function verifyToken(token) {
+    console.log('Attempting to verify token...');
+    // In a real application, this would involve:
+    // 1. Checking if the token exists
+    // 2. Verifying the token's signature (e.g., JWT signature)
+    // 3. Checking token expiration
+    // 4. Extracting user information from the token
+
+    // Simple simulation: Assume 'valid-token-123' is a valid token
+    if (token === 'valid-token-123') {
+        console.log('Token is valid. User authenticated.');
+        return { userId: 'user-abc', username: 'authenticatedUser' }; // Simulated user info
+    } else {
+        console.log('Token is invalid or missing. Authentication failed.');
+        return null;
+    }
+}
+
+// Simulate an incoming request with a token
+function handleProtectedRequest(token) {
+    console.log('Handling protected request...');
+    const user = verifyToken(token);
+
+    if (user) {
+        console.log(`Access granted for user: ${user.username}`);
+        // Proceed with request handling (e.g., access data)
+        // Simulated response
+        return { status: 200, body: `Welcome, ${user.username}! This is protected data.` };
+    } else {
+        console.log('Access denied.');
+        // Simulated response
+        return { status: 401, body: 'Unauthorized: Invalid or missing token.' };
+    }
+}
+
+// --- Simulation Examples ---
+console.log('--- Testing with a valid token ---');
+let response1 = handleProtectedRequest('valid-token-123');
+console.log(`Simulated Response 1: Status ${response1.status}, Body: ${response1.body}`);
+
+console.log('\n--- Testing with an invalid token ---');
+let response2 = handleProtectedRequest('invalid-token-456');
+console.log(`Simulated Response 2: Status ${response2.status}, Body: ${response2.body}`);
+
+console.log('\n--- Testing with no token ---');
+let response3 = handleProtectedRequest(null);
+console.log(`Simulated Response 3: Status ${response3.status}, Body: ${response3.body}`);
+
+// Observe the console logs in the terminal simulation.
+</textarea>
+                    </div>
+                    <div class="server-visualization" id="auth-vis">
+                         <div class="terminal" id="auth-terminal"></div>
+                         </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Authentication Challenge</h3>
+                <p class="exercise-instruction">Modify the simulation code in the playground:</p>
+                <ol>
+                    <li>Add a check in the <code>verifyToken</code> function to also ensure the token is not expired (simulate an expiration time).</li>
+                    <li>Add a second valid token (e.g., 'another-valid-token') that can also pass verification.</li>
+                    <li>Update the simulation examples to test with an expired token and the second valid token.</li>
+                </ol>
+                <button class="check-btn" onclick="checkAuthExercise()">Check Solution</button>
+                 <div class="feedback" id="feedback-auth-challenge"></div>
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Authentication Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of authentication concepts:</p>
+
+                <div class="quiz" id="quiz-auth-1">
+                    <p><strong>1. What is the primary goal of authentication?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="auth-quiz-1" value="A"> To determine what a user is allowed to do</label><br>
+                        <label><input type="radio" name="auth-quiz-1" value="B"> To verify the identity of a user or system</label><br>
+                        <label><input type="radio" name="auth-quiz-1" value="C"> To encrypt data transmission</label><br>
+                        <label><input type="radio" name="auth-quiz-1" value="D"> To improve server performance</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('auth-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-auth-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-auth-2">
+                    <p><strong>2. Which term refers to determining *what* an authenticated user is allowed to do?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="auth-quiz-2" value="A"> Authentication</label><br>
+                        <label><input type="radio" name="auth-quiz-2" value="B"> Encryption</label><br>
+                        <label><input type="radio" name="auth-quiz-2" value="C"> Authorization</label><br>
+                        <label><input type="radio" name="auth-quiz-2" value="D"> Hashing</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('auth-quiz-2', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-auth-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-auth-3">
+                    <p><strong>3. In which authentication method does the server NOT store client state between requests?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="auth-quiz-3" value="A"> Session-Based Authentication</label><br>
+                        <label><input type="radio" name="auth-quiz-3" value="B"> Token-Based Authentication (e.g., JWT)</label><br>
+                        <label><input type="radio" name="auth-quiz-3" value="C"> Both store client state</label><br>
+                        <label><input type="radio" name="auth-quiz-3" value="D"> Neither store client state</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('auth-quiz-3', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-auth-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-auth-4">
+                    <p><strong>4. What is a common way to securely store user passwords in a database?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="auth-quiz-4" value="A"> Store them in plain text</label><br>
+                        <label><input type="radio" name="auth-quiz-4" value="B"> Encrypt them with a simple key</label><br>
+                        <label><input type="radio" name="auth-quiz-4" value="C"> Hash them using a strong hashing algorithm</label><br>
+                        <label><input type="radio" name="auth-quiz-4" value="D"> Store them in a separate, unsecured file</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('auth-quiz-4', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-auth-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-auth-5">
+                    <p><strong>5. What does a server typically issue to a client after successful login in token-based authentication?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="auth-quiz-5" value="A"> A session ID</label><br>
+                        <label><input type="radio" name="auth-quiz-5" value="B"> A cookie with user preferences</label><br>
+                        <label><input type="radio" name="auth-quiz-5" value="C"> An API key</label><br>
+                        <label><input type="radio" name="auth-quiz-5" value="D"> A token (e.g., JWT)</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('auth-quiz-5', 'D')">Check Answer</button>
+                    <div class="feedback" id="feedback-auth-quiz-5"></div>
+                </div>
+
+                
+            </div>
+        </section>
+
+        <section id="error" class="lesson-section">
+            <h2 class="lesson-title">Error Handling</h2>
+            <div class="lesson-content">
+                <h3>What is Error Handling?</h3>
+                <p>Error handling is the process of anticipating, detecting, and resolving errors that occur during the execution of a program. In backend development, robust error handling is crucial for building reliable and stable applications. When errors occur, you need to prevent your server from crashing, provide meaningful feedback to clients, and log details to help you debug the issue.</p>
+
+                <p>Ignoring errors can lead to unexpected application behavior, security vulnerabilities, data corruption, and a poor user experience.</p>
+
+                <h3>Types of Errors</h3>
+                <p>Errors can manifest in various ways:</p>
+                <ul>
+                    <li><strong>Syntax Errors:</strong> Errors caused by incorrect code syntax (e.g., missing a parenthesis or semicolon). These are usually caught before the code runs.</li>
+                    <li><strong>Runtime Errors:</strong> Errors that occur while the program is running (e.g., trying to access a property of an undefined variable, database connection failure).</li>
+                    <li><strong>Logical Errors:</strong> Errors where the code runs without crashing but produces incorrect results due to flaws in the program's logic.</li>
+                </ul>
+                <p>Backend error handling primarily focuses on dealing with runtime and logical errors.</p>
+
+                <h3>Synchronous vs. Asynchronous Error Handling</h3>
+                <p>Handling errors differs between synchronous and asynchronous code:</p>
+                <ul>
+                    <li><strong>Synchronous:</strong> Errors typically "throw" and can be caught using <code>try...catch</code> blocks.</li>
+                    <li><strong>Asynchronous:</strong> Errors in callbacks are often passed as the first argument to the callback function (the "error-first" pattern). Promises have <code>.catch()</code> methods or a second argument in <code>.then()</code>. Async/await allows using <code>try...catch</code> with asynchronous code, making error handling more consistent.</li>
+                </ul>
+
+                <h3>Using Try...Catch</h3>
+                <p>The <code>try...catch</code> statement is used for handling synchronous errors:</p>
+                <pre><code class="language-javascript">try {
+    // Code that might throw an error
+    let result = riskyOperation();
+    console.log('Operation successful:', result);
+} catch (error) {
+    // Code to handle the error
+    console.error('An error occurred:', error.message);
+    // You might send an error response here
+} finally {
+    // Optional: Code that runs regardless of whether an error occurred
+    console.log('Execution finished.');
+}
+</code></pre>
+
+                <h3>Error Handling in Asynchronous Code (Async/Await)</h3>
+                <p>With async/await, you can use <code>try...catch</code> to handle errors from Promises:</p>
+                <pre><code class="language-javascript">async function fetchData() {
+    try {
+        console.log('Fetching data...');
+        // Assume fetch returns a Promise that might reject
+        const response = await fetch('https://api.example.com/data');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Data received:', data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle the error, maybe return a default value or re-throw
+        throw error; // Re-throw the error for the caller to handle
+    }
+}
+
+fetchData();
+</code></pre>
+
+                <h3>Middleware for Error Handling (Express.js)</h3>
+                <p>In frameworks like Express.js, you can define dedicated error-handling middleware. These are special middleware functions that take four arguments: <code>(err, req, res, next)</code>. Express recognizes this signature and routes errors to them.</p>
+                 <pre><code class="language-javascript">// Express error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Log the error stack for debugging
+    res.status(500).send('Something broke!'); // Send a generic error response
+    // Or send a more detailed JSON error response
+    // res.status(500).json({ message: 'Internal Server Error', error: err.message });
+});
+</code></pre>
+                <p>It's good practice to have a centralized error handling mechanism in your backend application.</p>
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Error Handling Simulation</span>
+                            <button class="run-btn" onclick="runCode('error-code', 'error-vis')">Run Simulation</button>
+                            <button class="reset-btn" onclick="resetCode('error-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="error-code">// Simulate a function that might fail
+function potentiallyFailingOperation(shouldFail) {
+    if (shouldFail) {
+        throw new Error('Operation failed as requested!');
+    }
+    return 'Operation succeeded.';
+}
+
+// Simulate an async function that might fail
+async function potentiallyFailingAsyncTask(shouldFail) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (shouldFail) {
+                reject(new Error('Async operation failed!'));
+            } else {
+                resolve('Async operation succeeded.');
+            }
+        }, 500); // Simulate async delay
+    });
+}
+
+// --- Synchronous Error Handling Example ---
+console.log('--- Testing Synchronous Error Handling ---');
+try {
+    console.log(potentiallyFailingOperation(false)); // Should succeed
+    // console.log(potentiallyFailingOperation(true)); // Uncomment to test failure
+} catch (error) {
+    console.error('Caught synchronous error:', error.message);
+}
+
+// --- Asynchronous Error Handling Example (using async/await) ---
+console.log('\n--- Testing Asynchronous Error Handling ---');
+async function runAsyncTest() {
+    try {
+        console.log(await potentiallyFailingAsyncTask(false)); // Should succeed
+        // console.log(await potentiallyFailingAsyncTask(true)); // Uncomment to test failure
+    } catch (error) {
+        console.error('Caught asynchronous error:', error.message);
+    }
+}
+runAsyncTest();
+
+// Observe the console logs in the terminal simulation.
+</textarea>
+                    </div>
+                    <div class="server-visualization" id="error-vis">
+                         <div class="terminal" id="error-terminal"></div>
+                         </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Error Handling Challenge</h3>
+                <p class="exercise-instruction">Modify the simulation code in the playground:</p>
+                <ol>
+                    <li>In the synchronous example, change <code>potentiallyFailingOperation(false)</code> to <code>potentiallyFailingOperation(true)</code> to intentionally cause an error and observe the <code>catch</code> block executing.</li>
+                    <li>In the asynchronous example, change <code>potentiallyFailingAsyncTask(false)</code> to <code>potentiallyFailingAsyncTask(true)</code> to cause the async operation to fail and observe the async <code>catch</code> block executing.</li>
+                    <li>Add a <code>finally</code> block to the synchronous <code>try...catch</code> and add a console log inside it.</li>
+                </ol>
+                <button class="check-btn" onclick="checkErrorExercise()">Check Solution</button>
+                 <div class="feedback" id="feedback-error-challenge"></div>
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Error Handling Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of error handling:</p>
+
+                <div class="quiz" id="quiz-error-1">
+                    <p><strong>1. Why is robust error handling important in backend development?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="error-quiz-1" value="A"> To make the code shorter</label><br>
+                        <label><input type="radio" name="error-quiz-1" value="B"> To prevent server crashes and provide feedback</label><br>
+                        <label><input type="radio" name="error-quiz-1" value="C"> To improve frontend styling</label><br>
+                        <label><input type="radio" name="error-quiz-1" value="D"> To automatically fix bugs</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('error-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-error-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-error-2">
+                    <p><strong>2. Which type of error occurs while the program is running, often due to unexpected conditions?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="error-quiz-2" value="A"> Syntax Error</label><br>
+                        <label><input type="radio" name="error-quiz-2" value="B"> Logical Error</label><br>
+                        <label><input type="radio" name="error-quiz-2" value="C"> Compile-time Error</label><br>
+                        <label><input type="radio" name="error-quiz-2" value="D"> Runtime Error</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('error-quiz-2', 'D')">Check Answer</button>
+                    <div class="feedback" id="feedback-error-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-error-3">
+                    <p><strong>3. What JavaScript construct is used to catch synchronous errors?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="error-quiz-3" value="A"> <code>if/else</code></label><br>
+                        <label><input type="radio" name="error-quiz-3" value="B"> <code>switch</code></label><br>
+                        <label><input type="radio" name="error-quiz-3" value="C"> <code>try...catch</code></label><br>
+                        <label><input type="radio" name="error-quiz-3" value="D"> <code>for loop</code></label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('error-quiz-3', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-error-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-error-4">
+                    <p><strong>4. In the "error-first" callback pattern for asynchronous operations, where is the error typically passed?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="error-quiz-4" value="A"> As the last argument</label><br>
+                        <label><input type="radio" name="error-quiz-4" value="B"> As the first argument</label><br>
+                        <label><input type="radio" name="error-quiz-4" value="C"> In the function's return value</label><br>
+                        <label><input type="radio" name="error-quiz-4" value="D"> It's stored in a global variable</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('error-quiz-4', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-error-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-error-5">
+                    <p><strong>5. What is the primary advantage of using <code>async/await</code> with <code>try...catch</code> for asynchronous error handling?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="error-quiz-5" value="A"> It makes asynchronous code synchronous</label><br>
+                        <label><input type="radio" name="error-quiz-5" value="B"> It provides a more synchronous-like syntax for error handling</label><br>
+                        <label><input type="radio" name="error-quiz-5" value="C"> It eliminates all errors</label><br>
+                        <label><input type="radio" name="error-quiz-5" value="D"> It automatically sends error emails</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('error-quiz-5', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-error-quiz-5"></div>
+                </div>
+            </div>
+
+                
+        </section>
+
+        <section id="testing" class="lesson-section">
+            <h2 class="lesson-title">Testing & Debugging</h2>
+            <div class="lesson-content">
+                <h3>What is Testing?</h3>
+                <p>Testing in backend development is the process of verifying that your code works as expected and meets the requirements. It involves writing automated tests that run your code under various conditions to check for correctness, reliability, and performance. Testing is a crucial part of the software development lifecycle, helping to catch bugs early and ensure that changes don't break existing functionality.</p>
+
+                <h3>Types of Testing</h3>
+                <p>There are several levels and types of testing commonly used in backend development:</p>
+                <ul>
+                    <li><strong>Unit Testing:</strong> Testing individual, isolated units of code (e.g., a single function or module) to ensure they work correctly in isolation.</li>
+                    <li><strong>Integration Testing:</strong> Testing how different units or modules interact with each other (e.g., testing the interaction between your API endpoint and the database).</li>
+                    <li><strong>End-to-End (E2E) Testing:</strong> Testing the entire application flow from the user interface through the backend and database, simulating real user scenarios.</li>
+                    <li><strong>API Testing:</strong> Specifically testing the endpoints of your API to ensure they respond correctly to various requests.</li>
+                </ul>
+                <p>Automated tests are typically written using testing frameworks specific to your programming language (e.g., Jest, Mocha, Supertest for Node.js).</p>
+
+                <h3>Why Testing is Important</h3>
+                <p>Investing time in writing tests provides significant benefits:</p>
+                <ul>
+                    <li><strong>Bug Detection:</strong> Tests help find bugs early in the development process, making them cheaper and easier to fix.</li>
+                    <li><strong>Refactoring Confidence:</strong> With a good test suite, you can refactor (restructure) your code with confidence, knowing that if you break something, the tests will tell you.</li>
+                    <li><strong>Documentation:</strong> Well-written tests can serve as living documentation, showing how different parts of the code are intended to be used.</li>
+                    <li><strong>Improved Code Quality:</strong> Writing testable code often leads to better-designed and more modular code.</li>
+                </ul>
+
+                <h3>What is Debugging?</h3>
+                <p>Debugging is the process of identifying, analyzing, and removing bugs or errors from your code. When something goes wrong, debugging is how you figure out *why* it went wrong and fix it. While testing helps you *find* that a bug exists, debugging helps you *understand* and *resolve* the bug.</p>
+
+                <h3>Debugging Techniques</h3>
+                <p>Backend developers use various techniques to debug their code:</p>
+                <ul>
+                    <li><strong>Logging:</strong> Adding <code>console.log</code> statements (or using more sophisticated logging libraries) throughout your code to print values and track the execution flow. This is a simple but powerful technique.</li>
+                    <li><strong>Using a Debugger:</strong> Using a dedicated debugging tool (often integrated into code editors like VS Code) that allows you to set breakpoints, step through code execution line by line, inspect variables, and analyze the call stack. This provides much more control and insight than logging alone.</li>
+                    <li><strong>Error Messages and Stack Traces:</strong> Analyzing the error messages and stack traces provided by the server or runtime environment to understand where and why an error occurred.</li>
+                </ul>
+
+                <h3>Importance of Debugging</h3>
+                <p>Debugging is an essential skill for any developer. It allows you to quickly diagnose and fix issues, saving time and preventing frustration. Becoming proficient at debugging helps you understand your code more deeply and build more robust applications.</p>
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Debugging Simulation (Logging)</span>
+                            <button class="run-btn" onclick="runCode('testing-code', 'testing-vis')">Run Code</button>
+                            <button class="reset-btn" onclick="resetCode('testing-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="testing-code">// This function is supposed to add two numbers,
+// but it has a small bug!
+function addNumbers(a, b) {
+    // console.log('Input a:', a); // Debugging log
+    // console.log('Input b:', b); // Debugging log
+    let result = a + b;
+    // console.log('Calculated result:', result); // Debugging log
+    return result + 1; // This is the bug!
+}
+
+let num1 = 5;
+let num2 = 3;
+
+console.log('Calling addNumbers...');
+let sum = addNumbers(num1, num2);
+console.log('Expected sum: 8');
+console.log('Actual sum:', sum);
+
+// To debug: Uncomment the console.log lines inside the function
+// and observe the output in the terminal simulation.
+// You would also use a debugger to step through this.
+</textarea>
+                    </div>
+                    <div class="server-visualization" id="testing-vis">
+                         <div class="terminal" id="testing-terminal"></div>
+                         </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Debugging Challenge</h3>
+                <p class="exercise-instruction">Find and fix the bug in the <code>addNumbers</code> function in the playground code:</p>
+                <ol>
+                    <li>Run the code and observe the output in the terminal.</li>
+                    <li>Identify why the actual sum is not the expected sum.</li>
+                    <li>Modify the <code>addNumbers</code> function to correct the bug so it returns the correct sum of <code>a</code> and <code>b</code>.</li>
+                    <li>Run the code again to verify the fix.</li>
+                </ol>
+                <button class="check-btn" onclick="checkTestingExercise()">Check Solution</button>
+                 <div class="feedback" id="feedback-testing-challenge"></div>
+                </div>
+                
+                <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Testing & Debugging Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of testing and debugging concepts:</p>
+
+                <div class="quiz" id="quiz-testing-1">
+                    <p><strong>1. What is the primary goal of writing automated tests in backend development?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="testing-quiz-1" value="A"> To make the application run faster</label><br>
+                        <label><input type="radio" name="testing-quiz-1" value="B"> To verify code correctness and catch bugs early</label><br>
+                        <label><input type="radio" name="testing-quiz-1" value="C"> To generate documentation automatically</label><br>
+                        <label><input type="radio" name="testing-quiz-1" value="D"> To improve the user interface</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('testing-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-testing-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-testing-2">
+                    <p><strong>2. Which type of testing focuses on individual units of code in isolation?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="testing-quiz-2" value="A"> Integration Testing</label><br>
+                        <label><input type="radio" name="testing-quiz-2" value="B"> End-to-End Testing</label><br>
+                        <label><input type="radio" name="testing-quiz-2" value="C"> Unit Testing</label><br>
+                        <label><input type="radio" name="testing-quiz-2" value="D"> API Testing</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('testing-quiz-2', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-testing-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-testing-3">
+                    <p><strong>3. What is the process of identifying, analyzing, and removing bugs from code?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="testing-quiz-3" value="A"> Refactoring</label><br>
+                        <label><input type="radio" name="testing-quiz-3" value="B"> Deployment</label><br>
+                        <label><input type="radio" name="testing-quiz-3" value="C"> Debugging</label><br>
+                        <label><input type="radio" name="testing-quiz-3" value="D"> Version Control</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('testing-quiz-3', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-testing-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-testing-4">
+                    <p><strong>4. Adding <code>console.log</code> statements is a common technique for:</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="testing-quiz-4" value="A"> Writing unit tests</label><br>
+                        <label><input type="radio" name="testing-quiz-4" value="B"> Deploying the application</label><br>
+                        <label><input type="radio" name="testing-quiz-4" value="C"> Debugging code</label><br>
+                        <label><input type="radio" name="testing-quiz-4" value="D"> Implementing authentication</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('testing-quiz-4', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-testing-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-testing-5">
+                    <p><strong>5. What tool allows you to set breakpoints and step through code execution line by line?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="testing-quiz-5" value="A"> A compiler</label><br>
+                        <label><input type="radio" name="testing-quiz-5" value="B"> A debugger</label><br>
+                        <label><input type="radio" name="testing-quiz-5" value="C"> A linter</label><br>
+                        <label><input type="radio" name="testing-quiz-5" value="D"> A package manager</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('testing-quiz-5', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-testing-quiz-5"></div>
+                </div>
+                
+            
+            
+            </div>
+
+            
+
+                
+        </section>
+
+        <section id="deploy" class="lesson-section">
+            <h2 class="lesson-title">Deployment</h2>
+            <div class="lesson-content">
+                <h3>What is Deployment?</h3>
+                <p>Deployment is the process of making your backend application accessible to users over the internet. It involves taking the code you've written and hosting it on a server that is connected to the web. Until your application is deployed, it only runs locally on your development machine and cannot be accessed by others.</p>
+
+                <p>Deployment is the final step in bringing your backend project to life and sharing it with the world. It requires careful planning and execution to ensure your application runs smoothly, is secure, and can handle expected traffic.</p>
+
+                <h3>Deployment Options</h3>
+                <p>There are several common ways to deploy backend applications:</p>
+                <ul>
+                    <li><strong>Traditional Hosting (VPS/Dedicated Servers):</strong> Renting a virtual private server (VPS) or a dedicated physical server where you have full control over the environment. This requires more manual setup and management (installing Node.js, setting up a web server like Nginx or Apache, configuring databases, etc.).</li>
+                    <li><strong>Platform as a Service (PaaS):</strong> Using cloud platforms that provide a managed environment for deploying, running, and scaling applications. Examples include Heroku, Render, and Elastic Beanstalk (AWS). These services abstract away much of the underlying infrastructure management.</li>
+                    <li><strong>Containerization (Docker) & Orchestration (Kubernetes):</strong> Packaging your application and its dependencies into containers (like Docker images) and then using orchestration platforms (like Kubernetes) to automate deployment, scaling, and management of these containers. This offers consistency across environments and powerful scaling capabilities.</li>
+                    <li><strong>Serverless Functions (FaaS):</strong> Running backend code in response to events without managing servers. Examples include AWS Lambda, Azure Functions, and Google Cloud Functions. You only pay for the compute time consumed.</li>
+                </ul>
+                <p>The choice of deployment method depends on factors like the application's complexity, expected traffic, budget, and your team's expertise.</p>
+
+                <h3>The Deployment Process (General Steps)</h3>
+                <p>While the specifics vary, a typical deployment process might involve:</p>
+                <ol>
+                    <li><strong>Preparing the Code:</strong> Ensuring your code is ready for production (e.g., setting environment variables, optimizing code).</li>
+                    <li><strong>Choosing a Hosting Provider:</strong> Selecting a platform or server to host your application.</li>
+                    <li><strong>Setting up the Environment:</strong> Configuring the server with the necessary software (Node.js, database, etc.).</li>
+                    <li><strong>Uploading the Code:</strong> Transferring your application files to the server.</li>
+                    <li><strong>Installing Dependencies:</strong> Installing required packages (e.g., using <code>npm install</code> on the server).</li>
+                    <li><strong>Configuring the Application:</strong> Setting up database connections, API keys, and other production-specific settings.</li>
+                    <li><strong>Starting the Server:</strong> Running your backend application.</li>
+                    <li><strong>Setting up a Process Manager:</strong> Using tools like PM2 or forever to keep your application running and restart it if it crashes.</li>
+                    <li><strong>Configuring a Web Server (Optional but recommended):</strong> Using Nginx or Apache as a reverse proxy to handle incoming requests, SSL certificates, and serving static files.</li>
+                    <li><strong>Monitoring:</strong> Setting up tools to monitor your application's health, performance, and errors in production.</li>
+                </ol>
+
+                <h3>Continuous Integration and Continuous Deployment (CI/CD)</h3>
+                <p>For more automated and efficient deployments, developers often use CI/CD pipelines. Continuous Integration (CI) involves automatically building and testing code changes whenever they are committed. Continuous Deployment (CD) automatically deploys verified code changes to production. This streamlines the release process and reduces the risk of manual errors.</p>
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Conceptual Deployment Script</span>
+                            <button class="run-btn" onclick="runCode('deploy-code', 'deploy-vis')">Run Simulation</button>
+                            <button class="reset-btn" onclick="resetCode('deploy-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="deploy-code">#!/bin/bash
+
+# This is a conceptual deployment script simulation
+
+echo "--- Starting Deployment Process ---"
+
+# Step 1: Pull latest code (Simulated)
+echo "1. Pulling latest code from repository..."
+# git pull origin main
+sleep 1 # Simulate time
+
+# Step 2: Install dependencies (Simulated)
+echo "2. Installing Node.js dependencies..."
+# npm install --production
+sleep 2 # Simulate time
+
+# Step 3: Build the application (if necessary, e.g., frontend assets) (Simulated)
+# echo "3. Building application..."
+# npm run build
+# sleep 1
+
+# Step 4: Configure environment variables (Simulated)
+echo "4. Configuring environment variables..."
+# export NODE_ENV=production
+# export DATABASE_URL="mongodb://prod-db:27017/mydb"
+sleep 0.5 # Simulate time
+
+# Step 5: Restart the application process (Simulated)
+echo "5. Restarting application process manager (e.g., PM2)..."
+# pm2 restart my-backend-app
+sleep 1.5 # Simulate time
+
+echo "--- Deployment Complete! ---"
+
+# Observe the steps in the terminal simulation.
+</textarea>
+                    </div>
+                    <div class="server-visualization" id="deploy-vis">
+                         <div class="terminal" id="deploy-terminal"></div>
+                         </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Deployment Challenge</h3>
+                <p class="exercise-instruction">Observe the simulated deployment script in the playground:</p>
+                <ol>
+                    <li>Click "Run Simulation" to see the steps executed in the terminal.</li>
+                    <li>Imagine you needed to add a step to run database migrations before restarting the application. Where would you conceptually add that step in the script?</li>
+                    <li>(No code change required for this challenge, just understand the process).</li>
+                </ol>
+                <button class="check-btn" onclick="checkDeployExercise()">Check Solution</button>
+                 <div class="feedback" id="feedback-deploy-challenge"></div> 
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Deployment Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of deployment concepts:</p>
+
+                <div class="quiz" id="quiz-deploy-1">
+                    <p><strong>1. What is the main purpose of deploying a backend application?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="deploy-quiz-1" value="A"> To write unit tests</label><br>
+                        <label><input type="radio" name="deploy-quiz-1" value="B"> To make it accessible to users over the internet</label><br>
+                        <label><input type="radio" name="deploy-quiz-1" value="C"> To design the user interface</label><br>
+                        <label><input type="radio" name="deploy-quiz-1" value="D"> To connect to a database</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('deploy-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-deploy-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-deploy-2">
+                    <p><strong>2. Which deployment option provides a managed environment, abstracting away much of the underlying infrastructure?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="deploy-quiz-2" value="A"> Traditional Hosting (VPS)</label><br>
+                        <label><input type="radio" name="deploy-quiz-2" value="B"> Platform as a Service (PaaS)</label><br>
+                        <label><input type="radio" name="deploy-quiz-2" value="C"> Containerization (Docker)</label><br>
+                        <label><input type="radio" name="deploy-quiz-2" value="D"> Serverless Functions (FaaS)</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('deploy-quiz-2', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-deploy-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-deploy-3">
+                    <p><strong>3. What is a key benefit of using Docker for deployment?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="deploy-quiz-3" value="A"> It automatically writes your code</label><br>
+                        <label><input type="radio" name="deploy-quiz-3" value="B"> It ensures consistency across different environments</label><br>
+                        <label><input type="radio" name="deploy-quiz-3" value="C"> It replaces the need for a database</label><br>
+                        <label><input type="radio" name="deploy-quiz-3" value="D"> It handles all user authentication</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('deploy-quiz-3', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-deploy-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-deploy-4">
+                    <p><strong>4. What does CI in CI/CD stand for?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="deploy-quiz-4" value="A"> Code Integration</label><br>
+                        <label><input type="radio" name="deploy-quiz-4" value="B"> Continuous Improvement</label><br>
+                        <label><input type="radio" name="deploy-quiz-4" value="C"> Continuous Integration</label><br>
+                        <label><input type="radio" name="deploy-quiz-4" value="D"> Client Interface</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('deploy-quiz-4', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-deploy-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-deploy-5">
+                    <p><strong>5. Which tool is commonly used in Node.js production environments to keep the application running and restart it if it crashes?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="deploy-quiz-5" value="A"> npm</label><br>
+                        <label><input type="radio" name="deploy-quiz-5" value="B"> Git</label><br>
+                        <label><input type="radio" name="deploy-quiz-5" value="C"> PM2 or forever</label><br>
+                        <label><input type="radio" name="deploy-quiz-5" value="D"> nodemon</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('deploy-quiz-5', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-deploy-quiz-5"></div>
+                </div>
+
+                
+            </div>
+        </section>
+
+
+        <section id="final" class="lesson-section">
+            <h2 class="lesson-title">Final Project: Build a Task Manager Backend</h2>
+            <div class="lesson-content">
+                <h3>Project Goal: Create a Functional Task Manager</h3>
+                <p>Congratulations on making it to the final project! This is where you'll bring together many of the concepts you've learned – routing, databases, APIs, and potentially authentication and error handling – to build a complete backend application. Your goal is to create a backend for a simple Task Manager application.</p>
+
+                <p>A task manager allows users to create, view, update, and delete tasks. This maps directly to the CRUD operations you learned about in the database section and the HTTP methods used in REST APIs.</p>
+
+                <h3>Frontend for Your Task Manager</h3>
+                <p>To focus on the backend development, we've provided a simple frontend HTML file (`taskManagerFrontend.html`) that you can use. This frontend has the basic structure and JavaScript to interact with a backend API. Your task is to build the backend API that this frontend will communicate with.</p>
+
+                <p>You are welcome to build your own frontend if you prefer, but using the provided one will allow you to concentrate on the backend logic and connecting the two parts.</p>
+
+                <div class="frontend-option" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+                    <h4>Using the Provided Frontend:</h4>
+                    <p>You can download the frontend file or view it directly below:</p>
+                    <a href="taskManagerFrontend.html" download="taskManagerFrontend.html" class="check-btn" style="display: inline-block; margin-right: 10px; background-color: #28a745;">Download Frontend HTML</a>
+                    <button class="check-btn" onclick="document.getElementById('frontend-iframe').src='taskManagerFrontend.html'" style="background-color: #007bff;">Load Frontend in Preview</button>
+                    <p style="margin-top: 10px;">Preview the frontend here:</p>
+                    <iframe id="frontend-iframe" src="" style="width: 100%; height: 400px; border: 1px solid #ccc; border-radius: 4px;"></iframe>
+                </div>
+
+
+                <h3>Backend Requirements:</h3>
+                <p>Your backend should provide API endpoints to handle the following operations for tasks:</p>
+                <ul>
+                    <li><strong>Create Task:</strong> Receive task data (e.g., text) via a POST request and save it to a database.</li>
+                    <li><strong>Get All Tasks:</strong> Respond to a GET request with a list of all tasks from the database.</li>
+                    <li><strong>Update Task:</strong> Receive updates for a specific task (e.g., marking it complete) via a PUT or PATCH request to a specific task endpoint (e.g., `/tasks/:id`) and update it in the database.</li>
+                    <li><strong>Delete Task:</strong> Handle a DELETE request to a specific task endpoint (e.g., `/tasks/:id`) and remove the task from the database.</li>
+                </ul>
+                 <p>You should use a database (like MongoDB with Mongoose, as covered in the Database section) to store the tasks persistently.</p>
+
+
+                <h3>Step-by-Step Guide & Illustrations (Conceptual):</h3>
+
+                <h4>Step 1: Set up Your Project</h4>
+                <p>Initialize a new Node.js project and install necessary packages (e.g., Express, Mongoose):</p>
+                <pre><code class="language-bash"># Initialize a new npm project
+npm init -y
+# Install Express and Mongoose
+npm install express mongoose
+</code></pre>
+                
+
+                <h4>Step 2: Connect to Your Database</h4>
+                <p>Establish a connection to your MongoDB database using Mongoose. Define a Mongoose schema and model for your Task data (e.g., `text: String`, `completed: Boolean`).</p>
+                 <pre><code class="language-javascript">// server.js or db.js
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/taskmanager', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected for Task Manager'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+const taskSchema = new mongoose.Schema({
+    text: { type: String, required: true },
+    completed: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now }
+});
+
+const Task = mongoose.model('Task', taskSchema);
+
+module.exports = Task; // Export the model
+</code></pre>
+                 
+                <h4>Step 3: Create Your Express App and Routes</h4>
+                <p>Create an Express application. Define the API endpoints (`/tasks`, `/tasks/:id`) and the HTTP methods (GET, POST, PUT/PATCH, DELETE) that they will handle.</p>
+                 <pre><code class="language-javascript">// server.js
+const express = require('express');
+const Task = require('./db'); // Import your Task model
+
+const app = express();
+app.use(express.json()); // Middleware to parse JSON bodies
+
+// GET all tasks
+app.get('/tasks', async (req, res) => {
+    try {
+        const tasks = await Task.find();
+        res.json(tasks);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// POST a new task
+app.post('/tasks', async (req, res) => {
+    const task = new Task({
+        text: req.body.text
+    });
+    try {
+        const newTask = await task.save();
+        res.status(201).json(newTask);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+// Add PUT/PATCH and DELETE routes here...
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Task Manager backend running on port ${port}`);
+});
+</code></pre>
+                 
+                <h4>Step 4: Implement CRUD Logic</h4>
+                <p>Write the asynchronous functions within your route handlers to perform the Create, Read, Update, and Delete operations using your Mongoose model.</p>
+                 <pre><code class="language-javascript">// server.js (Continuing from Step 3)
+
+// GET a single task by ID
+app.get('/tasks/:id', async (req, res) => {
+    try {
+        const task = await Task.findById(req.params.id);
+        if (!task) return res.status(404).json({ message: 'Task not found' });
+        res.json(task);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// PUT update a task by ID
+app.put('/tasks/:id', async (req, res) => {
+    try {
+        const task = await Task.findById(req.params.id);
+        if (!task) return res.status(404).json({ message: 'Task not found' });
+
+        if (req.body.text != null) {
+            task.text = req.body.text;
+        }
+        if (req.body.completed != null) {
+            task.completed = req.body.completed;
+        }
+
+        const updatedTask = await task.save();
+        res.json(updatedTask);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+// DELETE a task by ID
+app.delete('/tasks/:id', async (req, res) => {
+    try {
+        const task = await Task.findById(req.params.id);
+        if (!task) return res.status(404).json({ message: 'Task not found' });
+
+        await task.deleteOne(); // Use deleteOne() or remove() depending on Mongoose version
+        res.json({ message: 'Task deleted' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// ... app.listen(...)
+</code></pre>
+                    
+                 <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+                     <div style="text-align: center; margin-right: 20px;">
+                         <div style="width: 50px; height: 50px; background-color: #007bff; border-radius: 50%; display: inline-block; line-height: 50px; color: white; font-weight: bold;">S</div>
+                         <p>Server</p>
+                     </div>
+                     <div style="text-align: center; margin-left: 20px;">
+                         <div style="width: 50px; height: 50px; background-color: #28a745; border-radius: 50%; display: inline-block; line-height: 50px; color: white; font-weight: bold;">DB</div>
+                         <p>Database</p>
+                     </div>
+                     <div style="position: absolute; width: 100px; height: 2px; background-color: #000; transform: rotate(45deg);"></div>
+                     <div style="position: absolute; width: 100px; height: 2px; background-color: #000; transform: rotate(-45deg);"></div>
+                 </div>
+
+                <h4>Step 5: Connect Frontend and Backend</h4>
+                <p>In your `taskManagerFrontend.html` file (or your custom frontend), modify the JavaScript functions (`fetchTasks`, the event listeners for add, complete, and delete) to make actual HTTP requests to your backend API endpoints using the Fetch API or a library like Axios.</p>
+                 <pre><code class="language-javascript">// taskManagerFrontend.html (Inside the script tag)
+
+// Example of fetching tasks from backend
+async function fetchTasks() {
+    try {
+        // Replace with your backend URL if not running on the same origin
+        const response = await fetch('/tasks');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const tasks = await response.json();
+
+        taskList.innerHTML = ''; // Clear current list
+        tasks.forEach(task => {
+            const taskElement = renderTask(task);
+            taskList.appendChild(taskElement);
+        });
+
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+        // Display an error message to the user
+    }
+}
+
+// Example of adding a task
+addTaskBtn.addEventListener('click', async () => {
+    const taskText = newTaskInput.value.trim();
+    if (taskText !== '') {
+        try {
+            const response = await fetch('/tasks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: taskText })
+            });
+            if (!response.ok) {
+                 const errorData = await response.json();
+                 throw new Error(`HTTP error! status: ${response.status}, Message: ${errorData.message}`);
+            }
+            const newTask = await response.json();
+            const newTaskElement = renderTask(newTask);
+            taskList.appendChild(newTaskElement);
+            newTaskInput.value = '';
+        } catch (error) {
+            console.error('Error adding task:', error);
+            alert('Failed to add task: ' + error.message);
+        }
+    } else {
+        alert('Please enter a task!');
+    }
+});
+
+// Add similar async functions for updating and deleting tasks...
+
+fetchTasks(); // Call on page load
+</code></pre>
+                 <p><em>an arrow from the browser icon to the server icon representing an HTTP request, and an arrow back representing the HTTP response.</em></p>
+                <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+                    <div style="text-align: center; margin-right: 20px;">
+                        <div style="width: 50px; height: 50px; background-color: #007bff; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-weight: bold;">B</div>
+                        <p>Browser</p>
+                    </div>
+                    <div style="position: relative; width: 100px; height: 2px; background-color: #000; margin-right: 20px;">
+                        <div style="position: absolute; top: -5px; right: -10px; width: 0; height: 0; border-left: 10px solid #000; border-top: 5px solid transparent; border-bottom: 5px solid transparent;"></div>
+                    </div>
+                    <div style="text-align: center; margin-left: 20px;">
+                        <div style="width: 50px; height: 50px; background-color: #28a745; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-weight: bold;">S</div>
+                        <p>Server</p>
+                    </div>
+                </div>
+
+                <h4>Step 6: Testing and Refinement</h4>
+                <p>Test all your API endpoints using tools like Postman or by interacting with your frontend. Fix any bugs, add input validation, and implement basic error handling in your backend routes.</p>
+                 <p><em>Illustration: Show a magnifying glass icon over the code and server, indicating debugging and testing.</em></p>
+
+                <h4>Step 7: (Optional) Add Authentication</h4>
+                <p>If you want to make your task manager multi-user, implement user authentication (e.g., using JWT) to protect your API endpoints so only logged-in users can manage their tasks.</p>
+                 
+
+                <div class="playground">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-editor-title">Your Task Manager Backend Code</span>
+                            <button class="run-btn" onclick="runCode('final-code', 'final-vis')">Run Server</button>
+                            <button class="reset-btn" onclick="resetCode('final-code')">Reset</button>
+                        </div>
+                        <textarea class="code-input" id="final-code">// Start building your Task Manager backend here!
+// You can copy and paste code from the steps above.
+
+const express = require('express');
+const mongoose = require('mongoose');
+
+const app = express();
+app.use(express.json());
+
+// Connect to database (replace with your connection string if needed)
+mongoose.connect('mongodb://localhost:27017/taskmanager', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected for Task Manager'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+// Define Task Schema and Model
+const taskSchema = new mongoose.Schema({
+    text: { type: String, required: true },
+    completed: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now }
+});
+
+const Task = mongoose.model('Task', taskSchema);
+
+// --- API Endpoints ---
+
+// GET all tasks
+app.get('/tasks', async (req, res) => {
+    try {
+        const tasks = await Task.find();
+        res.json(tasks);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// POST a new task
+app.post('/tasks', async (req, res) => {
+    const task = new Task({
+        text: req.body.text
+    });
+    try {
+        const newTask = await task.save();
+        res.status(201).json(newTask);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+// GET a single task by ID
+app.get('/tasks/:id', async (req, res) => {
+    try {
+        const task = await Task.findById(req.params.id);
+        if (!task) return res.status(404).json({ message: 'Task not found' });
+        res.json(task);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// PUT update a task by ID
+app.put('/tasks/:id', async (req, res) => {
+    try {
+        const task = await Task.findById(req.params.id);
+        if (!task) return res.status(404).json({ message: 'Task not found' });
+
+        if (req.body.text != null) {
+            task.text = req.body.text;
+        }
+        if (req.body.completed != null) {
+            task.completed = req.body.completed;
+        }
+
+        const updatedTask = await task.save();
+        res.json(updatedTask);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+// DELETE a task by ID
+app.delete('/tasks/:id', async (req, res) => {
+    try {
+        const task = await Task.findById(req.params.id);
+        if (!task) return res.status(404).json({ message: 'Task not found' });
+
+        await task.deleteOne(); // Use deleteOne() or remove() depending on Mongoose version
+        res.json({ message: 'Task deleted' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Task Manager backend running on port ${port}`);
+});
+
+</textarea>
+                    </div>
+                    <div class="server-visualization" id="final-vis">
+                        <div class="server-rack">
+                            <div class="server-blade">
+                                <div class="server-light" id="final-server-light"></div>
+                            </div>
+                        </div>
+                        <div class="database-visual"></div>
+                        <div class="api-visual"></div>
+                        <div class="terminal" id="final-terminal"></div>
+                        <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                            <button class="check-btn" onclick="sendRequest('final', '/tasks', 'GET')">GET /tasks</button>
+                             <button class="check-btn" onclick="sendRequest('final', '/tasks', 'POST')">POST /tasks</button>
+                             <button class="check-btn" onclick="sendRequest('final', '/tasks/some-id', 'PUT')">PUT /tasks/:id (Simulated)</button>
+                             <button class="check-btn" onclick="sendRequest('final', '/tasks/some-id', 'DELETE')">DELETE /tasks/:id (Simulated)</button>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="exercise-title"><i>✓</i> Final Project Challenge</h3>
+                <p class="exercise-instruction">Complete the Task Manager Backend:</p>
+                <ol>
+                    <li>Write the full backend code in the playground using Express and Mongoose to implement all required CRUD endpoints for tasks.</li>
+                    <li>Ensure your backend connects to a MongoDB database.</li>
+                    <li>(Optional but recommended): Add basic input validation for new tasks.</li>
+                    <li>(Optional but recommended): Add error handling for database operations and invalid requests.</li>
+                    <li>Once your backend is running, open the `taskManagerFrontend.html` file (or your own frontend) in a separate browser tab and modify its JavaScript to communicate with your running backend API.</li>
+                    <li>Test creating, viewing, updating (marking complete), and deleting tasks using the frontend.</li>
+                </ol>
+                <button class="check-btn" onclick="checkFinalExercise()">Check Solution</button>
+                 <div class="feedback" id="feedback-final-challenge"></div> 
+            </div>
+
+            <div class="exercise">
+                <h3 class="exercise-title"><i>✓</i> Final Project Quizzes</h3>
+                <p class="exercise-instruction">Test your understanding of the final project requirements:</p>
+
+                <div class="quiz" id="quiz-final-1">
+                    <p><strong>1. What are the four main CRUD operations your Task Manager backend should support?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="final-quiz-1" value="A"> Start, Stop, Pause, Resume</label><br>
+                        <label><input type="radio" name="final-quiz-1" value="B"> Create, Read, Update, Delete</label><br>
+                        <label><input type="radio" name="final-quiz-1" value="C"> Connect, Disconnect, Send, Receive</label><br>
+                        <label><input type="radio" name="final-quiz-1" value="D"> Authenticate, Authorize, Encrypt, Decrypt</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('final-quiz-1', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-final-quiz-1"></div>
+                </div>
+
+                <div class="quiz" id="quiz-final-2">
+                    <p><strong>2. Which HTTP method would you typically use for the "Create Task" operation?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="final-quiz-2" value="A"> GET</label><br>
+                        <label><input type="radio" name="final-quiz-2" value="B"> PUT</label><br>
+                        <label><input type="radio" name="final-quiz-2" value="C"> POST</label><br>
+                        <label><input type="radio" name="final-quiz-2" value="D"> DELETE</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('final-quiz-2', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-final-quiz-2"></div>
+                </div>
+
+                <div class="quiz" id="quiz-final-3">
+                    <p><strong>3. What technology are you recommended to use for storing task data persistently in this project?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="final-quiz-3" value="A"> Browser Local Storage</label><br>
+                        <label><input type="radio" name="final-quiz-3" value="B"> In-memory arrays</label><br>
+                        <label><input type="radio" name="final-quiz-3" value="C"> MongoDB (with Mongoose)</label><br>
+                        <label><input type="radio" name="final-quiz-3" value="D"> Flat files on the server</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('final-quiz-3', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-final-quiz-3"></div>
+                </div>
+
+                <div class="quiz" id="quiz-final-4">
+                    <p><strong>4. What is the purpose of the provided `taskManagerFrontend.html` file?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="final-quiz-4" value="A"> It's the complete backend application</label><br>
+                        <label><input type="radio" name="final-quiz-4" value="B"> It's a frontend to interact with your backend API</label><br>
+                        <label><input type="radio" name="final-quiz-4" value="C"> It's a database file</label><br>
+                        <label><input type="radio" name="final-quiz-4" value="D"> It's a deployment script</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('final-quiz-4', 'B')">Check Answer</button>
+                    <div class="feedback" id="feedback-final-quiz-4"></div>
+                </div>
+
+                <div class="quiz" id="quiz-final-5">
+                    <p><strong>5. When connecting your frontend to your backend, what mechanism will the frontend use to send requests and receive responses?</strong></p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="final-quiz-5" value="A"> Direct database calls</label><br>
+                        <label><input type="radio" name="final-quiz-5" value="B"> File system operations</label><br>
+                        <label><input type="radio" name="final-quiz-5" value="C"> HTTP requests to your API endpoints</label><br>
+                        <label><input type="radio" name="final-quiz-5" value="D"> Shared memory</label>
+                    </div>
+                    <button class="check-btn" onclick="checkQuiz('final-quiz-5', 'C')">Check Answer</button>
+                    <div class="feedback" id="feedback-final-quiz-5"></div>
+                </div>
+
+                
+            </div>
+        </section>
+
+
+
+         <div class="progress-container">
+            <h3 class="progress-title">Your Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p class="progress-text"><span id="progress-percent">0</span>% Complete</p>
+        </div>
+
+        <div class="achievement-badge" id="achievement-badge">
+            <span class="badge-icon">🏆</span>
+            <span class="badge-text">New Achievement Unlocked!</span>
+        </div>
+    </div>
+
+    <button class="floating-btn" id="note-tablet-toggle" title="Open Notes">
+        <i class="fas fa-clipboard"></i>
+    </button>
+
+    <div class="note-tablet-panel" id="note-tablet-panel">
+        <div class="note-tablet-header">
+            <h4>My Notes & Scratchpad</h4>
+            <button id="close-note-tablet" title="Close Notes">&times;</button>
+        </div>
+        <div class="note-tablet-content">
+            <div class="note-tablet-controls" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e0dcd7; align-items: center;">
+                <button id="add-heading-btn" title="Add Heading" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">H</button>
+                <button id="add-list-btn" title="Add List Item" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">• List</button>
+                <button id="add-bold-btn" title="Bold Text" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;"><b>B</b></button>
+                <button id="add-italic-btn" title="Italic Text" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;"><i>I</i></button>
+                <button id="add-underline-btn" title="Underline Text" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;"><u>U</u></button>
+                <button id="add-hr-btn" title="Insert Horizontal Rule" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">HR</button>
+                <button id="clear-notes-btn" title="Clear All Notes" style="background-color: #dc3545; color: white; border: 1px solid #dc3545; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">Clear</button>
+            </div>
+            <textarea id="note-textarea" placeholder="Write your notes here..."></textarea>
+            <div class="note-code-playground">
+                 <div class="code-editor-header">
+                    <span class="code-editor-title">Code Scratchpad</span>
+                    <button class="run-btn" onclick="runCode('note-code-input', 'note-code-vis')">Run Code</button>
+                    <button class="reset-btn" onclick="resetCode('note-code-input')">Reset</button>
+                </div>
+                <textarea class="code-input" id="note-code-input" placeholder="// Write and run small code snippets here..."></textarea>
+                 <div class="simulation-visual" id="note-code-vis">
+                     <div class="terminal" id="note-code-terminal"></div>
+                 </div>
+            </div>
+        </div>
+        <div class="note-tablet-footer">
+            <button id="download-notes-btn" class="check-btn">Download Notes</button>
+        </div>
+    </div>
+
+    <footer>
+        <button id="toggle-achievements-btn" class="footer-btn">
+            Achievements <i class="fas fa-chevron-up" id="achievements-toggle-icon"></i>
+        </button>
+        <div id="achievements-panel" class="achievements-panel">
+             <h4>Unlocked Achievements:</h4>
+             <ul id="achievement-list">
+                 </ul>
+        </div>
+    </footer>
+
+
+    
+    <script>
+        let unlockedSections = ['intro'];
+
+// Track correct answers for quizzes by their name attribute, grouped by section
+let sectionQuizCorrect = {
+    'intro': {
+        'intro-quiz-1': false,
+        'intro-quiz-2': false,
+        'intro-quiz-3': false,
+        'intro-quiz-4': false,
+        'intro-quiz-5': false
+    },
+    'setup': {
+        'setup-quiz-1': false,
+        'setup-quiz-2': false,
+        'setup-quiz-3': false,
+        'setup-quiz-4': false,
+        'setup-quiz-5': false
+    },
+    'hello': {
+        'hello-quiz-1': false,
+        'hello-quiz-2': false,
+        'hello-quiz-3': false,
+        'hello-quiz-4': false,
+        'hello-quiz-5': false
+    },
+    'routes': {
+        'routes-quiz-1': false,
+        'routes-quiz-2': false,
+        'routes-quiz-3': false,
+        'routes-quiz-4': false,
+        'routes-quiz-5': false
+    },
+    'middleware': {
+        'middleware-quiz-1': false,
+        'middleware-quiz-2': false,
+        'middleware-quiz-3': false,
+        'middleware-quiz-4': false,
+        'middleware-quiz-5': false
+    },
+    'async': {
+        'async-quiz-1': false,
+        'async-quiz-2': false,
+        'async-quiz-3': false,
+        'async-quiz-4': false,
+        'async-quiz-5': false
+    },
+    'database': {
+        'database-quiz-1': false,
+        'database-quiz-2': false,
+        'database-quiz-3': false,
+        'database-quiz-4': false,
+        'database-quiz-5': false
+    },
+    'api': {
+        'api-quiz-1': false,
+        'api-quiz-2': false,
+        'api-quiz-3': false,
+        'api-quiz-4': false,
+        'api-quiz-5': false
+    },
+    'auth': {
+        'auth-quiz-1': false,
+        'auth-quiz-2': false,
+        'auth-quiz-3': false,
+        'auth-quiz-4': false,
+        'auth-quiz-5': false
+    },
+    'error': {
+        'error-quiz-1': false,
+        'error-quiz-2': false,
+        'error-quiz-3': false,
+        'error-quiz-4': false,
+        'error-quiz-5': false
+    },
+    'testing': {
+        'testing-quiz-1': false,
+        'testing-quiz-2': false,
+        'testing-quiz-3': false,
+        'testing-quiz-4': false,
+        'testing-quiz-5': false
+    },
+    'deploy': {
+        'deploy-quiz-1': false,
+        'deploy-quiz-2': false,
+        'deploy-quiz-3': false,
+        'deploy-quiz-4': false,
+        'deploy-quiz-5': false
+    },
+    'final': {
+        'final-quiz-1': false,
+        'final-quiz-2': false,
+        'final-quiz-3': false,
+        'final-quiz-4': false,
+        'final-quiz-5': false
+    }
+};
+
+// List of unlocked achievement names
+let achievements = [];
+
+// Define the section unlock path
+const nextSectionMap = {
+    'intro': 'setup',
+    'setup': 'hello',
+    'hello': 'routes',
+    'routes': 'middleware',
+    'middleware': 'async',
+    'async': 'database',
+    'database': 'api',
+    'api': 'auth',
+    'auth': 'error',
+    'error': 'testing',
+    'testing': 'deploy',
+    'deploy': 'final',
+    'final': null
+};
+
+// Map section to achievement titles
+const sectionAchievementMap = {
+    'intro': 'Intro Initiator',
+    'setup': 'Setup Specialist',
+    'hello': 'Server Starter',
+    'routes': 'Routing Ranger',
+    'middleware': 'Middleware Magician',
+    'async': 'Async Architect',
+    'database': 'Database Developer',
+    'api': 'API Artisan',
+    'auth': 'Auth Authority',
+    'error': 'Error Eliminator',
+    'testing': 'Testing Technician',
+    'deploy': 'Deployment Dynamo',
+    'final': 'Backend Boss'
+};
+
+// Example check function for section 1's challenge
+function checkSection1Exercise() {
+    console.log('Checking Section 1 exercise...');
+    const code = document.getElementById('section1-code')?.value;
+    const feedback = document.getElementById('feedback-section1-challenge'); // Use the specific feedback ID
+
+    if (!feedback) {
+        console.error('Feedback element not found for section 1 challenge.');
+        return;
+    }
+     if (!code) {
+         showFeedback(feedback, 'No code found to check.', 'error');
+         return;
+     }
+
+    // --- Challenge Check Logic ---
+    // Implement the logic to check if the user's code meets the challenge requirements.
+    // This will be specific to the code and goal of Section 1's challenge.
+    // Example: Check if the code includes a specific function call or variable.
+
+    const challengePassed = code.includes('// Expected code or logic for Section 1'); // Replace with actual check
+
+    if (challengePassed) {
+        showFeedback(feedback, 'Challenge complete! Well done!', 'success');
+        // Optional: Unlock a specific achievement for this challenge
+        // unlockAchievement('Section 1 Challenge Master');
+    } else {
+        showFeedback(feedback, 'Keep trying! Review the instructions and code.', 'error');
+    }
+}
+
+ // Placeholder check function for the final project challenge
+ function checkFinalExercise() {
+     console.log('Checking Final Project exercise...');
+     const code = document.getElementById('final-code')?.value;
+     const feedback = document.getElementById('feedback-final-challenge');
+
+     if (!feedback) {
+         console.error('Feedback element not found for final challenge.');
+         return;
+     }
+      if (!code) {
+          showFeedback(feedback, 'No code found to check.', 'error');
+          return;
+      }
+    }
+
+
+    </script>
+    <script src="courseScript.js"></script>
+</body>
+</html>

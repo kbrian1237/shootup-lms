@@ -1,0 +1,1680 @@
+/*
+    Retro Course Theme CSS
+    Inspired by classic arcade games, early home computers, and 8-bit aesthetics.
+    Features bold colors, pixelated or chunky fonts, and distinct borders.
+    This version is specifically tailored to the provided courseTemp.html structure.
+*/
+
+/* --- CSS Variables for Retro Theme System --- */
+:root {
+        /* Retro Color Palette */
+        --retro-black: #222222;       /* Deep, rich black for backgrounds */
+        --retro-dark-grey: #444444;   /* Slightly lighter grey for elements */
+        --retro-light-grey: #aaaaaa;  /* For text and subtle details */
+        --retro-blue: #0088cc;        /* Classic arcade blue */
+        --retro-green: #00cc66;       /* Bright green for success/accents */
+        --retro-red: #cc3333;         /* Alarm red for errors/accents */
+        --retro-yellow: #ffcc00;      /* Vibrant yellow for highlights */
+        --retro-purple: #8800cc;      /* Deep purple accent */
+        --retro-orange: #ff6600;      /* Punchy orange accent */
+
+        /* Generic Mappings (for JS theme compatibility) */
+        --bg-primary: var(--retro-black);
+        --bg-secondary: var(--retro-dark-grey);
+        --text-primary: var(--retro-light-grey);
+        --text-secondary: var(--retro-light-grey);
+        --accent-gold: var(--retro-yellow); /* Mapping for existing gold accent */
+        --accent-blue: var(--retro-blue);
+        --border-color: var(--retro-light-grey);
+        --shadow-color: rgba(0, 0, 0, 0.4); /* Stronger shadow */
+        --success-color: var(--retro-green);
+        --error-color: var(--retro-red);
+        --code-bg: #111111; /* Even darker for code blocks */
+        --code-text: var(--retro-green); /* Green console text */
+        --locked-grey: #666666; /* Clearly muted for locked items */
+        --button-bg: var(--retro-blue);
+        --button-text: white;
+        --button-hover-bg: var(--retro-purple); /* Hover state for buttons */
+        --nav-bg: #111111; /* Dark nav background */
+        --nav-link-text: var(--retro-yellow); /* Vibrant nav links */
+        --nav-link-hover-bg: rgba(255, 204, 0, 0.2); /* Yellow transparent hover */
+        --nav-link-active-bg: var(--retro-orange); /* Orange active state */
+        --nav-link-active-text: var(--retro-black); /* Dark text for active */
+        --dark-color: var(--retro-dark-grey); /* For achievement badge, etc. */
+
+        /* Specific Retro Properties */
+        --font-pixel: 'Press Start 2P', cursive; /* Used for headings */
+        --font-chunky: 'Bebas Neue', sans-serif; /* Used for general body text, labels */
+        --font-console: 'Fira Code', 'Courier New', monospace; /* For code/terminal */
+        --border-width-chunky: 3px;
+        --border-style-chunky: solid;
+        --box-shadow-retro: 5px 5px 0px 0px rgba(0, 0, 0, 0.8); /* Offset shadow */
+        --transition-speed: 0.15s ease-in-out; /* Snappy transitions */
+        --border-radius-pixel: 5px; /* Subtle pixelated rounding */
+
+        /* RGB values for transitions/rgba functions (match the defined palette) */
+        --primary-color-rgb: 0, 136, 204;     /* retro-blue */
+        --secondary-color-rgb: 0, 204, 102;   /* retro-green */
+        --accent-color-rgb: 255, 204, 0;      /* retro-yellow */
+        --text-color-rgb: 170, 170, 170;      /* retro-light-grey */
+        --success-color-rgb: 0, 204, 102;
+        --error-color-rgb: 204, 51, 51;
+}
+
+/* --- Additional Themes --- */
+
+/* Dark Theme */
+body.dark-theme {
+        --bg-primary: #2c3e50;
+        --bg-secondary: #34495e;
+        --text-primary: #ecf0f1;
+        --text-secondary: #bdc3c7;
+        --accent-gold: #f1c40f;
+        --accent-blue: #3498db;
+        --border-color: #5a6a7a;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+        --code-bg: #1e1e1e;
+        --code-text: #abb2bf;
+        --locked-grey: #95a5a6;
+        --button-bg: var(--accent-blue);
+        --button-text: white;
+        --button-hover-bg: #2980b9;
+        --nav-bg: #1a252f;
+        --nav-link-text: #bdc3c7;
+        --nav-link-hover-bg: rgba(255, 255, 255, 0.1);
+        --nav-link-active-bg: var(--accent-gold);
+        --nav-link-active-text: var(--dark-color);
+        --dark-color: #1a252f;
+}
+
+/* Light Theme */
+body.light-theme {
+        --bg-primary: #f0f4f8;
+        --bg-secondary: #ffffff;
+        --text-primary: #2c3e50;
+        --text-secondary: #7f8c8d;
+        --accent-gold: #e67e22;
+        --accent-blue: #3498db;
+        --border-color: #dbe4ee;
+        --shadow-color: rgba(0, 0, 0, 0.06);
+        --code-bg: #f4f4f4;
+        --code-text: #333;
+        --locked-grey: #95a5a6;
+        --button-bg: var(--accent-blue);
+        --button-text: white;
+        --button-hover-bg: #2980b9;
+        --nav-bg: #ecf0f1;
+        --nav-link-text: var(--text-primary);
+        --nav-link-hover-bg: rgba(0, 0, 0, 0.08);
+        --nav-link-active-bg: var(--accent-gold);
+        --nav-link-active-text: var(--text-primary);
+        --dark-color: #ecf0f1;
+}
+
+/* Ocean Theme */
+body.ocean-theme {
+        --bg-primary: #e0f2f7;
+        --bg-secondary: #ffffff;
+        --text-primary: #004d40;
+        --text-secondary: #37474f;
+        --accent-gold: #ffb300;
+        --accent-blue: #0277bd;
+        --border-color: #b2ebf2;
+        --shadow-color: rgba(0, 0, 0, 0.07);
+        --code-bg: #002633;
+        --code-text: #80deea;
+        --locked-grey: #546e7a;
+        --button-bg: var(--accent-blue);
+        --button-text: white;
+        --button-hover-bg: #01579b;
+        --nav-bg: #004d40;
+        --nav-link-text: #e0f2f7;
+        --nav-link-hover-bg: rgba(255, 255, 255, 0.1);
+        --nav-link-active-bg: var(--accent-gold);
+        --nav-link-active-text: var(--text-primary);
+        --dark-color: #004d40;
+}
+
+/* Forest Theme */
+body.forest-theme {
+        --bg-primary: #e8f5e9;
+        --bg-secondary: #ffffff;
+        --text-primary: #1b5e20;
+        --text-secondary: #388e3c;
+        --accent-gold: #fbc02d;
+        --accent-blue: #33691e;
+        --border-color: #c8e6c9;
+        --shadow-color: rgba(0, 0, 0, 0.05);
+        --code-bg: #333333;
+        --code-text: #a5d6a7;
+        --locked-grey: #66bb6a;
+        --button-bg: var(--accent-blue);
+        --button-text: white;
+        --button-hover-bg: #2e7d32;
+        --nav-bg: #1b5e20;
+        --nav-link-text: #e8f5e9;
+        --nav-link-hover-bg: rgba(255, 255, 255, 0.1);
+        --nav-link-active-bg: var(--accent-gold);
+        --nav-link-active-text: var(--text-primary);
+        --dark-color: #1b5e20;
+}
+
+/* --- Base Styles --- */
+body {
+    font-family: var(--font-chunky); /* Apply Bebas Neue or fallback */
+    margin: 0;
+    padding-bottom: 80px; /* Space for the footer */
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color var(--transition-speed), color var(--transition-speed),
+                border-color var(--transition-speed); /* Include border for theme transitions */
+}
+
+/* Specific body class for when 'retro' style is active.
+   The JS sets cssLink.href directly, so the :root variables are generally active.
+   This class can be used for extra style specific to this theme if needed.
+*/
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Make headers bold and impactful */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-pixel); /* Apply Press Start 2P or fallback */
+    color: var(--accent-blue);
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    text-shadow: 2px 2px var(--retro-dark-grey); /* Chunky text shadow */
+    transition: color var(--transition-speed), text-shadow var(--transition-speed);
+}
+
+h1 { font-size: 2.8rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-family: var(--font-chunky); /* Ensure paragraph text uses chunky font */
+}
+
+a {
+    color: var(--retro-yellow);
+    text-decoration: underline;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--retro-orange);
+}
+
+/* --- Header --- */
+header {
+    background-color: var(--retro-dark-grey);
+    color: var(--retro-yellow);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-bottom: var(--border-width-chunky) var(--border-style-chunky) var(--retro-blue);
+    box-shadow: var(--box-shadow-retro);
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out;
+}
+
+header h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--retro-yellow); /* Header title is yellow */
+    text-shadow: 4px 4px var(--retro-orange); /* Stronger pixel shadow */
+    animation: retroBlink 1s infinite alternate; /* Subtle blink effect */
+}
+
+header p {
+    font-size: 1.2rem;
+    color: var(--retro-light-grey);
+    opacity: 0.9;
+    font-family: var(--font-chunky); /* Ensure header tagline uses chunky font */
+}
+
+/* --- Settings Button and Modal Styles --- */
+#settingsButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--retro-blue);
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-dark-grey);
+    color: white;
+    font-family: var(--font-pixel); /* Use pixel font for buttons too */
+    font-size: 0.9rem;
+    padding: 8px 14px;
+    border-radius: var(--border-radius-pixel);
+    cursor: pointer;
+    box-shadow: 2px 2px 0px 0px var(--retro-black); /* Chunky button shadow */
+    transition: all var(--transition-speed);
+    z-index: 120;
+    text-transform: uppercase; /* Make buttons pop */
+}
+
+#settingsButton:hover {
+    background-color: var(--retro-purple);
+    transform: translate(1px, 1px); /* Push effect */
+    box-shadow: 1px 1px 0px 0px var(--retro-black);
+}
+
+/* The Modal (background overlay) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2001;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker, more opaque overlay */
+    display: flex; /* Use flexbox to center content vertically and horizontally */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Content/Box - looks like an old dialog box */
+.modal-content {
+    background-color: var(--retro-dark-grey);
+    padding: 2.5rem;
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-light-grey);
+    width: 90%;
+    max-width: 450px;
+    border-radius: var(--border-radius-pixel);
+    box-shadow: var(--box-shadow-retro);
+    color: var(--text-primary);
+    position: relative;
+    animation: fadeIn 0.3s;
+    /* Center the modal content */
+    margin: 0 auto;
+    top: 50%;
+    left: 15%;
+    right: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-content h2 {
+    font-family: var(--font-pixel);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: var(--retro-yellow);
+    border-bottom: 2px solid var(--retro-blue);
+    padding-bottom: 0.7rem;
+    text-shadow: 1px 1px var(--retro-black);
+}
+
+.close {
+    color: var(--retro-red);
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    background: none;
+    border: none;
+    transition: color 0.2s, transform 0.1s;
+}
+
+.close:hover {
+    color: var(--retro-orange);
+    transform: scale(1.1);
+}
+
+/* Settings (Theme/Font Selects) - chunky and visible */
+.settings {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.settings > div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.settings label {
+    font-family: var(--font-chunky);
+    font-weight: bold;
+    color: var(--retro-yellow);
+    min-width: 90px;
+    font-size: 1rem;
+    text-shadow: 1px 1px var(--retro-black);
+}
+
+.settings select {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border-radius: var(--border-radius-pixel);
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-blue);
+    font-family: var(--font-chunky);
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: var(--retro-black);
+    color: var(--retro-green); /* Green text in select */
+    outline: none;
+    transition: all var(--transition-speed);
+    appearance: none; /* Hide default dropdown arrow */
+    /* Custom SVG arrow for select dropdown */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.362%22%20height%3D%22292.362%22%3E%3Cpath%20fill%3D%22%2300CC66%22%20d%3D%22M287.362%2C197.211L159.362%2C69.211c-3.906-3.906-10.234-3.906-14.141%2C0L5.001%2C197.211c-3.906%2C3.906-3.906%2C10.234%2C0%2C14.141s10.234%2C3.906%2C14.141%2C0l133.191-133.191l133.191%2C133.191c3.906%2C3.906%2C10.234%2C3.906%2C14.141%2C0S291.268%2C201.117%2C287.362%2C197.211z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 15px auto;
+}
+
+.settings select:focus {
+    border-color: var(--retro-green);
+    box-shadow: 0 0 0 3px rgba(0, 204, 102, 0.3);
+}
+
+.settings option {
+    background-color: var(--retro-black);
+    color: var(--retro-light-grey);
+    font-family: var(--font-chunky);
+}
+
+/* --- Loader Overlay Styles --- */
+#loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95); /* Almost opaque black for retro feel */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: opacity 0.3s ease;
+}
+
+#loader-overlay.hidden {
+    opacity: 0;
+    pointer-events: none; /* Allows clicks through once hidden */
+}
+
+/* Spinner Styles */
+.spinner {
+    width: 80px; /* Larger spinner */
+    height: 80px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.spinner::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 8px solid var(--retro-light-grey); /* Thicker border */
+    border-top: 8px solid var(--retro-yellow); /* Yellow spinner */
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite; /* Faster spin */
+    box-shadow: 0 0 20px var(--retro-yellow); /* Stronger glow */
+}
+
+.spinner p {
+    font-family: var(--font-pixel);
+    font-size: 1.8rem; /* Larger "learn" text */
+    color: var(--retro-gold); /* Gold color as per HTML */
+    text-shadow: 2px 2px var(--retro-orange);
+    position: relative; /* To place it above the spinner */
+    z-index: 1;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* --- Navigation --- */
+.nav-container {
+    background-color: var(--nav-bg);
+    padding: 0.8rem;
+    border-bottom: var(--border-width-chunky) var(--border-style-chunky) var(--retro-blue);
+    box-shadow: var(--box-shadow-retro);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto; /* Allow horizontal scroll if needed */
+}
+
+.nav-tabs {
+    display: flex; /* Use flexbox for horizontal nav */
+    flex-wrap: nowrap; /* Prevent wrapping to new lines */
+    justify-content: flex-start; /* Align left, can be center if needed */
+    gap: 1rem;
+    padding: 0.6rem;
+    list-style: none; /* Remove bullet points */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: hidden;
+    white-space: nowrap; /* Prevent line breaks */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--retro-blue) var(--nav-bg); /* Firefox */
+}
+
+.nav-tabs::-webkit-scrollbar {
+    height: 8px;
+}
+.nav-tabs::-webkit-scrollbar-thumb {
+    background: var(--retro-blue);
+    border-radius: 4px;
+}
+.nav-tabs::-webkit-scrollbar-track {
+    background: var(--nav-bg);
+}
+
+.nav-tabs li {
+    display: flex; /* Allow lock icon to be next to button */
+    align-items: center;
+    flex-shrink: 0; /* Prevent shrinking so all tabs stay same size */
+}
+
+.nav-tabs button {
+    background-color: var(--retro-dark-grey); /* Button background */
+    color: var(--nav-link-text);
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-light-grey);
+    padding: 0.7rem 1.4rem;
+    border-radius: var(--border-radius-pixel);
+    font-family: var(--font-pixel);
+    font-weight: normal;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px 0px var(--retro-black); /* Chunky button shadow */
+    transition: all var(--transition-speed);
+    font-size: 0.9rem;
+    cursor: pointer; /* Ensure cursor pointer is visible */
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.nav-tabs button:hover:not(:disabled) {
+    background-color: var(--nav-link-hover-bg);
+    color: var(--retro-green);
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px 0px var(--retro-black);
+}
+
+.nav-tabs button.active {
+    background-color: var(--nav-link-active-bg);
+    color: var(--nav-link-active-text);
+    font-weight: bold;
+    box-shadow: 0 0 0px 0px var(--retro-black); /* Active state "pushes" button in */
+    transform: translate(2px, 2px);
+    border-color: var(--retro-green); /* Green border for active */
+}
+
+/* Styling for Locked Navigation Items */
+.nav-tabs li .nav-btn[disabled] {
+    opacity: 0.6; /* Clearly muted */
+    pointer-events: none; /* Disable click */
+    background-color: var(--retro-dark-grey);
+    color: var(--locked-grey);
+    border-color: var(--locked-grey);
+    box-shadow: 2px 2px 0px 0px var(--retro-black); /* Maintain shadow */
+    cursor: not-allowed;
+}
+
+.lock-icon {
+    font-size: 0.8rem;
+    color: var(--retro-red);
+    margin-left: 8px;
+    transition: color 0.3s ease; /* Smooth color change for lock icon */
+}
+
+/* --- Main Content --- */
+.container {
+    max-width: 1200px; /* Slightly narrower for retro feel */
+    margin: 2.5rem auto;
+    padding: 0 2rem;
+}
+
+/* Lesson Section - distinct blocks */
+.lesson-section {
+    background-color: var(--bg-secondary);
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-yellow);
+    border-radius: var(--border-radius-pixel);
+    padding: 2.5rem;
+    box-shadow: var(--box-shadow-retro);
+    margin-bottom: 2.5rem;
+    /* Added for controlling visibility based on active class */
+    display: none; /* Hide all sections by default */
+    opacity: 0; /* Start hidden for JS animation */
+    transition: opacity 0.5s ease-out; /* Fade in when active */
+}
+
+.lesson-section.active {
+    display: block; /* Show only the active section */
+    opacity: 1; /* Show when active */
+}
+
+.lesson-title {
+    font-family: var(--font-pixel);
+    color: var(--retro-orange);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    border-bottom: var(--border-width-chunky) var(--border-style-chunky) var(--retro-green);
+    padding-bottom: 1rem;
+    display: inline-block; /* To make border-bottom appear only under text */
+    text-shadow: 3px 3px var(--retro-red);
+}
+
+.lesson-content h3 {
+    font-family: var(--font-pixel);
+    color: var(--retro-blue);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    border-bottom: 1px dotted var(--retro-light-grey); /* Dotted for old school screens */
+    padding-bottom: 0.6rem;
+}
+
+.lesson-content p {
+    margin-bottom: 1.5rem;
+    color: var(--retro-light-grey);
+    font-family: var(--font-chunky); /* Ensure paragraph text uses chunky font */
+}
+
+.lesson-content ul {
+    margin-bottom: 1.5rem;
+    padding-left: 25px;
+    color: var(--retro-light-grey);
+    font-family: var(--font-chunky);
+    list-style-type: square; /* Retro square bullets */
+}
+
+.lesson-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 25px;
+    color: var(--retro-light-grey);
+    font-family: var(--font-chunky);
+}
+
+.lesson-content li {
+    margin-bottom: 0.7rem;
+}
+
+.lesson-content code {
+    background-color: rgba(0, 0, 0, 0.5); /* Darker inline code */
+    padding: 0.3rem 0.5rem;
+    border-radius: 3px;
+    font-family: var(--font-console);
+    color: var(--retro-green); /* Green inline code */
+    border: 1px solid rgba(0, 204, 102, 0.3);
+}
+.lesson-content pre code {
+    display: block;
+    padding: 1.8rem;
+    background-color: var(--code-bg);
+    color: var(--code-text);
+    overflow-x: auto;
+    border-radius: var(--border-radius-pixel);
+    box-shadow: inset 0 0 8px rgba(0, 204, 102, 0.4); /* Inner green glow */
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-green);
+    font-family: var(--font-console);
+}
+
+
+/* --- Interactive Playground --- */
+.playground {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin: 3.5rem 0;
+}
+
+@media (min-width: 768px) {
+    .playground {
+        flex-direction: row;
+    }
+}
+
+.code-editor, .simulation-visual {
+    flex: 1;
+    min-height: 450px; /* Taller */
+    border-radius: var(--border-radius-pixel);
+    box-shadow: var(--box-shadow-retro);
+    overflow: hidden; /* Important for terminal scrolling */
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-blue);
+}
+
+.code-editor {
+    background-color: var(--code-bg);
+    padding: 1.8rem;
+    color: var(--code-text);
+    display: flex;
+    flex-direction: column;
+}
+
+.code-editor-header {
+    display: flex; /* Align title and buttons */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--retro-dark-grey); /* Separator */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 10px; /* Space between items if wrapped */
+}
+
+.code-editor-title {
+    font-family: var(--font-pixel);
+    color: var(--retro-yellow);
+    font-size: 1.2rem;
+    text-shadow: 1px 1px var(--retro-black);
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.code-editor-header button {
+    margin-left: 10px; /* Space between buttons */
+}
+
+.run-btn, .reset-btn {
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-dark-grey);
+    padding: 0.5rem 1.2rem;
+    border-radius: var(--border-radius-pixel);
+    font-family: var(--font-pixel);
+    font-size: 0.85rem;
+    box-shadow: 2px 2px 0px 0px var(--retro-black);
+    transition: all var(--transition-speed);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.run-btn {
+    background-color: var(--retro-green);
+    color: var(--retro-black);
+}
+
+.run-btn:hover {
+    background-color: #00e673; /* Lighter green */
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px 0px var(--retro-black);
+}
+
+.reset-btn {
+    background-color: var(--retro-red);
+    color: var(--retro-black);
+}
+
+.reset-btn:hover {
+    background-color: #e64d4d; /* Lighter red */
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px 0px var(--retro-black);
+}
+
+textarea.code-input {
+    flex-grow: 1; /* Take up remaining space */
+    min-height: 250px; /* More space for code */
+    background-color: #111111;
+    color: var(--code-text);
+    border: none; /* Remove default textarea border */
+    padding: 1.5rem;
+    font-family: var(--font-console);
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: vertical; /* Allow vertical resizing */
+    outline: none; /* Remove outline on focus */
+    caret-color: var(--retro-orange); /* Orange blinking cursor */
+}
+
+/* Simulation Visualization Area - resembles old screen */
+.simulation-visual {
+    background-color: #000000; /* Deep black for screen */
+    padding: 1.8rem;
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-orange);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.5); /* Orange glow */
+}
+
+/* Placeholder for specific visualizations */
+.simulation-placeholder {
+    font-family: var(--font-pixel);
+    font-size: 1.5rem;
+    color: var(--retro-yellow);
+    text-align: center;
+    text-shadow: 1px 1px var(--retro-black);
+    filter: drop-shadow(0 0 5px var(--retro-yellow)); /* Subtle glow for text */
+    margin-bottom: 20px; /* Space above terminal */
+}
+
+/* Terminal Output - classic green-on-black */
+.terminal {
+    width: 100%;
+    height: 200px;
+    background-color: #000000;
+    color: var(--retro-green);
+    font-family: var(--font-console);
+    padding: 18px;
+    /* margin-top: 20px; Not needed if within flex column and correctly spaced */
+    border-radius: var(--border-radius-pixel);
+    overflow-y: auto;
+    font-size: 0.95rem;
+    white-space: pre-wrap; /* Preserve whitespace and wrap long lines */
+    word-break: break-word; /* Break words if too long */
+    border: 1px solid var(--retro-dark-grey);
+    box-shadow: inset 0 0 5px rgba(0, 204, 102, 0.3); /* Inner green glow */
+    flex-shrink: 0; /* Prevent shrinking if content grows */
+}
+
+.terminal-line {
+    margin-bottom: 8px;
+}
+
+.terminal-line.system { color: var(--retro-blue); }
+.terminal-line.error { color: var(--retro-red); font-weight: bold; }
+.terminal-line.success { color: var(--retro-yellow); } /* Yellow for success */
+.terminal-line.request { color: var(--retro-orange); font-weight: bold; }
+.terminal-line.response { color: var(--retro-light-grey); }
+
+/* --- Exercise Section --- */
+.exercise {
+    background-color: var(--bg-secondary);
+    /* Changed to uniform border to match overall retro theme better */
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-red);
+    border-radius: var(--border-radius-pixel); /* Apply consistent border radius */
+    padding: 2.5rem;
+    margin: 2.5rem 0;
+    box-shadow: var(--box-shadow-retro);
+}
+
+.exercise-title {
+    font-family: var(--font-pixel);
+    color: var(--retro-red);
+    margin-bottom: 1.8rem;
+    font-size: 2rem;
+    text-shadow: 2px 2px var(--retro-black);
+}
+
+.exercise-title i {
+    color: var(--retro-yellow);
+    font-size: 1.8rem;
+    margin-right: 10px;
+}
+
+.exercise-instruction {
+    margin-bottom: 1.8rem;
+    color: var(--retro-light-grey);
+    font-family: var(--font-chunky); /* Ensure instruction text uses chunky font */
+}
+
+.exercise ol {
+    margin-bottom: 1.8rem;
+    padding-left: 25px;
+    color: var(--retro-light-grey);
+    font-family: var(--font-chunky);
+}
+
+.exercise li {
+    margin-bottom: 1rem;
+}
+
+/* Styling for individual quizzes */
+.quiz {
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-blue);
+    border-radius: var(--border-radius-pixel);
+    background-color: var(--retro-black); /* Dark background for quizzes */
+    box-shadow: inset 0 0 5px rgba(0, 136, 204, 0.3); /* Inner blue glow */
+}
+
+.quiz p {
+    margin-bottom: 1.2rem;
+    font-weight: bold;
+    color: var(--retro-yellow);
+    font-family: var(--font-pixel); /* Quiz questions use pixel font */
+    text-shadow: 1px 1px var(--retro-black);
+}
+
+.quiz-options label {
+    display: block;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    color: var(--retro-light-grey);
+    font-family: var(--font-chunky); /* Quiz options use chunky font */
+    transition: color 0.1s ease;
+}
+
+.quiz-options label:hover {
+    color: var(--retro-green);
+}
+
+.quiz-options input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2); /* Larger radio buttons */
+    accent-color: var(--retro-blue); /* Retro blue radio button */
+    cursor: pointer;
+}
+
+.check-btn {
+    background-color: var(--retro-blue);
+    color: white;
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-light-grey);
+    padding: 0.8rem 2.2rem;
+    border-radius: var(--border-radius-pixel);
+    cursor: pointer;
+    font-weight: bold;
+    font-family: var(--font-pixel); /* Pixel font for check buttons */
+    font-size: 1rem;
+    margin-top: 2rem;
+    box-shadow: 3px 3px 0px 0px var(--retro-black);
+    transition: all var(--transition-speed);
+    text-transform: uppercase;
+}
+
+.check-btn:hover {
+    background-color: var(--retro-purple);
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0px 0px var(--retro-black);
+}
+
+.check-btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px 0px 0px var(--retro-black);
+}
+
+
+/* Feedback Styling - clear and bold */
+.feedback {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: var(--border-radius-pixel);
+    display: none; /* Hidden by default, shown by JS */
+    font-weight: bold;
+    font-family: var(--font-pixel); /* Feedback uses pixel font */
+    border: var(--border-width-chunky) var(--border-style-chunky) transparent;
+    animation: retroTextReveal 0.2s steps(8) forwards; /* Typewriter effect */
+    overflow: hidden; /* Hide overflow for typewriter effect */
+    white-space: nowrap; /* Keep text on single line for typewriter effect */
+    max-width: 100%;
+}
+
+.feedback.success {
+    background-color: rgba(var(--success-color-rgb), 0.2);
+    color: var(--retro-green);
+    border-color: var(--retro-green);
+    box-shadow: 0 0 10px rgba(var(--success-color-rgb), 0.5);
+}
+
+.feedback.error {
+    background-color: rgba(var(--error-color-rgb), 0.2);
+    color: var(--retro-red);
+    border-color: var(--retro-red);
+    box-shadow: 0 0 10px rgba(var(--error-color-rgb), 0.5);
+}
+
+/* Keyframes for typewriter effect */
+@keyframes retroTextReveal {
+  from { width: 0; }
+  to { width: 100%; }
+}
+/* Keyframes for retro button push */
+@keyframes buttonPush {
+    0% { transform: translate(0, 0); box-shadow: 3px 3px 0px 0px var(--retro-black); }
+    100% { transform: translate(3px, 3px); box-shadow: 0px 0px 0px 0px var(--retro-black); }
+}
+
+/* --- Progress Section --- */
+.progress-container {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius-pixel);
+    padding: 2rem;
+    box-shadow: var(--box-shadow-retro);
+    margin-top: 3rem;
+    text-align: center;
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-blue);
+}
+
+.progress-title {
+    font-family: var(--font-pixel);
+    color: var(--retro-blue);
+    margin-bottom: 1.8rem;
+    font-size: 1.8rem;
+    text-shadow: 2px 2px var(--retro-black);
+}
+
+.progress-bar {
+    height: 30px; /* Chunkier bar */
+    background-color: var(--retro-black);
+    border-radius: var(--border-radius-pixel);
+    margin-bottom: 1.2rem;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.8); /* Inner shadow */
+    border: 2px solid var(--retro-light-grey);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--retro-yellow), var(--retro-orange)); /* Yellow to orange gradient */
+    border-radius: var(--border-radius-pixel);
+    width: 0%;
+    transition: width 0.8s ease-out; /* Slower transition */
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.5), 0 0 25px rgba(255, 102, 0, 0.5);
+}
+
+.progress-text {
+    font-family: var(--font-pixel);
+    font-weight: bold;
+    color: var(--retro-green); /* Green progress text */
+    font-size: 1.2rem;
+    text-shadow: 1px 1px var(--retro-black);
+}
+
+/* --- Achievement Badge (Temporary Notification) --- */
+.achievement-badge {
+    position: fixed; /* Fixed position for notification */
+    bottom: 90px;
+    right: 20px;
+    background-color: var(--retro-yellow);
+    color: var(--retro-black);
+    padding: 1.5rem 2rem;
+    border-radius: var(--border-radius-pixel);
+    box-shadow: var(--box-shadow-retro);
+    transform: translateX(150%); /* Start off-screen */
+    transition: transform 0.4s ease-out;
+    z-index: 1000;
+    font-family: var(--font-pixel);
+    font-weight: bold;
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-orange);
+}
+
+.achievement-badge.show {
+    transform: translateX(0); /* Slide in */
+}
+
+.badge-icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: var(--retro-orange);
+    filter: drop-shadow(2px 2px var(--retro-red)); /* Red shadow for icon */
+}
+
+/* --- Floating Note Tablet Button --- */
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 70px; /* Larger button */
+    height: 70px;
+    border-radius: 50%;
+    background-color: var(--retro-purple);
+    color: white;
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-blue);
+    box-shadow: 4px 4px 0px 0px var(--retro-black);
+    font-size: 2rem;
+    transition: all var(--transition-speed);
+    z-index: 999;
+    display: flex; /* For centering the icon */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.floating-btn:hover {
+    background-color: var(--retro-blue);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px var(--retro-black);
+}
+
+/* --- Note Tablet Modal/Panel --- */
+.note-tablet-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9); /* Start slightly smaller */
+    width: 90%;
+    max-width: 900px; /* Even wider panel */
+    height: 90%;
+    max-height: 90vh;
+    background-color: var(--retro-dark-grey);
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-yellow);
+    border-radius: var(--border-radius-pixel);
+    box-shadow: 0 0 30px rgba(255, 204, 0, 0.5); /* Yellow glow */
+    z-index: 1000;
+    opacity: 0; /* Hidden by default */
+    pointer-events: none; /* Disable interaction when closed */
+    display: flex; /* Use flex for internal layout */
+    flex-direction: column;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.note-tablet-panel.open {
+    opacity: 1; /* Show when open */
+    transform: translate(-50%, -50%) scale(1); /* Scale to full size */
+    pointer-events: all; /* Enable interaction when open */
+}
+
+.note-tablet-header {
+    padding: 1.2rem 1.8rem;
+    background-color: var(--retro-blue);
+    color: white;
+    border-bottom: var(--border-width-chunky) var(--border-style-chunky) var(--retro-dark-grey);
+    border-radius: var(--border-radius-pixel) var(--border-radius-pixel) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.note-tablet-header h4 {
+    font-family: var(--font-pixel);
+    font-size: 1.4rem;
+    color: white;
+    text-shadow: 1px 1px var(--retro-black);
+    margin: 0; /* Reset default h4 margin */
+}
+
+.note-tablet-header button {
+    background: none;
+    border: none;
+    color: var(--retro-yellow);
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.1s;
+}
+
+.note-tablet-header button:hover {
+    color: var(--retro-red);
+}
+
+.note-tablet-content {
+    padding: 2rem;
+    flex-grow: 1; /* Allow content to grow */
+    overflow-y: auto; /* Enable scrolling for long content */
+    display: flex;
+    flex-direction: column;
+}
+
+.note-tablet-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--retro-light-grey); /* Use retro color for border */
+    align-items: center;
+}
+
+.note-tablet-controls button {
+    background-color: var(--retro-black);
+    color: var(--retro-yellow);
+    border: 2px solid var(--retro-orange);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+    box-shadow: 1px 1px 0px 0px var(--retro-dark-grey);
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.note-tablet-controls button:hover {
+    background-color: var(--retro-orange);
+    color: var(--retro-black);
+    transform: translate(1px, 1px);
+    box-shadow: 0px 0px 0px 0px var(--retro-dark-grey);
+}
+
+#clear-notes-btn {
+    background-color: var(--retro-red);
+    border-color: var(--retro-orange);
+    color: white;
+}
+#clear-notes-btn:hover {
+    background-color: var(--retro-orange);
+    color: var(--retro-black);
+}
+
+#note-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 15px;
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-blue);
+    border-radius: var(--border-radius-pixel);
+    font-family: var(--font-console);
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #111111;
+    color: var(--retro-green);
+    outline: none;
+    resize: vertical;
+    margin-bottom: 2rem;
+    box-shadow: inset 0 0 5px rgba(0, 136, 204, 0.3); /* Inner blue glow */
+    caret-color: var(--retro-orange);
+    flex-grow: 1; /* Allow it to fill space */
+}
+
+#note-textarea:focus {
+    border-color: var(--retro-green);
+    box-shadow: 0 0 0 3px rgba(0, 204, 102, 0.3), inset 0 0 5px rgba(0, 204, 102, 0.5);
+}
+
+.note-code-playground {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    border: 1px solid var(--retro-dark-grey);
+    border-radius: var(--border-radius-pixel);
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.note-code-playground .code-editor-header {
+    background-color: var(--retro-black);
+    border-bottom: 2px solid var(--retro-light-grey);
+    padding: 1rem 1.5rem;
+    margin-bottom: 0; /* Remove default margin from header style */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.note-code-playground textarea.code-input {
+    min-height: 120px;
+    height: auto;
+    background-color: #111111;
+    padding: 1.2rem;
+    border: none; /* No outer border, only inner glow */
+    font-size: 0.95rem;
+    color: var(--retro-green);
+    box-shadow: inset 0 0 3px rgba(0, 204, 102, 0.2); /* Subtle inner glow */
+}
+
+.note-code-playground .simulation-visual {
+    min-height: 150px;
+    padding: 1.2rem;
+    background-color: #000000;
+    border: none; /* No outer border, only inner glow */
+    box-shadow: none;
+    border-top: 1px dashed var(--retro-light-grey); /* Dashed separator */
+    justify-content: flex-start; /* Align terminal to top */
+}
+
+.note-code-playground .simulation-placeholder {
+    display: none; /* Hide placeholder in scratchpad visual */
+}
+
+.note-code-playground .terminal {
+    height: 100%; /* Fill available height */
+    width: 100%;
+    margin-top: 0;
+    padding: 10px;
+    border-radius: 0;
+    border: none;
+    box-shadow: none; /* No extra shadow here */
+}
+
+.note-tablet-footer {
+    padding: 1.2rem 1.8rem;
+    background-color: var(--retro-blue);
+    border-top: var(--border-width-chunky) var(--border-style-chunky) var(--retro-dark-grey);
+    border-radius: 0 0 var(--border-radius-pixel) var(--border-radius-pixel);
+    display: flex;
+    justify-content: flex-end; /* Align button to the right */
+}
+
+.note-tablet-footer .check-btn {
+    background-color: var(--retro-yellow);
+    color: var(--retro-black);
+    border-color: var(--retro-orange);
+    box-shadow: 2px 2px 0px 0px var(--retro-black); /* Smaller shadow for footer button */
+}
+.note-tablet-footer .check-btn:hover {
+    background-color: var(--retro-orange);
+    border-color: var(--retro-yellow);
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px 0px var(--retro-black);
+}
+
+
+/* --- Footer and Achievements Display --- */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--retro-dark-grey);
+    color: var(--retro-yellow);
+    padding: 1rem 1.5rem;
+    z-index: 99;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+    border-top: var(--border-width-chunky) var(--border-style-chunky) var(--retro-blue);
+    font-family: var(--font-pixel);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center footer content */
+    text-align: center;
+}
+
+.footer-btn {
+    background: none;
+    border: none;
+    color: var(--retro-yellow);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.6rem 1rem;
+    border-radius: var(--border-radius-pixel);
+    transition: all 0.2s ease;
+    text-shadow: 1px 1px var(--retro-black);
+    font-family: var(--font-pixel); /* Apply pixel font */
+    text-transform: uppercase;
+}
+
+.footer-btn:hover {
+    background-color: rgba(255, 204, 0, 0.2);
+    color: var(--retro-green);
+}
+
+#achievements-toggle-icon {
+    transition: transform 0.3s ease;
+    margin-left: 5px;
+}
+
+.achievements-panel {
+    background-color: var(--retro-black);
+    color: var(--retro-light-grey);
+    padding: 2rem;
+    border-radius: var(--border-radius-pixel) var(--border-radius-pixel) 0 0;
+    box-shadow: 0 -5px 20px rgba(255, 204, 0, 0.3); /* Yellow glow */
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    margin-top: 15px;
+    border: var(--border-width-chunky) var(--border-style-chunky) var(--retro-yellow);
+    border-bottom: none;
+    display: none; /* Controlled by JS, but also ensures hidden by default */
+    animation: slideInUp 0.4s ease-out;
+}
+
+.achievements-panel h4 {
+    font-family: var(--font-pixel);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--retro-orange);
+    border-bottom: 2px solid var(--retro-green);
+    padding-bottom: 0.8rem;
+    text-shadow: 1px 1px var(--retro-black);
+}
+
+#achievement-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#achievement-list li {
+    background-color: var(--retro-dark-grey);
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-family: var(--font-chunky);
+    font-size: 0.9rem;
+    border: 1px solid var(--retro-blue);
+    color: var(--retro-light-grey);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 2px 2px 0px 0px var(--retro-black);
+}
+
+#achievement-list li::before {
+    content: '🏆'; /* Use this if you want a fixed emoji */
+    /* Alternatively, if you want FA icon: */
+    /* font-family: 'Font Awesome 6 Free'; font-weight: 900; content: '\f091'; */ /* For trophy icon */
+    margin-right: 8px;
+    font-size: 1.3rem;
+    color: var(--retro-yellow);
+    filter: drop-shadow(1px 1px var(--retro-orange));
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes retroBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; } /* Subtle blink */
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    header {
+        padding: 1.5rem 1rem;
+    }
+    header h1 {
+        font-size: 2.5rem;
+        text-shadow: 3px 3px var(--retro-orange);
+    }
+    header p {
+        font-size: 1rem;
+    }
+    #settingsButton {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+    .modal-content {
+        padding: 2rem 1rem;
+        max-width: 95vw;
+        left:45% ;
+    }
+    .modal-content h2 {
+        font-size: 1.3rem;
+    }
+    .settings label, .settings select {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    .nav-container {
+        padding: 0.6rem;
+    }
+    .nav-tabs {
+        gap: 0.8rem;
+        padding: 0.5rem;
+    }
+    .nav-tabs button {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+        margin: 2rem auto;
+    }
+    .lesson-section {
+        padding: 2rem;
+    }
+    .lesson-title {
+        font-size: 2rem;
+        text-shadow: 2px 2px var(--retro-red);
+    }
+    .lesson-content h3 {
+        font-size: 1.4rem;
+    }
+    .lesson-content pre code {
+        padding: 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .playground {
+        flex-direction: column;
+        gap: 2rem;
+        margin: 2.5rem 0;
+    }
+    .code-editor, .simulation-visual {
+        min-height: 350px;
+        padding: 1.5rem;
+    }
+    .code-editor-header {
+        padding: 1rem 1.2rem;
+    }
+    .code-editor-title {
+        font-size: 1.1rem;
+    }
+    .run-btn, .reset-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.75rem;
+    }
+    textarea.code-input {
+        padding: 1.2rem;
+        font-size: 0.9rem;
+    }
+    .terminal {
+        height: 180px;
+        padding: 15px;
+        font-size: 0.85rem;
+    }
+
+    .exercise {
+        padding: 2rem;
+        margin: 2.5rem 0;
+    }
+    .exercise-title {
+        font-size: 1.7rem;
+    }
+    .exercise-title i {
+        font-size: 1.5rem;
+    }
+    .quiz {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    .check-btn {
+        padding: 0.7rem 1.8rem;
+        font-size: 0.9rem;
+    }
+    .feedback {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .progress-container {
+        padding: 1.8rem;
+        margin-top: 2.5rem;
+    }
+    .progress-title {
+        font-size: 1.5rem;
+    }
+    .progress-bar {
+        height: 25px;
+    }
+    .progress-text {
+        font-size: 1rem;
+    }
+
+    .achievement-badge {
+        bottom: 80px;
+        right: 15px;
+        padding: 1rem 1.5rem;
+        font-size: 0.85rem;
+    }
+    .badge-icon {
+        font-size: 1.6rem;
+    }
+
+    .floating-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6rem;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .note-tablet-panel {
+        max-width: 95vw;
+        height: 95vh;
+        max-height: 95vh;
+    }
+    .note-tablet-header {
+        padding: 1rem 1.2rem;
+    }
+    .note-tablet-header h4 {
+        font-size: 1.2rem;
+    }
+    .note-tablet-content {
+        padding: 1.5rem;
+    }
+    #note-textarea {
+        padding: 1.2rem;
+        font-size: 0.95rem;
+    }
+    .note-code-playground .code-editor-header {
+        padding: 0.8rem 1rem;
+    }
+    .note-code-playground textarea.code-input {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    .note-code-playground .terminal {
+        height: 100px;
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+    .note-tablet-footer {
+        padding: 1rem 1.2rem;
+    }
+
+    footer {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+    .footer-btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.8rem;
+    }
+    .achievements-panel {
+        padding: 1.5rem;
+        max-height: 200px;
+    }
+    .achievements-panel h4 {
+        font-size: 1.3rem;
+    }
+    #achievement-list li {
+        padding: 0.7rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+        text-shadow: 2px 2px var(--retro-orange);
+    }
+    header p {
+        font-size: 0.9rem;
+    }
+    .lesson-title {
+        font-size: 1.8rem;
+        text-shadow: 1px 1px var(--retro-red);
+    }
+    .lesson-content h3 {
+        font-size: 1.2rem;
+    }
+    .lesson-content pre code {
+        padding: 1rem;
+        font-size: 0.85rem;
+    }
+    .code-editor, .simulation-visual {
+        min-height: 300px;
+        padding: 1rem;
+    }
+    textarea.code-input {
+        padding: 1rem;
+        font-size: 0.85rem;
+    }
+    .terminal {
+        height: 150px;
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+    .exercise-title {
+        font-size: 1.5rem;
+    }
+    .quiz {
+        padding: 1.2rem;
+    }
+    .check-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.8rem;
+    }
+    .feedback {
+        padding: 0.8rem;
+        font-size: 0.8rem;
+    }
+    .progress-title {
+        font-size: 1.3rem;
+    }
+    .progress-bar {
+        height: 20px;
+    }
+    .progress-text {
+        font-size: 0.9rem;
+    }
+    .achievement-badge {
+        bottom: 70px;
+        right: 10px;
+        padding: 0.8rem 1.2rem;
+        font-size: 0.8rem;
+    }
+    .badge-icon {
+        font-size: 1.4rem;
+    }
+    .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+        bottom: 10px;
+        right: 10px;
+    }
+    .note-tablet-panel {
+        padding: 1rem;
+    }
+    .note-tablet-header h4 {
+        font-size: 1rem;
+    }
+    .note-tablet-content {
+        padding: 1rem;
+    }
+    #note-textarea {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    .note-code-playground textarea.code-input {
+        padding: 0.8rem;
+        font-size: 0.85rem;
+    }
+    .note-code-playground .terminal {
+        height: 80px;
+        padding: 6px;
+        font-size: 0.75rem;
+    }
+    .note-tablet-footer {
+        padding: 0.8rem 1rem;
+    }
+    footer {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    .achievements-panel {
+        padding: 1rem;
+    }
+    .achievements-panel h4 {
+        font-size: 1.2rem;
+    }
+    #achievement-list li {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.75rem;
+    }
+}

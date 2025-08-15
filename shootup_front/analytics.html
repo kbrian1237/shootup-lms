@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - ShootUp</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dist/style.css">
+    
+    <style>
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .progress-ring-circle {
+            transition: stroke-dasharray 0.35s;
+            transform-origin: 50% 50%;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+        .animate-delay-4 { animation-delay: 0.4s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+
+    <!-- Main container for the entire layout -->
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+
+        <div id="navigation-placeholder"></div>
+
+        <!-- Main Content Area -->
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <!-- Sidebar toggle button (hidden when sidebar is open) -->
+            <button id="sidebar-toggle-btn" class="absolute top-8 left-8 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none transition-all duration-300 ease-in-out hidden btn-primary" title="Show Navigation">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+
+            <!-- Analytics Dashboard -->
+            <div class="p-8">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h1 class="text-4xl font-bold text-white mb-2 animate-fade-in-up">Analytics Dashboard</h1>
+                        <p class="text-gray-400 animate-fade-in-up animate-delay-1">Track your learning progress and insights</p>
+                    </div>
+                    <div class="flex gap-4 animate-fade-in-up animate-delay-2">
+                        <button onclick="refreshAnalytics()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                            <i class="fas fa-sync-alt mr-2"></i>
+                            Refresh
+                        </button>
+                        <button onclick="generateSampleData()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            Generate Sample Data
+                        </button>
+                        <button onclick="exportAnalytics()" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                            <i class="fas fa-download mr-2"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Key Metrics -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="metric-card stats-card rounded-2xl p-6 animate-fade-in-up">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-gray-400">Time Spent</p>
+                                <h3 class="text-3xl font-bold mt-2" id="total-time">0 <span class="text-lg">hrs</span></h3>
+                                <p class="text-sm text-indigo-400 mt-1" id="time-trend">+0% this week</p>
+                            </div>
+                            <div class="p-3 bg-purple-500/20 rounded-full">
+                                <i class="fa-solid fa-clock text-2xl text-purple-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card stats-card rounded-2xl p-6 animate-fade-in-up animate-delay-1">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-gray-400">Courses Completed</p>
+                                <h3 class="text-3xl font-bold mt-2" id="courses-completed">0</h3>
+                                <p class="text-sm text-green-400 mt-1" id="completion-rate">0% completion rate</p>
+                            </div>
+                            <div class="p-3 bg-green-500/20 rounded-full">
+                                <i class="fa-solid fa-graduation-cap text-2xl text-green-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card stats-card rounded-2xl p-6 animate-fade-in-up animate-delay-2">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-gray-400">Average Score</p>
+                                <h3 class="text-3xl font-bold mt-2" id="average-score">0%</h3>
+                                <p class="text-sm text-yellow-400 mt-1" id="score-trend">No quizzes taken</p>
+                            </div>
+                            <div class="p-3 bg-yellow-500/20 rounded-full">
+                                <i class="fa-solid fa-star text-2xl text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card stats-card rounded-2xl p-6 animate-fade-in-up animate-delay-3">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-gray-400">Study Streak</p>
+                                <h3 class="text-3xl font-bold mt-2" id="study-streak">0 <span class="text-lg">days</span></h3>
+                                <p class="text-sm text-indigo-400 mt-1" id="streak-status">Start your streak!</p>
+                            </div>
+                            <div class="p-3 bg-indigo-500/20 rounded-full">
+                                <i class="fa-solid fa-fire text-2xl text-indigo-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row 1 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Weekly Activity -->
+                    <div class="stats-card rounded-2xl p-6 animate-fade-in-up animate-delay-4">
+                        <h3 class="text-2xl font-bold mb-6 text-indigo-300">Weekly Activity</h3>
+                        <div class="chart-container">
+                            <canvas id="weeklyActivityChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Course Progress -->
+                    <div class="stats-card rounded-2xl p-6 animate-fade-in-up animate-delay-4">
+                        <h3 class="text-2xl font-bold mb-6 text-indigo-300">Course Progress</h3>
+                        <div id="course-progress-container" class="space-y-4">
+                            <!-- Course progress bars will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row 2 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Time Distribution -->
+                    <div class="stats-card rounded-2xl p-6">
+                        <h3 class="text-2xl font-bold mb-6 text-indigo-300">Time Distribution by Course</h3>
+                        <div class="chart-container">
+                            <canvas id="timeDistributionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Performance Trends -->
+                    <div class="stats-card rounded-2xl p-6">
+                        <h3 class="text-2xl font-bold mb-6 text-indigo-300">Quiz Performance Trends</h3>
+                        <div class="chart-container">
+                            <canvas id="performanceTrendsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Insights -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Learning Patterns -->
+                    <div class="stats-card rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-4 text-indigo-300">Learning Patterns</h3>
+                        <div id="learning-patterns" class="space-y-3">
+                            <!-- Learning patterns will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="stats-card rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-4 text-indigo-300">Recent Achievements</h3>
+                        <div id="recent-achievements" class="space-y-3">
+                            <!-- Recent achievements will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Study Goals -->
+                    <div class="stats-card rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-4 text-indigo-300">Study Goals</h3>
+                        <div id="study-goals" class="space-y-3">
+                            <!-- Study goals will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="stats-card rounded-2xl p-6">
+                    <h3 class="text-2xl font-bold mb-6 text-indigo-300">Recent Activity</h3>
+                    <div id="recent-activity" class="space-y-3">
+                        <!-- Recent activity will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dist/data.js"></script>
+    <script src="dist/script.js"></script>
+    <script src="dist/progress-sync.js"></script>
+    <script src="dist/course-scheduler.js"></script>
+    <script src="dist/analytics-engine.js"></script>
+    <script src="dist/navigation-toggle.js"></script>
+    
+    <script>
+        let charts = {};
+        let analyticsData = null;
+        let allCourses = [];
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Load course data
+                const data = await window.ShootUpData.load();
+                allCourses = data.courses || [];
+                
+                // Initialize analytics
+                await initializeAnalytics();
+                
+            } catch (error) {
+                console.error('Error initializing analytics:', error);
+                showError('Failed to load analytics data');
+            }
+        });
+
+        async function initializeAnalytics() {
+            // Get analytics summary
+            analyticsData = window.AnalyticsEngine.getAnalyticsSummary();
+            
+            // Update key metrics
+            updateKeyMetrics();
+            
+            // Create charts
+            createWeeklyActivityChart();
+            createTimeDistributionChart();
+            createPerformanceTrendsChart();
+            
+            // Update other sections
+            updateCourseProgress();
+            updateLearningPatterns();
+            updateRecentAchievements();
+            updateStudyGoals();
+            updateRecentActivity();
+        }
+
+        function updateKeyMetrics() {
+            const overview = analyticsData.overview;
+            
+            // Total time spent
+            document.getElementById('total-time').innerHTML = 
+                `${overview.totalTimeSpentHours} <span class="text-lg">hrs</span>`;
+            
+            // Calculate weekly trend
+            const weeklyData = analyticsData.weeklyProgress;
+            const thisWeekMinutes = Object.values(weeklyData).reduce((a, b) => a + b, 0);
+            const weeklyTrend = thisWeekMinutes > 0 ? '+' + Math.round(thisWeekMinutes / 60 * 10) / 10 + 'h this week' : 'No activity this week';
+            document.getElementById('time-trend').textContent = weeklyTrend;
+            
+            // Courses completed
+            document.getElementById('courses-completed').textContent = overview.coursesCompleted;
+            
+            // Calculate completion rate
+            const totalCourses = allCourses.length;
+            const completionRate = totalCourses > 0 ? Math.round((overview.coursesCompleted / totalCourses) * 100) : 0;
+            document.getElementById('completion-rate').textContent = `${completionRate}% completion rate`;
+            
+            // Average score
+            document.getElementById('average-score').textContent = `${overview.averageScore}%`;
+            
+            // Score trend
+            const scoreTrend = overview.averageScore >= 80 ? 'Excellent performance!' : 
+                              overview.averageScore >= 60 ? 'Good progress' : 
+                              overview.averageScore > 0 ? 'Keep improving' : 'No quizzes taken';
+            document.getElementById('score-trend').textContent = scoreTrend;
+            
+            // Study streak
+            document.getElementById('study-streak').innerHTML = 
+                `${overview.studyStreak} <span class="text-lg">days</span>`;
+            
+            const streakStatus = overview.studyStreak >= 7 ? 'Amazing streak! 🔥' :
+                               overview.studyStreak >= 3 ? 'Great consistency!' :
+                               overview.studyStreak >= 1 ? 'Keep it up!' : 'Start your streak!';
+            document.getElementById('streak-status').textContent = streakStatus;
+        }
+
+        function createWeeklyActivityChart() {
+            const ctx = document.getElementById('weeklyActivityChart').getContext('2d');
+            const weeklyData = analyticsData.weeklyProgress;
+            
+            if (charts.weeklyActivity) {
+                charts.weeklyActivity.destroy();
+            }
+            
+            charts.weeklyActivity = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(weeklyData),
+                    datasets: [{
+                        label: 'Minutes Studied',
+                        data: Object.values(weeklyData),
+                        backgroundColor: 'rgba(99, 102, 241, 0.6)',
+                        borderColor: 'rgba(99, 102, 241, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#9CA3AF'
+                            },
+                            grid: {
+                                color: 'rgba(156, 163, 175, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#9CA3AF'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createTimeDistributionChart() {
+            const ctx = document.getElementById('timeDistributionChart').getContext('2d');
+            const timeSpentByCourse = analyticsData.timeSpentByCourse;
+            
+            if (charts.timeDistribution) {
+                charts.timeDistribution.destroy();
+            }
+            
+            const courseNames = Object.keys(timeSpentByCourse).map(courseId => {
+                const course = allCourses.find(c => c.id === courseId);
+                return course ? course.title : courseId;
+            });
+            
+            const colors = [
+                'rgba(99, 102, 241, 0.8)',
+                'rgba(34, 197, 94, 0.8)',
+                'rgba(234, 179, 8, 0.8)',
+                'rgba(239, 68, 68, 0.8)',
+                'rgba(168, 85, 247, 0.8)'
+            ];
+            
+            charts.timeDistribution = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: courseNames,
+                    datasets: [{
+                        data: Object.values(timeSpentByCourse),
+                        backgroundColor: colors,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#9CA3AF',
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createPerformanceTrendsChart() {
+            const ctx = document.getElementById('performanceTrendsChart').getContext('2d');
+            
+            if (charts.performanceTrends) {
+                charts.performanceTrends.destroy();
+            }
+            
+            // Get quiz scores over time
+            const quizScores = window.AnalyticsEngine.analytics.quizScores || [];
+            const labels = quizScores.map((_, index) => `Quiz ${index + 1}`);
+            const scores = quizScores.map(quiz => quiz.percentage);
+            
+            charts.performanceTrends = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Quiz Scores',
+                        data: scores,
+                        borderColor: 'rgba(34, 197, 94, 1)',
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                color: '#9CA3AF',
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(156, 163, 175, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#9CA3AF'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCourseProgress() {
+            const container = document.getElementById('course-progress-container');
+            const courseProgress = analyticsData.courseProgress;
+            
+            if (Object.keys(courseProgress).length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-8">No course progress data available</p>';
+                return;
+            }
+            
+            container.innerHTML = Object.entries(courseProgress).map(([courseId, progress]) => {
+                const course = allCourses.find(c => c.id === courseId);
+                const courseName = course ? course.title : courseId;
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-medium text-white">${courseName}</span>
+                                <span class="text-sm text-gray-400">${progress}%</span>
+                            </div>
+                            <div class="w-full bg-gray-600 rounded-full h-2">
+                                <div class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: ${progress}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateLearningPatterns() {
+            const container = document.getElementById('learning-patterns');
+            const trends = analyticsData.learningTrends;
+            
+            container.innerHTML = `
+                <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-calendar-day text-indigo-400 mr-3"></i>
+                        <span class="text-sm text-gray-300">Most Active Day</span>
+                    </div>
+                    <span class="text-sm font-medium text-white">${trends.mostActiveDay || 'N/A'}</span>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-clock text-green-400 mr-3"></i>
+                        <span class="text-sm text-gray-300">Avg Daily Time</span>
+                    </div>
+                    <span class="text-sm font-medium text-white">${trends.averageDailyTime} min</span>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-chart-line text-yellow-400 mr-3"></i>
+                        <span class="text-sm text-gray-300">Consistency Score</span>
+                    </div>
+                    <span class="text-sm font-medium text-white">${trends.consistencyScore}%</span>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-fire text-red-400 mr-3"></i>
+                        <span class="text-sm text-gray-300">Active Days</span>
+                    </div>
+                    <span class="text-sm font-medium text-white">${trends.totalActiveDays}</span>
+                </div>
+            `;
+        }
+
+        function updateRecentAchievements() {
+            const container = document.getElementById('recent-achievements');
+            const recentActivity = analyticsData.recentActivity;
+            const achievements = recentActivity.filter(activity => activity.type === 'achievement');
+            
+            if (achievements.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-4">No recent achievements</p>';
+                return;
+            }
+            
+            container.innerHTML = achievements.slice(0, 3).map(achievement => `
+                <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                    <div class="p-2 bg-yellow-500/20 rounded-full mr-3">
+                        <i class="fas fa-trophy text-yellow-400"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="font-medium text-white text-sm">${achievement.title}</div>
+                        <div class="text-xs text-gray-400">${achievement.points} points</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStudyGoals() {
+            const container = document.getElementById('study-goals');
+            const overview = analyticsData.overview;
+            const weeklyData = analyticsData.weeklyProgress;
+            const thisWeekMinutes = Object.values(weeklyData).reduce((a, b) => a + b, 0);
+            const weeklyGoal = 300; // 5 hours per week
+            const weeklyProgress = Math.min(100, Math.round((thisWeekMinutes / weeklyGoal) * 100));
+            
+            container.innerHTML = `
+                <div class="p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-300">Weekly Study Goal</span>
+                        <span class="text-sm font-medium text-white">${Math.round(thisWeekMinutes / 60 * 10) / 10}h / 5h</span>
+                    </div>
+                    <div class="w-full bg-gray-600 rounded-full h-2">
+                        <div class="bg-green-600 h-2 rounded-full transition-all duration-300" style="width: ${weeklyProgress}%"></div>
+                    </div>
+                </div>
+                
+                <div class="p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-300">Study Streak Goal</span>
+                        <span class="text-sm font-medium text-white">${overview.studyStreak} / 7 days</span>
+                    </div>
+                    <div class="w-full bg-gray-600 rounded-full h-2">
+                        <div class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: ${Math.min(100, (overview.studyStreak / 7) * 100)}%"></div>
+                    </div>
+                </div>
+                
+                <div class="p-3 bg-gray-700 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-300">Quiz Average Goal</span>
+                        <span class="text-sm font-medium text-white">${overview.averageScore}% / 85%</span>
+                    </div>
+                    <div class="w-full bg-gray-600 rounded-full h-2">
+                        <div class="bg-yellow-600 h-2 rounded-full transition-all duration-300" style="width: ${Math.min(100, (overview.averageScore / 85) * 100)}%"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateRecentActivity() {
+            const container = document.getElementById('recent-activity');
+            const recentActivity = analyticsData.recentActivity;
+            
+            if (recentActivity.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-8">No recent activity</p>';
+                return;
+            }
+            
+            container.innerHTML = recentActivity.map(activity => {
+                const date = new Date(activity.date);
+                const timeAgo = getTimeAgo(date);
+                
+                let icon, color, description;
+                
+                switch (activity.type) {
+                    case 'study':
+                        icon = 'fa-book-open';
+                        color = 'text-indigo-400';
+                        const course = allCourses.find(c => c.id === activity.courseId);
+                        description = `Studied ${course ? course.title : activity.courseId} for ${activity.minutes} minutes`;
+                        break;
+                    case 'quiz':
+                        icon = 'fa-question-circle';
+                        color = 'text-green-400';
+                        description = `Completed quiz "${activity.topicTitle}" with ${activity.score}%`;
+                        break;
+                    case 'achievement':
+                        icon = 'fa-trophy';
+                        color = 'text-yellow-400';
+                        description = `Unlocked achievement: ${activity.title}`;
+                        break;
+                    case 'completion':
+                        icon = 'fa-graduation-cap';
+                        color = 'text-purple-400';
+                        description = `Completed course: ${activity.courseTitle}`;
+                        break;
+                    default:
+                        icon = 'fa-circle';
+                        color = 'text-gray-400';
+                        description = 'Unknown activity';
+                }
+                
+                return `
+                    <div class="flex items-center p-4 bg-gray-700 rounded-lg">
+                        <div class="p-2 bg-gray-600 rounded-full mr-4">
+                            <i class="fas ${icon} ${color}"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <p class="text-white text-sm">${description}</p>
+                            <p class="text-gray-400 text-xs mt-1">${timeAgo}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'Just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+            return `${Math.floor(diffInSeconds / 86400)} days ago`;
+        }
+
+        function refreshAnalytics() {
+            initializeAnalytics();
+        }
+
+        function generateSampleData() {
+            window.AnalyticsEngine.generateSampleData();
+            setTimeout(() => {
+                initializeAnalytics();
+            }, 500);
+        }
+
+        function exportAnalytics() {
+            const exportData = window.AnalyticsEngine.exportData();
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `shootup-analytics-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function showError(message) {
+            const container = document.querySelector('.p-8');
+            container.innerHTML = `
+                <div class="text-center py-12 text-red-400">
+                    <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                    <p class="text-lg font-semibold mb-2">Analytics Error</p>
+                    <p class="text-sm">${message}</p>
+                    <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                        Try Again
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShootUp - Admin Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dist/style.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+
+    <!-- Main container for the entire layout -->
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+
+        <div id="navigation-placeholder"></div>
+
+        <!-- Main Content Area -->
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <!-- Sidebar toggle button (hidden when sidebar is open) -->
+            <button id="sidebar-toggle-btn" class="absolute top-8 left-8 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none transition-all duration-300 ease-in-out hidden btn-primary" title="Show Navigation">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+
+            <!-- Admin View -->
+            <div class="p-8">
+                <h2 class="text-4xl font-bold mb-8 header-title animate-fade-in-up">Admin Dashboard</h2>
+                
+                <!-- System Statistics -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="stats-card rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-bold text-blue-400 mb-2" id="total-users">0</div>
+                        <div class="text-gray-400">Total Users</div>
+                    </div>
+                    <div class="stats-card rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-bold text-green-400 mb-2" id="total-courses">0</div>
+                        <div class="text-gray-400">Total Courses</div>
+                    </div>
+                    <div class="stats-card rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-bold text-purple-400 mb-2" id="active-users">0</div>
+                        <div class="text-gray-400">Active Users</div>
+                    </div>
+                    <div class="stats-card rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-bold text-yellow-400 mb-2" id="total-categories">0</div>
+                        <div class="text-gray-400">Categories</div>
+                    </div>
+                </div>
+
+                <!-- Admin Controls -->
+                <div class="flex gap-4 mb-6">
+                    <button onclick="generateSampleData()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-database mr-2"></i>
+                        Generate Sample Data
+                    </button>
+                    <button onclick="exportData()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-download mr-2"></i>
+                        Export Data
+                    </button>
+                    <button onclick="resetData()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-trash mr-2"></i>
+                        Reset Data
+                    </button>
+                </div>
+                
+                <!-- User Management -->
+                <div class="stats-card rounded-2xl p-6 mb-8">
+                    <h3 class="text-2xl font-bold mb-6 text-indigo-300">User Management</h3>
+                    <button id="addUserBtn" class="cta-button animated-gradient text-white font-bold py-3 px-6 rounded-lg shadow-lg mb-4">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Add New User
+                    </button>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-gray-400 border-b border-gray-700">
+                                    <th class="pb-3">Name</th>
+                                    <th class="pb-3">Email</th>
+                                    <th class="pb-3">Role</th>
+                                    <th class="pb-3">Join Date</th>
+                                    <th class="pb-3">Last Active</th>
+                                    <th class="pb-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Category Management -->
+                <div class="stats-card rounded-2xl p-6 mb-8">
+                    <h3 class="text-2xl font-bold mb-6 text-indigo-300">Category Management</h3>
+                    <div class="flex gap-4 mb-4">
+                        <input type="text" id="newCategoryInput" placeholder="New Category Name" class="flex-1 p-4 rounded-lg bg-gray-700 border border-gray-600 text-white">
+                        <button id="addCategoryBtn" class="cta-button animated-gradient text-white font-bold py-3 px-6 rounded-lg shadow-lg">
+                            <i class="fas fa-plus mr-2"></i>
+                            Add
+                        </button>
+                    </div>
+                    <div id="categoryList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Categories will be added here dynamically -->
+                    </div>
+                </div>
+
+                <!-- Course Management -->
+                <div class="stats-card rounded-2xl p-6">
+                    <h3 class="text-2xl font-bold mb-6 text-indigo-300">Course Management</h3>
+                    <button id="addCourseBtn" class="cta-button animated-gradient text-white font-bold py-3 px-6 rounded-lg shadow-lg mb-4">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add New Course
+                    </button>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-gray-400 border-b border-gray-700">
+                                    <th class="pb-3">Course Name</th>
+                                    <th class="pb-3">Category</th>
+                                    <th class="pb-3">Students</th>
+                                    <th class="pb-3">Status</th>
+                                    <th class="pb-3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="courses-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center z-50">
+        <div class="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md">
+            <h3 class="text-2xl font-bold mb-6 text-indigo-300">Add New User</h3>
+            <form id="addUserForm">
+                <input type="text" id="userName" placeholder="Full Name" class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 text-white mb-4" required>
+                <input type="email" id="userEmail" placeholder="Email" class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 text-white mb-4" required>
+                <select id="userRole" class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 text-white mb-4">
+                    <option value="Student">Student</option>
+                    <option value="Admin">Admin</option>
+                </select>
+                <div class="flex justify-end gap-4">
+                    <button type="button" id="cancelAddUser" class="py-2 px-4 rounded-lg bg-gray-600 hover:bg-gray-500 transition-colors">Cancel</button>
+                    <button type="submit" class="py-2 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition-colors">Add User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Course Modal -->
+    <div id="addCourseModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center z-50">
+        <div class="bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md">
+            <h3 class="text-2xl font-bold mb-6 text-indigo-300">Add New Course</h3>
+            <form id="addCourseForm">
+                <input type="text" id="courseName" placeholder="Course Name" class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 text-white mb-4" required>
+                <textarea id="courseDescription" placeholder="Course Description" rows="3" class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 text-white mb-4"></textarea>
+                <select id="courseCategorySelect" class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 text-white mb-4" required>
+                    <option value="">Select Category</option>
+                </select>
+                <input type="text" id="courseLevel" placeholder="Level (e.g., Beginner, Intermediate)" class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 text-white mb-4">
+                <input type="text" id="courseRequirements" placeholder="Requirements" class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 text-white mb-4">
+                <div class="flex justify-end gap-4">
+                    <button type="button" id="cancelAddCourse" class="py-2 px-4 rounded-lg bg-gray-600 hover:bg-gray-500 transition-colors">Cancel</button>
+                    <button type="submit" class="py-2 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition-colors">Add Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="dist/data.js"></script>
+    <script src="dist/admin-system.js"></script>
+    <script src="dist/script.js"></script>
+    <script src="dist/navigation-toggle.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAdminData();
+            setupEventListeners();
+        });
+
+        function loadAdminData() {
+            updateSystemStats();
+            loadUsers();
+            loadCategories();
+            loadCourses();
+        }
+
+        function updateSystemStats() {
+            const stats = window.AdminSystem.analytics.getSystemStats();
+            
+            document.getElementById('total-users').textContent = stats.users.total;
+            document.getElementById('total-courses').textContent = stats.courses.total;
+            document.getElementById('active-users').textContent = stats.users.activeThisWeek;
+            document.getElementById('total-categories').textContent = stats.categories.total;
+        }
+
+        function loadUsers() {
+            const users = window.AdminSystem.users.getUsers();
+            const tbody = document.getElementById('users-table-body');
+            
+            tbody.innerHTML = users.map(user => `
+                <tr class="border-b border-gray-700 hover:bg-gray-700/30 transition-colors">
+                    <td class="py-3 text-white">${user.name}</td>
+                    <td class="py-3 text-gray-300">${user.email}</td>
+                    <td class="py-3">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold ${
+                            user.role === 'Admin' ? 'bg-purple-600 text-white' : 'bg-blue-600 text-white'
+                        }">
+                            ${user.role}
+                        </span>
+                    </td>
+                    <td class="py-3 text-gray-400">${user.joinDate}</td>
+                    <td class="py-3 text-gray-400">${user.lastActive}</td>
+                    <td class="py-3">
+                        <button onclick="editUser('${user.id}')" class="text-blue-400 hover:text-blue-300 mr-3">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteUser('${user.id}')" class="text-red-400 hover:text-red-300">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function loadCategories() {
+            const categories = window.AdminSystem.categories.getCategories();
+            const container = document.getElementById('categoryList');
+            
+            container.innerHTML = categories.map(category => `
+                <div class="bg-gray-700 p-4 rounded-lg flex justify-between items-center">
+                    <span class="text-white">${category}</span>
+                    <button onclick="deleteCategory('${category}')" class="text-red-400 hover:text-red-300">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            // Update course category select
+            const select = document.getElementById('courseCategorySelect');
+            select.innerHTML = '<option value="">Select Category</option>' + 
+                categories.map(category => `<option value="${category}">${category}</option>`).join('');
+        }
+
+        function loadCourses() {
+            const courses = window.AdminSystem.courses.getCourses();
+            const tbody = document.getElementById('courses-table-body');
+            
+            tbody.innerHTML = courses.map(course => `
+                <tr class="border-b border-gray-700 hover:bg-gray-700/30 transition-colors">
+                    <td class="py-3 text-white">${course.name}</td>
+                    <td class="py-3 text-gray-300">${course.category}</td>
+                    <td class="py-3 text-gray-400">${course.students || 0}</td>
+                    <td class="py-3">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold ${
+                            course.status === 'Active' ? 'bg-green-600 text-white' : 'bg-gray-600 text-white'
+                        }">
+                            ${course.status}
+                        </span>
+                    </td>
+                    <td class="py-3">
+                        <button onclick="editCourse('${course.id}')" class="text-blue-400 hover:text-blue-300 mr-3">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteCourse('${course.id}')" class="text-red-400 hover:text-red-300">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // User management
+            document.getElementById('addUserBtn').addEventListener('click', () => {
+                document.getElementById('addUserModal').classList.remove('hidden');
+            });
+            
+            document.getElementById('cancelAddUser').addEventListener('click', () => {
+                document.getElementById('addUserModal').classList.add('hidden');
+                document.getElementById('addUserForm').reset();
+            });
+            
+            document.getElementById('addUserForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                addUser();
+            });
+            
+            // Course management
+            document.getElementById('addCourseBtn').addEventListener('click', () => {
+                document.getElementById('addCourseModal').classList.remove('hidden');
+            });
+            
+            document.getElementById('cancelAddCourse').addEventListener('click', () => {
+                document.getElementById('addCourseModal').classList.add('hidden');
+                document.getElementById('addCourseForm').reset();
+            });
+            
+            document.getElementById('addCourseForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                addCourse();
+            });
+            
+            // Category management
+            document.getElementById('addCategoryBtn').addEventListener('click', addCategory);
+            document.getElementById('newCategoryInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addCategory();
+            });
+        }
+
+        function addUser() {
+            try {
+                const userData = {
+                    name: document.getElementById('userName').value,
+                    email: document.getElementById('userEmail').value,
+                    role: document.getElementById('userRole').value
+                };
+                
+                window.AdminSystem.users.addUser(userData);
+                document.getElementById('addUserModal').classList.add('hidden');
+                document.getElementById('addUserForm').reset();
+                
+                loadUsers();
+                updateSystemStats();
+                showNotification('User added successfully!', 'success');
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                try {
+                    window.AdminSystem.users.deleteUser(userId);
+                    loadUsers();
+                    updateSystemStats();
+                    showNotification('User deleted successfully!', 'success');
+                } catch (error) {
+                    showNotification(error.message, 'error');
+                }
+            }
+        }
+
+        function addCategory() {
+            const input = document.getElementById('newCategoryInput');
+            const categoryName = input.value.trim();
+            
+            if (!categoryName) {
+                showNotification('Please enter a category name', 'error');
+                return;
+            }
+            
+            try {
+                window.AdminSystem.categories.addCategory(categoryName);
+                input.value = '';
+                loadCategories();
+                updateSystemStats();
+                showNotification('Category added successfully!', 'success');
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        function deleteCategory(categoryName) {
+            if (confirm(`Are you sure you want to delete the "${categoryName}" category?`)) {
+                try {
+                    window.AdminSystem.categories.deleteCategory(categoryName);
+                    loadCategories();
+                    updateSystemStats();
+                    showNotification('Category deleted successfully!', 'success');
+                } catch (error) {
+                    showNotification(error.message, 'error');
+                }
+            }
+        }
+
+        function addCourse() {
+            try {
+                const courseData = {
+                    name: document.getElementById('courseName').value,
+                    description: document.getElementById('courseDescription').value,
+                    category: document.getElementById('courseCategorySelect').value,
+                    level: document.getElementById('courseLevel').value || 'Beginner',
+                    requirements: document.getElementById('courseRequirements').value || 'None'
+                };
+                
+                window.AdminSystem.courses.addCourse(courseData);
+                document.getElementById('addCourseModal').classList.add('hidden');
+                document.getElementById('addCourseForm').reset();
+                
+                loadCourses();
+                updateSystemStats();
+                showNotification('Course added successfully!', 'success');
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        function deleteCourse(courseId) {
+            if (confirm('Are you sure you want to delete this course?')) {
+                try {
+                    window.AdminSystem.courses.deleteCourse(courseId);
+                    loadCourses();
+                    updateSystemStats();
+                    showNotification('Course deleted successfully!', 'success');
+                } catch (error) {
+                    showNotification(error.message, 'error');
+                }
+            }
+        }
+
+        function generateSampleData() {
+            window.AdminSystem.generateSampleData();
+            loadAdminData();
+            showNotification('Sample data generated successfully!', 'success');
+        }
+
+        function exportData() {
+            const data = window.AdminSystem.exportAdminData();
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `admin-data-export-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Admin data exported successfully!', 'success');
+        }
+
+        function resetData() {
+            if (confirm('Are you sure you want to reset all admin data? This action cannot be undone.')) {
+                window.AdminSystem.resetAdminData();
+                loadAdminData();
+                showNotification('Admin data reset successfully!', 'success');
+            }
+        }
+
+        function editUser(userId) {
+            showNotification('Edit user functionality coming soon!', 'info');
+        }
+
+        function editCourse(courseId) {
+            showNotification('Edit course functionality coming soon!', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const colors = {
+                success: 'bg-green-600',
+                error: 'bg-red-600',
+                info: 'bg-blue-600'
+            };
+            
+            notification.className = `
+                fixed top-4 right-4 z-50 ${colors[type]} text-white p-4 rounded-lg shadow-lg 
+                transform translate-x-full transition-transform duration-300 max-w-sm
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

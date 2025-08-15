@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Dashboard - Learning Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>LMS</span>
+            </div>
+            
+            <div class="nav-search">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search courses, instructors, topics..." id="searchInput">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="nav-btn" id="notificationsBtn" title="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                
+                <button class="nav-btn" id="messagesBtn" title="Messages">
+                    <i class="fas fa-envelope"></i>
+                    <span class="notification-badge">2</span>
+                </button>
+                
+                <div class="user-menu">
+                    <button class="user-avatar" id="userMenuBtn">
+                        <img src="https://via.placeholder.com/40x40/3b82f6/ffffff?text=U" alt="User Avatar" id="userAvatarImg">
+                        <span class="user-name" id="userName">User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <img src="https://via.placeholder.com/50x50/3b82f6/ffffff?text=U" alt="User Avatar">
+                            <div>
+                                <div class="dropdown-name" id="dropdownUserName">User Name</div>
+                                <div class="dropdown-email" id="dropdownUserEmail">user@example.com</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="showSection('profile')">
+                            <i class="fas fa-user"></i> My Profile
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="showSection('my-courses')">
+                            <i class="fas fa-book"></i> My Courses
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-certificate"></i> Certificates
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li class="menu-item active" data-section="dashboard">
+                    <a href="#" onclick="showSection('dashboard')">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu-item" data-section="courses">
+                    <a href="#" onclick="showSection('courses')">
+                        <i class="fas fa-book-open"></i>
+                        <span>Browse Courses</span>
+                    </a>
+                </li>
+                <li class="menu-item" data-section="my-courses">
+                    <a href="#" onclick="showSection('my-courses')">
+                        <i class="fas fa-bookmark"></i>
+                        <span>My Courses</span>
+                    </a>
+                </li>
+                <li class="menu-item" data-section="community">
+                    <a href="#" onclick="showSection('community')">
+                        <i class="fas fa-users"></i>
+                        <span>Community</span>
+                    </a>
+                </li>
+                <li class="menu-item" data-section="progress">
+                    <a href="#" onclick="showSection('progress')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progress</span>
+                    </a>
+                </li>
+                <li class="menu-item" data-section="calendar">
+                    <a href="#" onclick="showSection('calendar')">
+                        <i class="fas fa-calendar"></i>
+                        <span>Calendar</span>
+                    </a>
+                </li>
+                <li class="menu-item" data-section="achievements">
+                    <a href="#" onclick="showSection('achievements')">
+                        <i class="fas fa-trophy"></i>
+                        <span>Achievements</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="upgrade-card">
+                    <i class="fas fa-star"></i>
+                    <h4>Upgrade to Pro</h4>
+                    <p>Unlock premium features and unlimited access</p>
+                    <button class="upgrade-btn">Upgrade Now</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="content-section active">
+            <div class="section-header">
+                <h1>Welcome back, <span id="welcomeUserName">User</span>!</h1>
+                <p>Continue your learning journey and explore new courses</p>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="enrolledCoursesCount">0</h3>
+                        <p>Enrolled Courses</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="studyHours">0</h3>
+                        <p>Study Hours</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="certificatesCount">0</h3>
+                        <p>Certificates</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="achievementsCount">0</h3>
+                        <p>Achievements</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Continue Learning -->
+            <div class="dashboard-section">
+                <div class="section-title">
+                    <h2>Continue Learning</h2>
+                    <a href="#" onclick="showSection('my-courses')">View All</a>
+                </div>
+                <div class="course-grid" id="continueCoursesGrid">
+                    <!-- Courses will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Recommended Courses -->
+            <div class="dashboard-section">
+                <div class="section-title">
+                    <h2>Recommended for You</h2>
+                    <a href="#" onclick="showSection('courses')">Browse All</a>
+                </div>
+                <div class="course-grid" id="recommendedCoursesGrid">
+                    <!-- Courses will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="dashboard-section">
+                <div class="section-title">
+                    <h2>Recent Activity</h2>
+                </div>
+                <div class="activity-feed" id="activityFeed">
+                    <!-- Activity items will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses-section" class="content-section">
+            <div class="section-header">
+                <h1>Browse Courses</h1>
+                <p>Discover new skills and advance your career</p>
+            </div>
+            
+            <!-- Course Filters -->
+            <div class="course-filters">
+                <div class="filter-group">
+                    <label>Category:</label>
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Level:</label>
+                    <select id="levelFilter">
+                        <option value="">All Levels</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort by:</label>
+                    <select id="sortFilter">
+                        <option value="newest">Newest</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Course Grid -->
+            <div class="course-grid" id="allCoursesGrid">
+                <!-- Courses will be loaded here -->
+            </div>
+        </section>
+
+        <!-- My Courses Section -->
+        <section id="my-courses-section" class="content-section">
+            <div class="section-header">
+                <h1>My Courses</h1>
+                <p>Track your progress and continue learning</p>
+            </div>
+            
+            <!-- Course Tabs -->
+            <div class="course-tabs">
+                <button class="tab-btn active" data-tab="enrolled">Enrolled</button>
+                <button class="tab-btn" data-tab="completed">Completed</button>
+                <button class="tab-btn" data-tab="wishlist">Wishlist</button>
+            </div>
+            
+            <!-- Course Content -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="enrolled-tab">
+                    <div class="course-grid" id="enrolledCoursesGrid">
+                        <!-- Enrolled courses will be loaded here -->
+                    </div>
+                </div>
+                <div class="tab-pane" id="completed-tab">
+                    <div class="course-grid" id="completedCoursesGrid">
+                        <!-- Completed courses will be loaded here -->
+                    </div>
+                </div>
+                <div class="tab-pane" id="wishlist-tab">
+                    <div class="course-grid" id="wishlistCoursesGrid">
+                        <!-- Wishlist courses will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section id="community-section" class="content-section">
+            <div class="section-header">
+                <h1>Community</h1>
+                <p>Connect with fellow learners and share knowledge</p>
+            </div>
+            
+            <!-- Community Tabs -->
+            <div class="community-tabs">
+                <button class="tab-btn active" data-tab="discussions">Discussions</button>
+                <button class="tab-btn" data-tab="questions">Q&A</button>
+                <button class="tab-btn" data-tab="announcements">Announcements</button>
+            </div>
+            
+            <!-- Create Post Button -->
+            <div class="community-actions">
+                <button class="create-post-btn" onclick="openCreatePostModal()">
+                    <i class="fas fa-plus"></i>
+                    Create Post
+                </button>
+            </div>
+            
+            <!-- Community Content -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="discussions-tab">
+                    <div class="posts-container" id="discussionsPosts">
+                        <!-- Discussion posts will be loaded here -->
+                    </div>
+                </div>
+                <div class="tab-pane" id="questions-tab">
+                    <div class="posts-container" id="questionsPosts">
+                        <!-- Q&A posts will be loaded here -->
+                    </div>
+                </div>
+                <div class="tab-pane" id="announcements-tab">
+                    <div class="posts-container" id="announcementsPosts">
+                        <!-- Announcements will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section id="progress-section" class="content-section">
+            <div class="section-header">
+                <h1>Learning Progress</h1>
+                <p>Track your achievements and skill development</p>
+            </div>
+            
+            <!-- Progress Overview -->
+            <div class="progress-overview">
+                <div class="progress-card">
+                    <h3>Overall Progress</h3>
+                    <div class="progress-circle">
+                        <svg class="progress-ring" width="120" height="120">
+                            <circle class="progress-ring-circle" stroke="#e5e7eb" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                            <circle class="progress-ring-circle progress-ring-fill" stroke="#3b82f6" stroke-width="8" fill="transparent" r="52" cx="60" cy="60" id="overallProgressCircle"/>
+                        </svg>
+                        <div class="progress-text">
+                            <span class="progress-percentage" id="overallProgressPercentage">0%</span>
+                            <span class="progress-label">Complete</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="progress-stats">
+                    <div class="progress-stat">
+                        <h4>Courses in Progress</h4>
+                        <span id="coursesInProgress">0</span>
+                    </div>
+                    <div class="progress-stat">
+                        <h4>Lessons Completed</h4>
+                        <span id="lessonsCompleted">0</span>
+                    </div>
+                    <div class="progress-stat">
+                        <h4>Quiz Score Average</h4>
+                        <span id="quizAverage">0%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Course Progress -->
+            <div class="course-progress-list" id="courseProgressList">
+                <!-- Course progress items will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile-section" class="content-section">
+            <div class="section-header">
+                <h1>My Profile</h1>
+                <p>Manage your account information and preferences</p>
+            </div>
+            
+            <!-- Profile Content -->
+            <div class="profile-container">
+                <div class="profile-sidebar">
+                    <div class="profile-avatar">
+                        <img src="https://via.placeholder.com/120x120/3b82f6/ffffff?text=U" alt="Profile Avatar" id="profileAvatarImg">
+                        <button class="change-avatar-btn">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <div class="profile-info">
+                        <h3 id="profileUserName">User Name</h3>
+                        <p id="profileUserEmail">user@example.com</p>
+                        <div class="profile-badges">
+                            <span class="badge">Student</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-content">
+                    <div class="profile-tabs">
+                        <button class="tab-btn active" data-tab="personal">Personal Info</button>
+                        <button class="tab-btn" data-tab="security">Security</button>
+                        <button class="tab-btn" data-tab="preferences">Preferences</button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="personal-tab">
+                            <form class="profile-form" id="personalInfoForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" id="firstName" name="firstName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" id="lastName" name="lastName">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="profileEmail" name="email">
+                                </div>
+                                <div class="form-group">
+                                    <label>Bio</label>
+                                    <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself..."></textarea>
+                                </div>
+                                <button type="submit" class="save-btn">Save Changes</button>
+                            </form>
+                        </div>
+                        
+                        <div class="tab-pane" id="security-tab">
+                            <form class="profile-form" id="securityForm">
+                                <div class="form-group">
+                                    <label>Current Password</label>
+                                    <input type="password" id="currentPassword" name="currentPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input type="password" id="newPassword" name="newPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm New Password</label>
+                                    <input type="password" id="confirmNewPassword" name="confirmNewPassword">
+                                </div>
+                                <button type="submit" class="save-btn">Update Password</button>
+                            </form>
+                        </div>
+                        
+                        <div class="tab-pane" id="preferences-tab">
+                            <form class="profile-form" id="preferencesForm">
+                                <div class="form-group">
+                                    <label>Language</label>
+                                    <select id="language" name="language">
+                                        <option value="en">English</option>
+                                        <option value="es">Spanish</option>
+                                        <option value="fr">French</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Timezone</label>
+                                    <select id="timezone" name="timezone">
+                                        <option value="UTC">UTC</option>
+                                        <option value="EST">Eastern Time</option>
+                                        <option value="PST">Pacific Time</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="emailNotifications" name="emailNotifications">
+                                        <span class="checkmark"></span>
+                                        Email Notifications
+                                    </label>
+                                </div>
+                                <button type="submit" class="save-btn">Save Preferences</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Create Post Modal -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Post</h3>
+                <button class="modal-close" onclick="closeCreatePostModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createPostForm">
+                    <div class="form-group">
+                        <label>Post Type</label>
+                        <select id="postType" name="postType">
+                            <option value="discussion">Discussion</option>
+                            <option value="question">Question</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="postTitle" name="title" placeholder="Enter post title...">
+                    </div>
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea id="postContent" name="content" rows="6" placeholder="Write your post content..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn secondary" onclick="closeCreatePostModal()">Cancel</button>
+                <button class="btn primary" onclick="submitPost()">Post</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

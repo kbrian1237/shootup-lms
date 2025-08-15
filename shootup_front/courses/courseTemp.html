@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Title - Learn Topic</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link id="layout" rel="stylesheet" href="./defaultStyle.css">
+</head>
+<body>
+    <!-- Back to navigation button -->
+    <button id="course-nav-toggle" style="position: fixed; top: 20px; left: 20px; z-index: 1000; padding: 12px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; border-radius: 50%; box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4); cursor: pointer; transition: all 0.3s ease; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;" title="Back to Navigation">
+        <i class="fas fa-arrow-left" style="font-size: 16px;"></i>
+    </button>
+
+    <!-- Loader overlay remains for visual feedback during loading -->
+    <div id="loader-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+        <div class="spinner"><p style="color: gold; justify-self: center;">learn</p></div>
+    </div>
+
+    <!-- Header content will be populated dynamically -->
+    <header>
+        <h1></h1>
+        <p></p>
+        <button id="settingsButton">Settings</button>
+    </header>
+
+    <!-- Settings Modal remains unchanged as it's UI chrome -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span> <h2>Settings</h2>
+            <div class="settings">
+                 <div class="theme-select">
+                    <label for="theme-select">Theme:</label>
+                    <select id="theme-select">
+                        <option value="default">Default</option>
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="forest">Forest</option>
+                    </select>
+                </div>
+                <div class="font-select">
+                    <label for="font-select">Font:</label>
+                    <select id="font-select">
+                        <option value="Segoe UI, Tahoma, Geneva, Verdana, sans-serif">Default</option>
+                        <option value="Roboto, sans-serif">Roboto</option>
+                        <option value="Open Sans, sans-serif">Open Sans</option>
+                        <option value="Lato, sans-serif">Lato</option>
+                        <option value="Montserrat, sans-serif">Montserrat</option>
+                        <option value="Merriweather, serif">Merriweather</option>
+                    </select>
+                </div>
+                <div class="style-select">
+                    <label for="style-select">Style:</label>
+                    <select id="style-select">
+                        <option value="default">Default</option>
+                        <option value="retro">retro</option>
+                        <option value="futuristic">futuristic</option>
+                        <option value="cyber">cyberpunk</option>
+                        <option value="lux">luxurious</option>
+                        <option value="minimalistic">minimalistic</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation tabs will be generated dynamically -->
+    <div class="nav-container">
+        <ul class="nav-tabs">
+        </ul>
+    </div>
+
+    <!-- Main container for lesson sections, will be populated dynamically -->
+    <div class="container">
+    </div>
+
+    <!-- Progress container remains for UI -->
+    <div class="progress-container">
+        <h3 class="progress-title">Your Progress</h3>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <p class="progress-text"><span id="progress-percent">0</span>% Complete</p>
+    </div>
+
+    <!-- Achievement badge remains for UI -->
+    <div class="achievement-badge" id="achievement-badge">
+        <span class="badge-icon">🏆</span>
+        <span class="badge-text">New Achievement Unlocked!</span>
+    </div>
+
+    <!-- Note tablet and its controls remain for UI -->
+    <button class="floating-btn" id="note-tablet-toggle" title="Open Notes">
+        <i class="fas fa-clipboard"></i>
+    </button>
+    <div class="note-tablet-panel" id="note-tablet-panel">
+        <div class="note-tablet-header">
+            <h4>My Notes & Scratchpad</h4>
+            <button id="close-note-tablet" title="Close Notes">&times;</button>
+        </div>
+        <div class="note-tablet-content">
+            <div class="note-tablet-controls" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e0dcd7; align-items: center;">
+                <button id="add-heading-btn" title="Add Heading" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">H</button>
+                <button id="add-list-btn" title="Add List Item" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">• List</button>
+                <button id="add-bold-btn" title="Bold Text" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;"><b>B</b></button>
+                <button id="add-italic-btn" title="Italic Text" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;"><i>I</i></button>
+                <button id="add-underline-btn" title="Underline Text" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;"><u>U</u></button>
+                <button id="add-hr-btn" title="Insert Horizontal Rule" style="background-color: #f8f5f2; color: #3a3a3a; border: 1px solid #e0dcd7; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">HR</button>
+                <button id="clear-notes-btn" title="Clear All Notes" style="background-color: #dc3545; color: white; border: 1px solid #dc3545; padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-width: 30px; text-align: center; transition: all 0.2s ease;">Clear</button>
+            </div>
+            <textarea id="note-textarea" placeholder="Write your notes here..."></textarea>
+            <div class="note-code-playground">
+                 <div class="code-editor-header">
+                    <span class="code-editor-title">Code Scratchpad</span>
+                    <button class="run-btn" onclick="runCode('note-code-input', 'note-code-vis')">Run Code</button>
+                    <button class="reset-btn" onclick="resetCode('note-code-input')">Reset</button>
+                </div>
+                <textarea class="code-input" id="note-code-input" placeholder="// Write and run small code snippets here..."></textarea>
+                 <div class="simulation-visual" id="note-code-vis">
+                     <div class="terminal" id="note-code-terminal"></div>
+                 </div>
+            </div>
+        </div>
+        <div class="note-tablet-footer">
+            <button id="download-notes-btn" class="check-btn">Download Notes</button>
+        </div>
+    </div>
+
+    <!-- Footer and achievements panel remain for UI -->
+    <footer>
+        <button id="toggle-achievements-btn" class="footer-btn">
+            Achievements <i class="fas fa-chevron-up" id="achievements-toggle-icon"></i>
+        </button>
+        <div id="achievements-panel" class="achievements-panel">
+             <h4>Unlocked Achievements:</h4>
+             <ul id="achievement-list">
+             </ul>
+        </div>
+    </footer>
+
+    <!-- Main script block for all course functionality -->
+     <script src="../dist/data.js"></script>
+    <script>
+        // --- GLOBAL STATE VARIABLES ---
+        let unlockedSections = ['section-0'];
+        let sectionQuizCorrect = {};
+        let achievements = [];
+        let nextSectionMap = {};
+        let sectionAchievementMap = {};
+        let currentCourseId = null;
+
+        // --- PRIMARY INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const courseId = params.get('id');
+            const loaderOverlay = document.getElementById('loader-overlay');
+            
+            // Function to hide loader
+            const hideLoader = () => {
+                if (loaderOverlay) {
+                    loaderOverlay.style.display = 'none';
+                }
+            };
+            
+            // Safety timeout to ensure loader is hidden after 10 seconds max
+            const safetyTimeout = setTimeout(() => {
+                console.warn('Loader timeout reached, forcing loader to hide');
+                hideLoader();
+            }, 10000);
+            
+            // Clear timeout when loader is properly hidden
+            const clearSafetyTimeout = () => {
+                clearTimeout(safetyTimeout);
+            };
+            
+            if (!courseId) {
+                // If no courseId, display an error and exit.
+                document.body.innerHTML = '<p style="color: red; text-align: center; padding: 20px;">Course ID not found in URL.</p>';
+                clearSafetyTimeout();
+                hideLoader();
+                return;
+            }
+            
+            // Store the current course ID for progress tracking
+            currentCourseId = courseId;
+
+            try {
+                // Fetch the main data file with proper error handling
+                let data;
+                try {
+                    data = await window.ShootUpData.load();
+                } catch (dataError) {
+                    console.error('Error loading main data:', dataError);
+                    throw new Error('Failed to load course data. Please check your connection and try again.');
+                }
+                
+                const courseMetadata = window.ShootUpData.getCourseById(data, courseId);
+                
+                if (!courseMetadata) {
+                    throw new Error(`Course with ID "${courseId}" not found.`);
+                }
+                
+                if (!courseMetadata.dataFile) {
+                    throw new Error(`Course data file not specified for course "${courseId}".`);
+                }
+                
+                // Load the specific course content from the dataFile
+                let courseContentResponse;
+                try {
+                    courseContentResponse = await fetch(`./${courseMetadata.dataFile}`, { cache: 'no-store' });
+                    if (!courseContentResponse.ok) {
+                        throw new Error(`HTTP ${courseContentResponse.status}: ${courseContentResponse.statusText}`);
+                    }
+                } catch (fetchError) {
+                    console.error('Error fetching course content:', fetchError);
+                    throw new Error(`Failed to load course content from "${courseMetadata.dataFile}".`);
+                }
+                
+                let courseData;
+                try {
+                    courseData = await courseContentResponse.json();
+                } catch (parseError) {
+                    console.error('Error parsing course data:', parseError);
+                    throw new Error('Failed to parse course data. The file may be corrupted.');
+                }
+                
+                // Populate the course content
+                populateCourseDOM(courseData);
+                initializeCourseLogic();
+                
+            } catch (error) {
+                console.error('Error in course loading process:', error);
+                document.body.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">An error occurred while loading the course: ${error.message}</p>`;
+            } finally {
+                // Always hide the loader overlay
+                clearSafetyTimeout();
+                hideLoader();
+            }
+        });
+         
+        /**
+         * Populates the DOM with course content from the fetched JSON data.
+         * @param {object} data - The course data from javascript.json.
+         */
+        function populateCourseDOM(data) {
+            // Populate header
+            document.title = `${data.title} - Learn ${data.category}`;
+            document.querySelector('header h1').textContent = data.title;
+            document.querySelector('header p').textContent = data.description;
+
+            const navTabs = document.querySelector('.nav-tabs');
+            const container = document.querySelector('.container');
+            navTabs.innerHTML = '';
+            container.innerHTML = '';
+
+            data.sections.forEach((section, index) => {
+                const sectionId = `section-${index}`;
+                sectionQuizCorrect[sectionId] = {};
+
+                // Populate navigation
+                const li = document.createElement('li');
+                li.dataset.target = sectionId;
+                const button = document.createElement('button');
+                button.className = 'nav-btn';
+                button.dataset.target = sectionId;
+                button.textContent = section.title;
+                const lockIcon = document.createElement('i');
+                lockIcon.className = 'fas fa-lock lock-icon';
+                if (index === 0) {
+                    button.classList.add('active');
+                    lockIcon.style.display = 'none';
+                }
+                li.appendChild(button);
+                li.appendChild(lockIcon);
+                navTabs.appendChild(li);
+
+                // Populate section content
+                const sectionEl = document.createElement('section');
+                sectionEl.id = sectionId;
+                sectionEl.className = 'lesson-section';
+                if (index === 0) sectionEl.classList.add('active');
+
+                const lessonTitle = document.createElement('h2');
+                lessonTitle.className = 'lesson-title';
+                lessonTitle.textContent = section.title;
+                sectionEl.appendChild(lessonTitle);
+
+                const lessonContent = document.createElement('div');
+                lessonContent.className = 'lesson-content';
+                section.content.forEach(contentItem => {
+                    let el;
+                    switch (contentItem.type) {
+                        case 'p': el = document.createElement('p'); el.innerHTML = contentItem.text; break;
+                        case 'h3': el = document.createElement('h3'); el.innerHTML = contentItem.text; break;
+                        case 'h4': el = document.createElement('h4'); el.innerHTML = contentItem.text; break;
+                        case 'ul':
+                            el = document.createElement('ul');
+                            contentItem.listItems.forEach(item => {
+                                const listItem = document.createElement('li');
+                                listItem.innerHTML = item;
+                                el.appendChild(listItem);
+                            });
+                            break;
+                        case 'code':
+                             el = document.createElement('pre');
+                             const codeEl = document.createElement('code');
+                             codeEl.className = 'language-javascript';
+                             codeEl.textContent = contentItem.code;
+                             el.appendChild(codeEl);
+                             break;
+                    }
+                    if (el) lessonContent.appendChild(el);
+                });
+                sectionEl.appendChild(lessonContent);
+
+                // Populate quizzes
+                if (section.quizzes && section.quizzes.length > 0) {
+                    const exerciseDiv = document.createElement('div');
+                    exerciseDiv.className = 'exercise';
+                    const exerciseTitle = document.createElement('h3');
+                    exerciseTitle.className = 'exercise-title';
+                    exerciseTitle.innerHTML = '<i>✓</i> Quizzes';
+                    exerciseDiv.appendChild(exerciseTitle);
+                    const exerciseInstruction = document.createElement('p');
+                    exerciseInstruction.className = 'exercise-instruction';
+                    exerciseInstruction.textContent = 'Answer the following questions to unlock the next section!';
+                    exerciseDiv.appendChild(exerciseInstruction);
+                    
+                    section.quizzes.forEach((quiz, quizIndex) => {
+                        const quizId = `quiz-${sectionId}-${quizIndex}`;
+                        sectionQuizCorrect[sectionId][quizId] = false;
+
+                        const quizDiv = document.createElement('div');
+                        quizDiv.className = 'quiz';
+                        quizDiv.id = quizId;
+                        const questionP = document.createElement('p');
+                        questionP.innerHTML = `<strong>${quiz.question}</strong>`;
+                        quizDiv.appendChild(questionP);
+
+                        const optionsDiv = document.createElement('div');
+                        optionsDiv.className = 'quiz-options';
+                        const optionLetters = ['A', 'B', 'C', 'D'];
+                        quiz.options.forEach((option, optionIndex) => {
+                            const label = document.createElement('label');
+                            const radio = document.createElement('input');
+                            radio.type = 'radio';
+                            radio.name = quizId;
+                            radio.value = optionLetters[optionIndex];
+                            label.appendChild(radio);
+                            label.append(` ${option}`);
+                            optionsDiv.appendChild(label);
+                            optionsDiv.appendChild(document.createElement('br'));
+                        });
+                        quizDiv.appendChild(optionsDiv);
+
+                        const checkBtn = document.createElement('button');
+                        checkBtn.className = 'check-btn';
+                        checkBtn.textContent = 'Check Answer';
+                        checkBtn.onclick = () => window.checkQuiz(quizId, quiz.correctAnswer);
+                        quizDiv.appendChild(checkBtn);
+
+                        const feedbackDiv = document.createElement('div');
+                        feedbackDiv.className = 'feedback';
+                        feedbackDiv.id = `feedback-${quizId}`;
+                        quizDiv.appendChild(feedbackDiv);
+                        exerciseDiv.appendChild(quizDiv);
+                    });
+                    sectionEl.appendChild(exerciseDiv);
+                }
+                container.appendChild(sectionEl);
+
+                // Populate maps for course logic
+                nextSectionMap[sectionId] = (index < data.sections.length - 1) ? `section-${index + 1}` : null;
+                sectionAchievementMap[sectionId] = `${section.title} Master`;
+            });
+        }
+    
+        /**
+         * Initializes all event listeners, loads state, and sets up the course logic.
+         */
+        function initializeCourseLogic() {
+            // --- DOM ELEMENT SELECTORS ---
+            const achievementBadge = document.getElementById('achievement-badge');
+            const achievementList = document.getElementById('achievement-list');
+            const themeSelect = document.getElementById('theme-select');
+            const fontSelect = document.getElementById('font-select');
+            const noteTabletToggleBtn = document.getElementById('note-tablet-toggle');
+            const noteTabletPanel = document.getElementById('note-tablet-panel');
+            const closeNoteTabletBtn = document.getElementById('close-note-tablet');
+            const noteTextarea = document.getElementById('note-textarea');
+            const downloadNotesBtn = document.getElementById('download-notes-btn');
+            const toggleAchievementsBtn = document.getElementById('toggle-achievements-btn');
+            const achievementsPanel = document.getElementById('achievements-panel');
+            const achievementsToggleIcon = document.getElementById('achievements-toggle-icon');
+            const footerElement = document.querySelector('footer');
+            const addHeadingBtn = document.getElementById('add-heading-btn');
+            const addListBtn = document.getElementById('add-list-btn');
+            const addBoldBtn = document.getElementById('add-bold-btn');
+            const addItalicBtn = document.getElementById('add-italic-btn');
+            const addUnderlineBtn = document.getElementById('add-underline-btn');
+            const addHrBtn = document.getElementById('add-hr-btn');
+            const clearNotesBtn = document.getElementById('clear-notes-btn');
+            const styleSelect = document.getElementById('style-select');
+            const cssLink = document.getElementById('layout');
+            const modal = document.getElementById("settingsModal");
+            const btn = document.getElementById("settingsButton");
+            const span = document.getElementsByClassName("close")[0];
+
+            // --- CORE LOGIC & STATE MANAGEMENT ---
+
+            function unlockSection(target) {
+                if (target && !unlockedSections.includes(target)) {
+                    unlockedSections.push(target);
+                    
+                    // Save with course-specific key
+                    const coursePrefix = currentCourseId ? `${currentCourseId}_` : '';
+                    localStorage.setItem(`${coursePrefix}unlockedSections`, JSON.stringify(unlockedSections));
+                    
+                    updateNavButtons();
+                    updateProgress();
+                    console.log(`Section "${target}" unlocked for course ${currentCourseId}!`);
+                }
+            }
+            
+            window.checkQuiz = function(name, correctAnswer) {
+                const selected = document.querySelector(`input[name="${name}"]:checked`);
+                const feedback = document.getElementById(`feedback-${name}`);
+                if (!feedback) return;
+
+                const nameParts = name.split('-'); // e.g., "quiz-section-0-0"
+                const sectionId = nameParts.slice(1, -1).join('-'); // "section-0"
+                
+                if (!selected) {
+                    showFeedback(feedback, 'Please select an answer!', 'error');
+                    if (sectionQuizCorrect[sectionId]) sectionQuizCorrect[sectionId][name] = false;
+                    return;
+                }
+
+                if (selected.value === correctAnswer) {
+                    showFeedback(feedback, 'Correct! Well done!', 'success');
+                    if (sectionQuizCorrect[sectionId]) sectionQuizCorrect[sectionId][name] = true;
+                    checkSectionQuizzesCompletion(sectionId);
+                } else {
+                    showFeedback(feedback, 'Not quite right. Try again!', 'error');
+                    if (sectionQuizCorrect[sectionId]) sectionQuizCorrect[sectionId][name] = false;
+                }
+                const coursePrefix = currentCourseId ? `${currentCourseId}_` : '';
+                localStorage.setItem(`${coursePrefix}sectionQuizCorrect`, JSON.stringify(sectionQuizCorrect));
+            }
+
+            function checkSectionQuizzesCompletion(sectionId) {
+                if (!sectionQuizCorrect[sectionId]) return;
+                const allCorrect = Object.values(sectionQuizCorrect[sectionId]).every(isCorrect => isCorrect === true);
+                if (allCorrect) {
+                    const nextSectionId = nextSectionMap[sectionId];
+                    const achievementTitle = sectionAchievementMap[sectionId];
+                    if (nextSectionId) unlockSection(nextSectionId);
+                    if (achievementTitle) unlockAchievement(achievementTitle);
+                }
+            }
+
+            function showFeedback(feedbackElement, message, type) {
+                feedbackElement.textContent = message;
+                feedbackElement.className = `feedback ${type}`;
+                feedbackElement.style.display = 'block';
+            }
+
+            function unlockAchievement(title) {
+                if (!achievements.includes(title)) {
+                    achievements.push(title);
+                    const coursePrefix = currentCourseId ? `${currentCourseId}_` : '';
+                    localStorage.setItem(`${coursePrefix}achievements`, JSON.stringify(achievements));
+                    const badgeText = achievementBadge.querySelector('.badge-text');
+                    badgeText.textContent = `Achievement Unlocked: ${title}!`;
+                    achievementBadge.classList.add('show');
+                    setTimeout(() => achievementBadge.classList.remove('show'), 3000);
+                    addAchievementToFooter(title);
+                }
+            }
+
+            function addAchievementToFooter(title) {
+                if (achievementList) {
+                    const item = document.createElement('li');
+                    item.textContent = title;
+                    achievementList.appendChild(item);
+                }
+            }
+
+            function displayAchievementsInFooter() {
+                if (achievementList) {
+                    achievementList.innerHTML = '';
+                    achievements.forEach(addAchievementToFooter);
+                }
+            }
+
+            function updateProgress() {
+                const totalSections = Object.keys(nextSectionMap).length + 1;
+                const unlockedCount = unlockedSections.length;
+                const percent = totalSections > 0 ? Math.round((unlockedCount / totalSections) * 100) : 0;
+                const clampedPercent = Math.min(percent, 100);
+                
+                // Update the course progress display
+                const progressFill = document.getElementById('progress-fill');
+                const progressPercent = document.getElementById('progress-percent');
+                
+                if (progressFill) {
+                    progressFill.style.width = `${clampedPercent}%`;
+                }
+                if (progressPercent) {
+                    progressPercent.textContent = clampedPercent;
+                }
+                
+                // Sync with main application progress tracking
+                if (currentCourseId) {
+                    localStorage.setItem(`progress_${currentCourseId}`, clampedPercent.toString());
+                    
+                    // Also notify parent window if in iframe
+                    if (window.parent && window.parent !== window) {
+                        try {
+                            window.parent.postMessage({
+                                type: 'progressUpdate',
+                                courseId: currentCourseId,
+                                progress: clampedPercent
+                            }, '*');
+                        } catch (error) {
+                            console.warn('Could not notify parent of progress update:', error);
+                        }
+                    }
+                }
+                
+                console.log(`Progress updated: ${clampedPercent}% (${unlockedCount}/${totalSections} sections unlocked)`);
+            }
+
+            function loadState() {
+                // Load course-specific state using course ID
+                const coursePrefix = currentCourseId ? `${currentCourseId}_` : '';
+                
+                const savedUnlocked = localStorage.getItem(`${coursePrefix}unlockedSections`);
+                if (savedUnlocked) {
+                    unlockedSections = JSON.parse(savedUnlocked);
+                } else {
+                    // Fallback to legacy storage for backward compatibility
+                    const legacySaved = localStorage.getItem('unlockedSections');
+                    if (legacySaved) unlockedSections = JSON.parse(legacySaved);
+                }
+
+                const savedQuizzes = localStorage.getItem(`${coursePrefix}sectionQuizCorrect`);
+                if (savedQuizzes) {
+                    const loadedState = JSON.parse(savedQuizzes);
+                    Object.assign(sectionQuizCorrect, loadedState);
+                } else {
+                    // Fallback to legacy storage
+                    const legacySaved = localStorage.getItem('sectionQuizCorrect');
+                    if (legacySaved) {
+                        const loadedState = JSON.parse(legacySaved);
+                        Object.assign(sectionQuizCorrect, loadedState);
+                    }
+                }
+
+                const savedAchievements = localStorage.getItem(`${coursePrefix}achievements`);
+                if (savedAchievements) {
+                    achievements = JSON.parse(savedAchievements);
+                } else {
+                    // Fallback to legacy storage
+                    const legacySaved = localStorage.getItem('achievements');
+                    if (legacySaved) achievements = JSON.parse(legacySaved);
+                }
+
+                const savedNotes = localStorage.getItem(`${coursePrefix}userNotes`);
+                if (savedNotes && noteTextarea) {
+                    noteTextarea.value = savedNotes;
+                } else {
+                    // Fallback to legacy storage
+                    const legacySaved = localStorage.getItem('userNotes');
+                    if (legacySaved && noteTextarea) noteTextarea.value = legacySaved;
+                }
+                
+                console.log(`Loaded state for course: ${currentCourseId || 'unknown'}`);
+                console.log(`Unlocked sections: ${unlockedSections.length}`);
+            }
+
+            function updateNavButtons() {
+                document.querySelectorAll('.nav-tabs li').forEach(li => {
+                    const target = li.getAttribute('data-target');
+                    const lockIcon = li.querySelector('.lock-icon');
+                    if (target === 'section-0') {
+                        if (lockIcon) lockIcon.style.display = 'none';
+                        return;
+                    }
+                    if (unlockedSections.includes(target)) {
+                        if (lockIcon) {
+                            lockIcon.className = 'fas fa-lock-open lock-icon';
+                            lockIcon.style.color = 'var(--success-color)';
+                            lockIcon.style.display = 'inline-block';
+                        }
+                    } else {
+                        if (lockIcon) {
+                            lockIcon.className = 'fas fa-lock lock-icon';
+                            lockIcon.style.color = '';
+                            lockIcon.style.display = 'inline-block';
+                        }
+                    }
+                });
+            }
+
+            // --- UI & SETTINGS FUNCTIONS ---
+
+            function applyTheme(themeName) {
+                document.body.className = themeName ? `${themeName}-theme` : '';
+            }
+
+            function applyFont(fontFamily) {
+                document.body.style.fontFamily = fontFamily;
+            }
+            
+            function applyStyle(styleName) {
+                 cssLink.href = `./${styleName}Style.css`;
+            }
+
+            function saveNotes() {
+                if (noteTextarea) {
+                    const coursePrefix = currentCourseId ? `${currentCourseId}_` : '';
+                    localStorage.setItem(`${coursePrefix}userNotes`, noteTextarea.value);
+                }
+            }
+
+            function insertAtCursor(textarea, textToInsert, wrap = null) {
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                const value = textarea.value;
+                if (start === end && !wrap) {
+                    textarea.value = value.substring(0, start) + textToInsert + value.substring(end);
+                    textarea.selectionStart = textarea.selectionEnd = start + textToInsert.length;
+                } else {
+                    const prefix = wrap ? wrap.prefix : '';
+                    const suffix = wrap ? wrap.suffix : '';
+                    const selectedText = value.substring(start, end);
+                    const text = wrap ? prefix + selectedText + suffix : textToInsert;
+                    textarea.value = value.substring(0, start) + text + value.substring(end);
+                }
+                textarea.focus();
+                textarea.dispatchEvent(new Event('input'));
+            }
+
+            window.runCode = function(editorId, visId) {
+                const code = document.getElementById(editorId).value;
+                const terminal = document.querySelector(`#${visId} .terminal`);
+                if (terminal) terminal.innerHTML = '';
+                try {
+                    const originalLog = console.log;
+                    console.log = function(...args) {
+                        const line = document.createElement('div');
+                        line.textContent = `> ${args.join(' ')}`;
+                        terminal.appendChild(line);
+                        originalLog.apply(console, args);
+                    };
+                    eval(code);
+                    console.log = originalLog;
+                } catch (e) {
+                    const line = document.createElement('div');
+                    line.textContent = `Error: ${e.message}`;
+                    line.style.color = 'red';
+                    terminal.appendChild(line);
+                }
+            }
+
+            window.resetCode = function(editorId) {
+                const editor = document.getElementById(editorId);
+                editor.value = editor.dataset.default || '';
+            }
+
+            // --- EVENT LISTENERS ---
+
+            document.querySelectorAll('.nav-tabs li').forEach(li => {
+                li.addEventListener('click', function() {
+                    const clickedTarget = this.getAttribute('data-target');
+                    if (unlockedSections.includes(clickedTarget)) {
+                        document.querySelectorAll('.nav-btn, .lesson-section').forEach(el => el.classList.remove('active'));
+                        document.querySelector(`.nav-btn[data-target="${clickedTarget}"]`).classList.add('active');
+                        document.getElementById(clickedTarget).classList.add('active');
+                    }
+                });
+            });
+            
+            btn.onclick = () => { modal.style.display = "block"; }
+            span.onclick = () => { modal.style.display = "none"; }
+            window.addEventListener('click', (event) => { if (event.target == modal) modal.style.display = "none"; });
+
+            toggleAchievementsBtn.addEventListener('click', () => {
+                const isOpen = footerElement.classList.toggle('achievements-open');
+                achievementsPanel.style.display = isOpen ? 'block' : 'none';
+                achievementsToggleIcon.className = `fas ${isOpen ? 'fa-chevron-down' : 'fa-chevron-up'}`;
+            });
+
+            themeSelect.addEventListener('change', (e) => {
+                applyTheme(e.target.value);
+                localStorage.setItem('selectedTheme', e.target.value);
+            });
+
+            fontSelect.addEventListener('change', (e) => {
+                applyFont(e.target.value);
+                localStorage.setItem('selectedFont', e.target.value);
+            });
+
+            styleSelect.addEventListener('change', (e) => {
+                applyStyle(e.target.value);
+                localStorage.setItem('selectedStyle', e.target.value);
+            });
+
+            noteTabletToggleBtn.addEventListener('click', () => noteTabletPanel.classList.add('open'));
+            closeNoteTabletBtn.addEventListener('click', () => noteTabletPanel.classList.remove('open'));
+            noteTextarea.addEventListener('input', saveNotes);
+            
+            addHeadingBtn.addEventListener('click', () => insertAtCursor(noteTextarea, '\n### '));
+            addListBtn.addEventListener('click', () => insertAtCursor(noteTextarea, '\n- '));
+            addBoldBtn.addEventListener('click', () => insertAtCursor(noteTextarea, '**bold text**', { prefix: '**', suffix: '**' }));
+            addItalicBtn.addEventListener('click', () => insertAtCursor(noteTextarea, '*italic text*', { prefix: '*', suffix: '*' }));
+            addUnderlineBtn.addEventListener('click', () => insertAtCursor(noteTextarea, '<u>underline text</u>', { prefix: '<u>', suffix: '</u>' }));
+            addHrBtn.addEventListener('click', () => insertAtCursor(noteTextarea, '\n---\n'));
+            clearNotesBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to clear all notes?')) {
+                    noteTextarea.value = '';
+                    saveNotes();
+                }
+            });
+
+            downloadNotesBtn.addEventListener('click', () => {
+                const blob = new Blob([noteTextarea.value], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'course_notes.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+
+            // --- INITIALIZATION CALLS ---
+            loadState();
+            
+            const savedTheme = localStorage.getItem('selectedTheme') || 'default';
+            themeSelect.value = savedTheme;
+            applyTheme(savedTheme);
+
+            const savedFont = localStorage.getItem('selectedFont') || 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+            fontSelect.value = savedFont;
+            applyFont(savedFont);
+
+            const savedStyle = localStorage.getItem('selectedStyle') || 'default';
+            styleSelect.value = savedStyle;
+            applyStyle(savedStyle);
+            
+            updateNavButtons();
+            displayAchievementsInFooter();
+            updateProgress();
+            
+            const initialActiveSection = unlockedSections[unlockedSections.length - 1] || 'section-0';
+            document.querySelectorAll('.lesson-section, .nav-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(initialActiveSection)?.classList.add('active');
+            document.querySelector(`.nav-btn[data-target="${initialActiveSection}"]`)?.classList.add('active');
+            
+            // Loader is already hidden in the finally block, no need to hide again
+        }
+        
+        // Add navigation toggle functionality for course content
+        const courseNavToggle = document.getElementById('course-nav-toggle');
+        if (courseNavToggle) {
+            courseNavToggle.addEventListener('click', () => {
+                // Go back to course details or parent window
+                if (window.parent && window.parent !== window) {
+                    // If in iframe, try to communicate with parent to show navigation
+                    try {
+                        window.parent.postMessage({
+                            type: 'showNavigation',
+                            action: 'toggle'
+                        }, '*');
+                    } catch (error) {
+                        console.warn('Could not communicate with parent window:', error);
+                        // Fallback: try to go back
+                        window.history.back();
+                    }
+                } else {
+                    // If standalone, go back
+                    window.history.back();
+                }
+            });
+            
+            // Style hover effect
+            courseNavToggle.addEventListener('mouseenter', () => {
+                courseNavToggle.style.transform = 'scale(1.1)';
+                courseNavToggle.style.boxShadow = '0 6px 25px rgba(99, 102, 241, 0.6)';
+            });
+            
+            courseNavToggle.addEventListener('mouseleave', () => {
+                courseNavToggle.style.transform = 'scale(1)';
+                courseNavToggle.style.boxShadow = '0 4px 20px rgba(99, 102, 241, 0.4)';
+            });
+            
+            // Add touch support for mobile
+            courseNavToggle.addEventListener('touchend', (event) => {
+                event.preventDefault();
+                courseNavToggle.click();
+            });
+        }
+    </script>
+</body>
+</html>

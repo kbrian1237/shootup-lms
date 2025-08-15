@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShootUp - Achievements</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dist/style.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+
+    <!-- Main container for the entire layout -->
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+
+        <div id="navigation-placeholder"></div>
+
+        <!-- Main Content Area -->
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <!-- Sidebar toggle button (hidden when sidebar is open) -->
+            <button id="sidebar-toggle-btn" class="absolute top-8 left-8 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none transition-all duration-300 ease-in-out hidden btn-primary" title="Show Navigation">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+
+            <!-- Achievements View -->
+            <div class="p-8">
+                <h2 class="text-4xl font-bold mb-8 header-title animate-fade-in-up">Achievements</h2>
+                
+                <!-- Achievement Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="stats-card rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-bold text-yellow-400 mb-2" id="unlocked-count">0</div>
+                        <div class="text-gray-400">Unlocked</div>
+                    </div>
+                    <div class="stats-card rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-bold text-indigo-400 mb-2" id="total-points">0</div>
+                        <div class="text-gray-400">Total Points</div>
+                    </div>
+                    <div class="stats-card rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-bold text-green-400 mb-2" id="completion-percentage">0%</div>
+                        <div class="text-gray-400">Completion</div>
+                    </div>
+                    <div class="stats-card rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-bold text-purple-400 mb-2" id="points-percentage">0%</div>
+                        <div class="text-gray-400">Points Earned</div>
+                    </div>
+                </div>
+
+                <!-- Achievement Controls -->
+                <div class="flex gap-4 mb-6">
+                    <button onclick="checkNewAchievements()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-sync mr-2"></i>
+                        Check New Achievements
+                    </button>
+                    <button onclick="generateSampleProgress()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        Generate Sample Progress
+                    </button>
+                    <select id="category-filter" onchange="filterAchievements()" class="bg-gray-700 text-white px-4 py-2 rounded-lg border border-gray-600">
+                        <option value="all">All Categories</option>
+                        <option value="Learning">Learning</option>
+                        <option value="Time">Time</option>
+                        <option value="Consistency">Consistency</option>
+                        <option value="Performance">Performance</option>
+                        <option value="Special">Special</option>
+                    </select>
+                    <select id="status-filter" onchange="filterAchievements()" class="bg-gray-700 text-white px-4 py-2 rounded-lg border border-gray-600">
+                        <option value="all">All Achievements</option>
+                        <option value="unlocked">Unlocked Only</option>
+                        <option value="locked">Locked Only</option>
+                    </select>
+                </div>
+
+                <!-- Achievement Categories -->
+                <div id="achievements-container">
+                    <!-- Categories will be populated here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dist/data.js"></script>
+    <script src="dist/analytics-engine.js"></script>
+    <script src="dist/achievements-system.js"></script>
+    <script src="dist/script.js"></script>
+    <script src="dist/navigation-toggle.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAchievements();
+            updateAchievementStats();
+        });
+
+        function loadAchievements() {
+            const container = document.getElementById('achievements-container');
+            const categories = window.AchievementSystem.getAchievementsByCategory();
+            
+            container.innerHTML = '';
+            
+            Object.entries(categories).forEach(([categoryName, achievements]) => {
+                if (achievements.length === 0) return;
+                
+                const categorySection = document.createElement('div');
+                categorySection.className = 'mb-8';
+                categorySection.setAttribute('data-category', categoryName);
+                
+                categorySection.innerHTML = `
+                    <h3 class="text-2xl font-bold mb-4 text-indigo-300">${categoryName}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${achievements.map(achievement => createAchievementCard(achievement)).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(categorySection);
+            });
+        }
+
+        function createAchievementCard(achievement) {
+            const isUnlocked = achievement.unlocked;
+            const progress = achievement.progress || 0;
+            
+            const cardClass = isUnlocked 
+                ? 'stats-card rounded-2xl p-6 border-2 border-yellow-400/30 bg-gradient-to-br from-yellow-400/10 to-orange-500/10' 
+                : 'stats-card rounded-2xl p-6 border border-gray-600 opacity-75';
+            
+            const iconClass = isUnlocked 
+                ? `fas ${achievement.icon} text-3xl text-${achievement.color}-400 mb-4` 
+                : `fas ${achievement.icon} text-3xl text-gray-500 mb-4`;
+            
+            const progressBar = !isUnlocked && progress > 0 ? `
+                <div class="mt-4">
+                    <div class="flex justify-between text-sm text-gray-400 mb-1">
+                        <span>Progress</span>
+                        <span>${Math.round(progress)}%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2">
+                        <div class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: ${progress}%"></div>
+                    </div>
+                </div>
+            ` : '';
+            
+            const unlockedBadge = isUnlocked ? `
+                <div class="absolute top-2 right-2">
+                    <div class="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold">
+                        <i class="fas fa-check mr-1"></i>
+                        UNLOCKED
+                    </div>
+                </div>
+            ` : '';
+            
+            const pointsBadge = `
+                <div class="absolute top-2 left-2">
+                    <div class="bg-indigo-600 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        ${achievement.points} pts
+                    </div>
+                </div>
+            `;
+            
+            return `
+                <div class="${cardClass} relative achievement-card" data-achievement-id="${achievement.id}" data-unlocked="${isUnlocked}">
+                    ${unlockedBadge}
+                    ${pointsBadge}
+                    <div class="text-center">
+                        <div class="${iconClass}"></div>
+                        <h4 class="text-xl font-bold mb-2 ${isUnlocked ? 'text-white' : 'text-gray-300'}">${achievement.title}</h4>
+                        <p class="text-gray-400 text-sm mb-4">${achievement.description}</p>
+                        ${isUnlocked ? `
+                            <div class="text-green-400 text-sm font-semibold">
+                                <i class="fas fa-trophy mr-1"></i>
+                                Achieved!
+                            </div>
+                        ` : `
+                            <div class="text-gray-500 text-sm">
+                                <i class="fas fa-lock mr-1"></i>
+                                Locked
+                            </div>
+                        `}
+                        ${progressBar}
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateAchievementStats() {
+            const stats = window.AchievementSystem.getAchievementStats();
+            
+            document.getElementById('unlocked-count').textContent = stats.unlockedCount;
+            document.getElementById('total-points').textContent = stats.totalPoints;
+            document.getElementById('completion-percentage').textContent = `${stats.completionPercentage}%`;
+            document.getElementById('points-percentage').textContent = `${stats.pointsPercentage}%`;
+        }
+
+        function checkNewAchievements() {
+            const newAchievements = window.AchievementSystem.checkAndUnlockAchievements();
+            
+            if (newAchievements.length > 0) {
+                // Show success message
+                showNotification(`🏆 ${newAchievements.length} new achievement(s) unlocked!`, 'success');
+                
+                // Refresh the display
+                setTimeout(() => {
+                    loadAchievements();
+                    updateAchievementStats();
+                }, 1000);
+            } else {
+                showNotification('No new achievements available right now. Keep learning!', 'info');
+            }
+        }
+
+        function generateSampleProgress() {
+            if (window.AnalyticsEngine) {
+                window.AnalyticsEngine.generateSampleData();
+                showNotification('Sample progress generated! Checking for new achievements...', 'success');
+                
+                setTimeout(() => {
+                    checkNewAchievements();
+                }, 1000);
+            } else {
+                showNotification('Analytics engine not available', 'error');
+            }
+        }
+
+        function filterAchievements() {
+            const categoryFilter = document.getElementById('category-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
+            
+            const categories = document.querySelectorAll('[data-category]');
+            
+            categories.forEach(categorySection => {
+                const categoryName = categorySection.getAttribute('data-category');
+                let showCategory = categoryFilter === 'all' || categoryFilter === categoryName;
+                
+                if (showCategory) {
+                    const achievements = categorySection.querySelectorAll('.achievement-card');
+                    let visibleAchievements = 0;
+                    
+                    achievements.forEach(achievement => {
+                        const isUnlocked = achievement.getAttribute('data-unlocked') === 'true';
+                        let showAchievement = true;
+                        
+                        if (statusFilter === 'unlocked' && !isUnlocked) {
+                            showAchievement = false;
+                        } else if (statusFilter === 'locked' && isUnlocked) {
+                            showAchievement = false;
+                        }
+                        
+                        achievement.style.display = showAchievement ? 'block' : 'none';
+                        if (showAchievement) visibleAchievements++;
+                    });
+                    
+                    categorySection.style.display = visibleAchievements > 0 ? 'block' : 'none';
+                } else {
+                    categorySection.style.display = 'none';
+                }
+            });
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const colors = {
+                success: 'bg-green-600',
+                error: 'bg-red-600',
+                info: 'bg-blue-600'
+            };
+            
+            notification.className = `
+                fixed top-4 right-4 z-50 ${colors[type]} text-white p-4 rounded-lg shadow-lg 
+                transform translate-x-full transition-transform duration-300 max-w-sm
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

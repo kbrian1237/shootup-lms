@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Course</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../dist/style.css">
+	<style>
+		.course-content pre { background:#0f172a; color:#e5e7eb; padding:1rem; border-radius:.75rem; overflow:auto; }
+		.course-section { border:1px solid rgba(255,255,255,.08); border-radius:1rem; padding:1rem; background:rgba(31,31,31,.6); }
+		.nav-horizontal { display:flex; gap:.5rem; white-space:nowrap; overflow-x:auto; padding:.25rem .5rem; }
+		.nav-horizontal a { padding:.35rem .6rem; border-radius:.5rem; border:1px solid rgba(255,255,255,.08); background:rgba(31,31,31,.5); font-size:.9rem; }
+	</style>
+</head>
+<body class="bg-[#0f0f0f] text-[#f5f5f5]">
+	<div id="main" class="min-h-screen">
+		<header class="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-black/60">
+			<div class="flex items-center gap-3">
+				<i class="fa-solid fa-book-open text-2xl text-indigo-400"></i>
+				<h1 id="course-title" class="text-2xl font-bold header-title">Course</h1>
+			</div>
+			<a href="../index.html" class="px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700">Back to LMS</a>
+		</header>
+
+		<nav class="px-6 pt-4">
+			<div id="course-nav" class="nav-horizontal"></div>
+		</nav>
+
+		<main class="px-6 py-8 max-w-6xl mx-auto">
+			<img id="course-banner" class="w-full h-56 object-cover rounded-xl mb-6 hidden" alt="Banner">
+			<div class="flex flex-wrap items-center gap-4 text-gray-300 mb-6">
+				<span><strong>Category:</strong> <span id="course-category"></span></span>
+				<span><strong>Level:</strong> <span id="course-level"></span></span>
+				<span class="flex items-center gap-1 text-yellow-400"><i class="fas fa-star"></i><span id="course-rating"></span></span>
+			</div>
+			<p id="course-description" class="text-gray-300 mb-8"></p>
+
+			<div id="course-outline" class="mb-8"></div>
+
+			<div id="course-sections" class="space-y-6 course-content"></div>
+		</main>
+	</div>
+
+	<script src="../dist/data.js"></script>
+	<script src="course.js"></script>
+</body>
+</html> 

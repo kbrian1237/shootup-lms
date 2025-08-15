@@ -1,0 +1,114 @@
+{
+	"site": {
+		"brand": "ShootUp",
+		"theme": "dark"
+	},
+	"user": {
+		"id": "u_001",
+		"name": "Jane Doe",
+		"role": "Student",
+		"email": "jane.doe@example.com",
+		"avatar": "https://placehold.co/100x100/4f46e5/ffffff?text=U"
+	},
+	"navigation": [
+		{"label": "Home", "href": "landing.html", "icon": "fa-home"},
+		{"label": "Dashboard", "href": "dashboard.html", "icon": "fa-tachometer-alt"},
+		{"label": "My Courses", "href": "courses.html", "icon": "fa-book-open"},
+		{"label": "Schedule", "href": "schedule.html", "icon": "fa-calendar-alt"},
+		{"label": "Analytics", "href": "analytics.html", "icon": "fa-chart-line"},
+		{"label": "Achievements", "href": "achievements.html", "icon": "fa-trophy"},
+		{"label": "Settings", "href": "settings.html", "icon": "fa-cogs"},
+		{"label": "Admin", "href": "admin.html", "icon": "fa-user-shield"}
+	],
+	"categories": ["Web Development", "Data Science", "Design"],
+	"courses": [
+		{
+			"id": "course_js",
+			"title": "Javascript Adventure",
+			"category": "Web Development",
+			"level": "Beginner",
+			"requirements": "Basic HTML and CSS",
+			"image": "https://placehold.co/400x200/374151/ffffff?text=Web+Development",
+			"rating": 4.5,
+			"likes": 1200,
+			"comments": 34,
+			"file": "course-details.html?id=course_js",
+            "dataFile": "javascript.json",
+			"banner": "https://placehold.co/1200x400/374151/ffffff?text=JavaScript",
+			"description": "Embark on an exciting journey to master JavaScript and build dynamic web experiences!"
+		},
+		{
+			"id": "course_backend",
+			"title": "Backend Development Mastery",
+			"category": "Web Development",
+			"level": "Intermediate",
+			"requirements": "JavaScript",
+			"image": "https://placehold.co/400x200/1f2937/ffffff?text=Data+Science",
+			"rating": 4.2,
+			"likes": 890,
+			"comments": 22,
+			"file": "course-details.html?id=course_backend",
+            "dataFile": "backend.json",
+			"banner": "https://placehold.co/1200x400/1f2937/ffffff?text=Backend+Development",
+			"description": "Master backend development with Node.js, databases, APIs, and deployment strategies!"
+		},
+		{
+			"id": "course_uiux",
+			"title": "The Art of UI/UX Design",
+			"category": "Design",
+			"level": "Beginner",
+			"requirements": "None",
+			"image": "https://placehold.co/400x200/4b5563/ffffff?text=UI/UX+Design",
+			"rating": 4.8,
+			"likes": 2100,
+			"comments": 78,
+			"file": "course-details.html?id=course_uiux",
+            "dataFile": "uiux.json",
+			"banner": "https://placehold.co/1200x400/4b5563/ffffff?text=UI%2FUX+Design",
+			"description": "Explore the principles of user-centered design and create delightful interfaces."
+		}
+	],
+	"dashboard": {
+		"recentActivity": [
+			{"title": "Javascript Adventure", "detail": "Completed module \"Advanced Functions\"", "ago": "2 hours ago", "icon": "fa-book-open", "color": "indigo"},
+			{"title": "The Art of UI/UX Design", "detail": "Course completed successfully", "ago": "5 hours ago", "icon": "fa-graduation-cap", "color": "green"},
+			{"title": "Backend Development Mastery", "detail": "Assignment due tomorrow", "ago": "1 day ago", "icon": "fa-calendar-check", "color": "yellow"},
+			{"title": "Backend Development Mastery", "detail": "New lecture uploaded", "ago": "2 days ago", "icon": "fa-video", "color": "purple"}
+		]
+	},
+	"analytics": {
+		"timeSpent": {
+			"labels": ["Javascript Adventure", "Backend Development Mastery", "The Art of UI/UX Design"],
+			"values": [50, 60, 18]
+		},
+		"scoreDistribution": {
+			"labels": ["A", "B", "C", "D"],
+			"values": [12, 19, 3, 5]
+		}
+	},
+	"schedule": [
+		{"title": "Live Q&A", "date": "2025-08-20", "time": "16:00", "courseId": "course_js"},
+		{"title": "Project Review", "date": "2025-08-22", "time": "14:00", "courseId": "course_backend"}
+	],
+	"achievements": [
+		{"title": "First Steps", "desc": "Completed your first lesson", "points": 50},
+		{"title": "Consistency", "desc": "Logged in seven days in a row", "points": 120}
+	],
+	"settings": {
+		"emailNotifications": true,
+		"pushNotifications": true,
+		"courseUpdates": true,
+		"assignmentReminders": false
+	},
+	"admin": {
+		"users": [
+			{"name": "Jane Doe", "email": "jane.doe@example.com", "role": "Student"},
+			{"name": "John Smith", "email": "john.smith@example.com", "role": "Admin"}
+		],
+		"courses": [
+			{"name": "Javascript Adventure"},
+			{"name": "Backend Development Mastery"},
+			{"name": "The Art of UI/UX Design"}
+		]
+	}
+}

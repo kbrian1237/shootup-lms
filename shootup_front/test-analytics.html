@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics System Test - ShootUp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5] p-8">
+    <h1 class="text-4xl font-bold mb-8 text-white">Analytics System Test</h1>
+    
+    <!-- Test Controls -->
+    <div class="bg-gray-800 rounded-xl p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Test Controls</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <button onclick="testTimeTracking()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-clock mr-1"></i>
+                Test Time Tracking
+            </button>
+            <button onclick="testQuizScoring()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-question-circle mr-1"></i>
+                Test Quiz Scoring
+            </button>
+            <button onclick="testAchievements()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-trophy mr-1"></i>
+                Test Achievements
+            </button>
+            <button onclick="testCourseCompletion()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-graduation-cap mr-1"></i>
+                Test Completion
+            </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <button onclick="generateSampleData()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-chart-line mr-1"></i>
+                Generate Sample Data
+            </button>
+            <button onclick="viewAnalytics()" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-eye mr-1"></i>
+                View Analytics
+            </button>
+            <button onclick="exportData()" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-download mr-1"></i>
+                Export Data
+            </button>
+            <button onclick="resetAnalytics()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-trash mr-1"></i>
+                Reset Analytics
+            </button>
+        </div>
+    </div>
+    
+    <!-- Test Results -->
+    <div class="bg-gray-800 rounded-xl p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Test Results</h2>
+        <div id="test-results" class="space-y-2">
+            <p>🔄 Ready to run tests...</p>
+        </div>
+    </div>
+    
+    <!-- Analytics Summary -->
+    <div class="bg-gray-800 rounded-xl p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Analytics Summary</h2>
+        <div id="analytics-summary" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-gray-700 p-4 rounded-lg text-center">
+                <div class="text-2xl font-bold text-purple-400" id="total-time">0h</div>
+                <div class="text-sm text-gray-400">Total Time</div>
+            </div>
+            <div class="bg-gray-700 p-4 rounded-lg text-center">
+                <div class="text-2xl font-bold text-green-400" id="courses-completed">0</div>
+                <div class="text-sm text-gray-400">Courses Completed</div>
+            </div>
+            <div class="bg-gray-700 p-4 rounded-lg text-center">
+                <div class="text-2xl font-bold text-yellow-400" id="average-score">0%</div>
+                <div class="text-sm text-gray-400">Average Score</div>
+            </div>
+            <div class="bg-gray-700 p-4 rounded-lg text-center">
+                <div class="text-2xl font-bold text-indigo-400" id="study-streak">0</div>
+                <div class="text-sm text-gray-400">Study Streak</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Time Tracker Test -->
+    <div class="bg-gray-800 rounded-xl p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Time Tracker Test</h2>
+        <div class="flex gap-4 mb-4">
+            <button onclick="startTimeTracking()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-play mr-1"></i>
+                Start Tracking
+            </button>
+            <button onclick="stopTimeTracking()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+                <i class="fas fa-stop mr-1"></i>
+                Stop Tracking
+            </button>
+            <div class="flex items-center bg-gray-700 px-4 py-2 rounded-lg">
+                <i class="fas fa-clock text-indigo-400 mr-2"></i>
+                <span>Session Time: </span>
+                <span id="session-time" class="font-bold ml-1">0m</span>
+            </div>
+        </div>
+        <div id="time-tracker-status" class="text-gray-400">
+            Time tracker not active
+        </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="bg-gray-800 rounded-xl p-6">
+        <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Recent Activity</h2>
+        <div id="recent-activity" class="space-y-2">
+            <p class="text-gray-400">No recent activity</p>
+        </div>
+    </div>
+
+    <script src="dist/data.js"></script>
+    <script src="dist/analytics-engine.js"></script>
+    <script src="dist/time-tracker.js"></script>
+    
+    <script>
+        let testInterval = null;
+        let sessionStartTime = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAnalyticsSummary();
+            updateRecentActivity();
+            
+            // Update session time every second
+            setInterval(updateSessionTime, 1000);
+        });
+
+        function testTimeTracking() {
+            logResult('🕒 Testing time tracking...');
+            
+            // Simulate realistic study time
+            window.AnalyticsEngine.trackTimeSpent('course_js', 25);
+            window.AnalyticsEngine.trackTimeSpent('course_backend', 35);
+            window.AnalyticsEngine.trackTimeSpent('course_uiux', 20);
+            
+            logResult('✅ Time tracking test completed - Added 80 minutes total');
+            updateAnalyticsSummary();
+            updateRecentActivity();
+        }
+
+        function testQuizScoring() {
+            logResult('📝 Testing quiz scoring...');
+            
+            // Simulate various quiz scores with realistic topics
+            window.AnalyticsEngine.trackQuizScore('course_js', 9, 10, 'What is JavaScript?');
+            window.AnalyticsEngine.trackQuizScore('course_js', 8, 10, 'Variables and Scope');
+            window.AnalyticsEngine.trackQuizScore('course_backend', 7, 10, 'Backend Fundamentals');
+            window.AnalyticsEngine.trackQuizScore('course_uiux', 10, 10, 'Design Fundamentals');
+            window.AnalyticsEngine.trackQuizScore('course_js', 6, 10, 'DOM Manipulation');
+            
+            logResult('✅ Quiz scoring test completed - Added 5 quiz scores');
+            updateAnalyticsSummary();
+            updateRecentActivity();
+        }
+
+        function testAchievements() {
+            logResult('🏆 Testing achievements...');
+            
+            // Simulate achievement unlocks
+            window.AnalyticsEngine.trackAchievement('first_lesson', 'First Steps', 50);
+            window.AnalyticsEngine.trackAchievement('quiz_master', 'Quiz Master', 100);
+            window.AnalyticsEngine.trackAchievement('consistency', 'Consistency Champion', 150);
+            window.AnalyticsEngine.trackAchievement('speed_learner', 'Speed Learner', 75);
+            
+            logResult('✅ Achievement test completed - Unlocked 4 achievements');
+            updateAnalyticsSummary();
+            updateRecentActivity();
+        }
+
+        function testCourseCompletion() {
+            logResult('🎓 Testing course completion...');
+            
+            // Simulate course completions with correct titles
+            window.AnalyticsEngine.trackCourseCompletion('course_js', 'Javascript Adventure');
+            window.AnalyticsEngine.updateCourseProgress('course_js', 100);
+            window.AnalyticsEngine.updateCourseProgress('course_backend', 75);
+            window.AnalyticsEngine.updateCourseProgress('course_uiux', 45);
+            
+            logResult('✅ Course completion test completed - Completed Javascript Adventure');
+            updateAnalyticsSummary();
+            updateRecentActivity();
+        }
+
+        function generateSampleData() {
+            logResult('📊 Generating comprehensive sample data...');
+            
+            window.AnalyticsEngine.generateSampleData();
+            
+            // Add some additional sample data
+            const courses = ['course_js', 'course_backend', 'course_uiux'];
+            const topics = [
+                'Introduction', 'Variables', 'Functions', 'Objects', 'Arrays',
+                'Loops', 'Conditionals', 'Events', 'DOM', 'APIs'
+            ];
+            
+            // Simulate a week of activity
+            for (let day = 0; day < 7; day++) {
+                const courseId = courses[Math.floor(Math.random() * courses.length)];
+                const studyTime = Math.floor(Math.random() * 60) + 15; // 15-75 minutes
+                
+                window.AnalyticsEngine.trackTimeSpent(courseId, studyTime);
+                
+                // Random quiz
+                if (Math.random() > 0.5) {
+                    const score = Math.floor(Math.random() * 5) + 6; // 6-10 score
+                    const topic = topics[Math.floor(Math.random() * topics.length)];
+                    window.AnalyticsEngine.trackQuizScore(courseId, score, 10, topic);
+                }
+            }
+            
+            logResult('✅ Sample data generation completed');
+            updateAnalyticsSummary();
+            updateRecentActivity();
+        }
+
+        function viewAnalytics() {
+            window.open('analytics.html', '_blank');
+        }
+
+        function exportData() {
+            const exportData = window.AnalyticsEngine.exportData();
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `analytics-test-export-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            logResult('📥 Analytics data exported successfully');
+        }
+
+        function resetAnalytics() {
+            if (confirm('Are you sure you want to reset all analytics data?')) {
+                window.AnalyticsEngine.resetAnalytics();
+                logResult('🗑️ Analytics data reset');
+                updateAnalyticsSummary();
+                updateRecentActivity();
+            }
+        }
+
+        function startTimeTracking() {
+            if (window.TimeTracker) {
+                window.TimeTracker.startTracking('course_js');
+                sessionStartTime = Date.now();
+                document.getElementById('time-tracker-status').innerHTML = 
+                    '<span class="text-green-400">✅ Time tracking active for Javascript Adventure</span>';
+                logResult('⏱️ Started time tracking for Javascript Adventure');
+            }
+        }
+
+        function stopTimeTracking() {
+            if (window.TimeTracker) {
+                window.TimeTracker.stopTracking();
+                sessionStartTime = null;
+                document.getElementById('time-tracker-status').innerHTML = 
+                    '<span class="text-gray-400">⏹️ Time tracking stopped</span>';
+                logResult('⏹️ Stopped time tracking');
+                updateAnalyticsSummary();
+                updateRecentActivity();
+            }
+        }
+
+        function updateSessionTime() {
+            if (sessionStartTime) {
+                const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000 / 60);
+                document.getElementById('session-time').textContent = `${elapsed}m`;
+            } else {
+                document.getElementById('session-time').textContent = '0m';
+            }
+        }
+
+        function updateAnalyticsSummary() {
+            const summary = window.AnalyticsEngine.getAnalyticsSummary();
+            const overview = summary.overview;
+            
+            document.getElementById('total-time').textContent = `${overview.totalTimeSpentHours}h`;
+            document.getElementById('courses-completed').textContent = overview.coursesCompleted;
+            document.getElementById('average-score').textContent = `${overview.averageScore}%`;
+            document.getElementById('study-streak').textContent = overview.studyStreak;
+        }
+
+        function updateRecentActivity() {
+            const summary = window.AnalyticsEngine.getAnalyticsSummary();
+            const recentActivity = summary.recentActivity;
+            const container = document.getElementById('recent-activity');
+            
+            if (recentActivity.length === 0) {
+                container.innerHTML = '<p class="text-gray-400">No recent activity</p>';
+                return;
+            }
+            
+            container.innerHTML = recentActivity.slice(0, 5).map(activity => {
+                const date = new Date(activity.date);
+                const timeAgo = getTimeAgo(date);
+                
+                let icon, color, description;
+                
+                switch (activity.type) {
+                    case 'study':
+                        icon = 'fa-book-open';
+                        color = 'text-indigo-400';
+                        description = `Studied for ${activity.minutes} minutes`;
+                        break;
+                    case 'quiz':
+                        icon = 'fa-question-circle';
+                        color = 'text-green-400';
+                        description = `Quiz: ${activity.topicTitle} (${activity.score}%)`;
+                        break;
+                    case 'achievement':
+                        icon = 'fa-trophy';
+                        color = 'text-yellow-400';
+                        description = `Achievement: ${activity.title}`;
+                        break;
+                    case 'completion':
+                        icon = 'fa-graduation-cap';
+                        color = 'text-purple-400';
+                        description = `Completed: ${activity.courseTitle}`;
+                        break;
+                    default:
+                        icon = 'fa-circle';
+                        color = 'text-gray-400';
+                        description = 'Unknown activity';
+                }
+                
+                return `
+                    <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                        <div class="p-2 bg-gray-600 rounded-full mr-3">
+                            <i class="fas ${icon} ${color}"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <p class="text-white text-sm">${description}</p>
+                            <p class="text-gray-400 text-xs">${timeAgo}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'Just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+            return `${Math.floor(diffInSeconds / 86400)} days ago`;
+        }
+
+        function logResult(message) {
+            const container = document.getElementById('test-results');
+            const timestamp = new Date().toLocaleTimeString();
+            const resultElement = document.createElement('p');
+            resultElement.innerHTML = `<span class="text-gray-400">[${timestamp}]</span> ${message}`;
+            container.appendChild(resultElement);
+            
+            // Keep only last 10 results
+            while (container.children.length > 10) {
+                container.removeChild(container.firstChild);
+            }
+            
+            // Scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+    </script>
+</body>
+</html>

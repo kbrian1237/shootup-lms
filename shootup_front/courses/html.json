@@ -1,0 +1,26 @@
+{
+	"title": "Learn HTML",
+	"category": "Web Development",
+	"level": "Beginner",
+	"rating": 4.6,
+	"banner": "https://placehold.co/1200x400/334155/ffffff?text=HTML",
+	"description": "Master the building blocks of the web: elements, attributes, structure, and semantics.",
+	"outline": [
+		{ "title": "Introduction", "topics": ["What is HTML?", "HTML document structure"] },
+		{ "title": "Text & Links", "topics": ["Headings & paragraphs", "Lists", "Anchors & images"] },
+		{ "title": "Forms & Tables", "topics": ["Form elements", "Input types", "Tables"] },
+		{ "title": "Semantic HTML", "topics": ["header/main/footer", "nav/article/section", "Accessibility"] }
+	],
+	"sections": [
+		{ "title": "Introduction to HTML", "content": [
+			{ "type": "p", "text": "HTML provides the structure for web pages using a hierarchy of elements." },
+			{ "type": "code", "code": "<!doctype html>\n<html>\n<head><meta charset='utf-8'><title>My Page</title></head>\n<body>\n  <h1>Hello</h1>\n</body>\n</html>" }
+		]},
+		{ "title": "Lists & Links", "content": [
+			{ "type": "code", "code": "<ul>\n  <li>Apples</li>\n  <li>Oranges</li>\n</ul>\n<a href='https://example.com'>Visit</a>" }
+		]},
+		{ "title": "Forms", "content": [
+			{ "type": "code", "code": "<form>\n  <input type='text' placeholder='Name'>\n  <input type='email' placeholder='Email'>\n  <button>Submit</button>\n</form>" }
+		]}
+	]
+} 

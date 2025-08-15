@@ -1,0 +1,1096 @@
+/*
+  Minimalist Course Theme CSS
+  Focus on typography, whitespace, and clarity.
+  Navigation is at the bottom.
+*/
+
+/* --- CSS Variables for Minimalist Themes --- */
+:root {
+    /* Default Theme: Minimal Light */
+    --bg-color: #f8f9fa; /* Very light gray / Off-white */
+    --text-color: #212529; /* Dark gray / Near black */
+    --primary-color: #007bff; /* Standard blue for primary actions */
+    --secondary-color: #6c757d; /* Muted gray for secondary text/elements */
+    --accent-color: #17a2b8; /* A subtle cyan for accents */
+    --border-color: #dee2e6; /* Light gray for borders */
+    --card-bg-color: #ffffff; /* White for cards/sections */
+    --shadow-color: rgba(0, 0, 0, 0.05); /* Very subtle shadow */
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --transition-speed: 0.2s ease-in-out;
+    --border-radius: 4px; /* Smaller border radius for a cleaner look */
+    --font-family: 'Inter', sans-serif;
+    --header-height: 60px; /* Reduced header height */
+    --nav-height: 50px;    /* Height for the bottom navigation */
+    --footer-height: 40px; /* Height for the footer */
+}
+
+
+/* --- Base Styles --- */
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding-top: var(--header-height); /* Space for fixed header */
+    padding-bottom: calc(var(--nav-height) + var(--footer-height)); /* Space for bottom nav and footer */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color); /* Titles use main text color for minimalism */
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+    font-weight: 600; /* Slightly bolder for hierarchy */
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+
+p {
+    margin-bottom: 1em;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--accent-color);
+}
+
+/* --- Header (Fixed) --- */
+header {
+    background-color: var(--accent-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 20px;
+    text-align: left; /* Minimalist header, often left-aligned */
+    box-shadow: 0 1px 3px var(--shadow-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em; /* Smaller header title */
+    color: var(--text-color);
+    font-weight: 700;
+}
+header p {
+    margin: 0 0 0 15px; /* Space out subtitle if present */
+    font-size: 0.9em;
+    color: var(--secondary-color);
+}
+
+
+/* Style for the settings button */
+#settingsButton {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--secondary-color);
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+}
+
+#settingsButton:hover {
+    background-color: var(--primary-color);
+    color: var(--card-bg-color);
+    border-color: var(--primary-color);
+}
+
+/* The Modal (background overlay) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001; /* Above header */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
+    transition: opacity var(--transition-speed);
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: var(--bg-color);
+    
+    margin: 15vh auto; /* Centered with top margin */
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    width: 90%;
+    max-width: 500px; /* Slimmer modal */
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px var(--shadow-color);
+    color: var(--text-color);
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.25rem;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.close {
+    color: var(--secondary-color);
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--text-color);
+}
+
+.settings {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column; /* Stack settings vertically */
+    gap: 15px;
+}
+
+.settings > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings label {
+    font-weight: normal; /* Lighter font weight for labels */
+    color: var(--text-color);
+    min-width: 100px; /* Align selects */
+}
+
+.settings select {
+    flex-grow: 1;
+    padding: 8px 10px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: var(--bg-color); /* Match body background or card background */
+    color: var(--text-color);
+}
+
+.settings select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.25); /* Subtle focus ring */
+}
+/* --- Loader Overlay Styles --- */
+#loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(44, 62, 80, 0.85); /* Semi-transparent dark overlay */
+    z-index: 2000; /* Above all other content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+    opacity: 1;
+    pointer-events: all;
+}
+
+#loader-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+body.loading {
+    overflow: hidden; /* Prevent scrolling when loader is active */
+}
+
+/* Spinner Styles */
+.spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner::before {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 48px;
+    border: 6px solid #fff;
+    border-top: 6px solid var(--accent-gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 18px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+
+/* Loader text styling */
+.spinner p {
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: var(--accent-gold);
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* --- Main Content Container --- */
+.container {
+    padding: 20px;
+    flex-grow: 1; /* Allow container to fill available space */
+    width: 100%;
+    max-width: 960px; /* Max width for content readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Lesson Sections --- */
+.lesson-section {
+    display: none;
+    padding: 20px;
+    margin-bottom: 25px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 5px var(--shadow-color);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--transition-speed), transform var(--transition-speed), background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.lesson-section.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.lesson-title {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    color: var(--primary-color); /* Use primary color for emphasis */
+}
+
+.lesson-content {
+    margin-bottom: 20px;
+}
+
+/* --- Code Examples --- */
+pre {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid var(--border-color);
+    font-size: 0.9em; /* Slightly smaller for code blocks */
+}
+
+code {
+    font-family: 'SF Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+ /* Subtle background for inline code */
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+pre code {
+    background-color: transparent; /* Reset for code inside pre */
+    padding: 0;
+    font-size: inherit;
+}
+
+
+
+/* --- Exercise, Quiz, Challenge --- */
+.exercise {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--accent-color); /* Accent border for emphasis */
+    border-radius: var(--border-radius);
+}
+
+.exercise-title {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    margin-top: 0;
+}
+
+.exercise-instruction {
+    font-style: normal; /* Less emphasis, more direct */
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
+
+.quiz {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-color); /* Slightly different background for quiz area */
+}
+
+.quiz-options label {
+    display: block;
+    margin-bottom: 10px; /* More spacing */
+    cursor: pointer;
+    font-size: 0.95em;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    border: 1px solid transparent;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+.quiz-options label:hover {
+    background-color: rgba(var(--primary-color-rgb, 0, 123, 255), 0.05);
+    border-color: rgba(var(--primary-color-rgb, 0, 123, 255), 0.2);
+}
+
+
+input[type="radio"] {
+    margin-right: 10px;
+    accent-color: var(--primary-color);
+    transform: scale(0.9);
+}
+
+.check-btn {
+    background-color: var(--primary-color);
+    color: var(--card-bg-color); /* Text color that contrasts with primary */
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.95em;
+    margin-top: 10px;
+    transition: background-color var(--transition-speed), opacity var(--transition-speed);
+}
+
+.check-btn:hover {
+    opacity: 0.85;
+}
+
+.feedback {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    display: none;
+    font-weight: normal;
+    font-size: 0.9em;
+    border: 1px solid;
+}
+
+.feedback.success {
+    background-color: rgba(var(--success-color-rgb, 40, 167, 69), 0.1);
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.feedback.error {
+    background-color: rgba(var(--error-color-rgb, 220, 53, 69), 0.1);
+    color: var(--error-color);
+    border-color: var(--error-color);
+}
+
+/* --- Code Editor & Simulation (Playground) --- */
+.playground {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    flex-direction: column; /* Stack for minimalism */
+}
+
+.code-editor, .simulation-visual {
+    flex: 1;
+    min-width: auto;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.code-editor-header {
+    background-color: var(--accent-color); /* Subtle header background */
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.code-editor-title {
+    font-weight: 600;
+    font-size: 0.9em;
+    color: var(--secondary-color);
+}
+
+.code-editor-header button {
+    background-color: var(--secondary-color);
+    color: var(--card-bg-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-left: 8px;
+    transition: background-color var(--transition-speed);
+}
+.code-editor-header button:hover {
+    background-color: var(--primary-color);
+}
+.code-editor-header .reset-btn {
+    background-color: var(--error-color);
+}
+.code-editor-header .reset-btn:hover {
+    background-color: rgba(var(--error-color-rgb,220,53,69), 0.8);
+}
+
+
+textarea.code-input {
+    flex-grow: 1;
+    width: 100%;
+    min-height: 150px;
+    background-color: var(--bg-color);
+    color: var(--text-color); /* Match card background */
+    border: none;
+    padding: 15px;
+    font-family: 'SF Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+    outline: none;
+    resize: vertical;
+    caret-color: var(--primary-color);
+}
+
+.simulation-placeholder, .terminal {
+    padding: 15px;
+    text-align: center;
+    color: var(--secondary-color);
+    font-style: italic;
+    flex-grow: 1;
+    font-size: 0.9em;
+}
+.terminal {
+    background-color: var(--bg-color);
+    color: var(--text-color); /* Terminal text matches body text */
+    text-align: left;
+    font-style: normal;
+    min-height: 80px;
+    overflow-y: auto;
+    border-top: 1px solid var(--border-color);
+}
+.terminal-line.system { color: var(--accent-color); }
+.terminal-line.error { color: var(--error-color); font-weight: normal; }
+
+
+/* --- Progress Indicator --- */
+.progress-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.progress-title {
+    color: var(--text-color);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.progress-bar { /* Simplified linear progress bar */
+    width: 100%;
+    height: 10px; /* Slimmer bar */
+    background-color: var(--border-color); /* Background of the track */
+    border-radius: var(--border-radius);
+    margin: 0 auto 10px auto;
+    position: relative;
+    overflow: hidden;
+}
+.progress-bar svg { display: none; } /* Hide SVG from previous theme */
+
+.progress-fill { /* Create this div inside .progress-bar in HTML */
+    height: 100%;
+    width: 0%; /* JS will update this */
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    transition: width var(--transition-speed);
+}
+
+.progress-text {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+}
+
+/* --- Achievement Badge Notification --- */
+.achievement-badge {
+    position: fixed;
+    bottom: calc(var(--nav-height) + var(--footer-height) + 20px); /* Above nav/footer */
+    right: 20px;
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--success-color);
+    border-radius: var(--border-radius);
+    padding: 10px 15px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all var(--transition-speed);
+    z-index: 1000;
+}
+
+.achievement-badge.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.badge-icon {
+    font-size: 1.2em; /* Smaller icon */
+    margin-right: 8px;
+    color: var(--success-color);
+}
+
+.badge-text {
+    font-weight: 500; /* Medium weight */
+    font-size: 0.9em;
+}
+
+/* --- Floating Note Tablet Toggle Button --- */
+.floating-btn {
+    position: fixed;
+    bottom: calc(var(--nav-height) + var(--footer-height) + 20px); /* Position above nav/footer */
+    left: 20px; /* Minimalist: often on the left or right, not centered */
+    background-color: var(--primary-color);
+    color: var(--card-bg-color);
+    border: none;
+    border-radius: 50%;
+    width: 45px; /* Smaller button */
+    height: 45px;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transition: all var(--transition-speed);
+    z-index: 999;
+}
+
+.floating-btn:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+/* --- Note Tablet Panel --- */
+.note-tablet-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 90%;
+    max-width: 600px; /* Slimmer panel */
+    height: auto; /* Adjust to content, with max-height */
+    max-height: 80vh;
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 20px var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+    z-index: 1002; /* Above modal overlay */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity var(--transition-speed), transform var(--transition-speed);
+}
+
+.note-tablet-panel.open {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.note-tablet-header {
+    padding: 10px 15px;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.note-tablet-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.note-tablet-header button.close-note-tablet { /* Specific class for close */
+    background: transparent;
+    border: none;
+    color: var(--secondary-color);
+    font-size: 1.5em; /* Match modal close */
+    cursor: pointer;
+}
+.note-tablet-header button.close-note-tablet:hover {
+    color: var(--text-color);
+}
+
+.note-tablet-content {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.note-tablet-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+}
+
+.note-tablet-controls button {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 5px 8px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all var(--transition-speed);
+}
+.note-tablet-controls button:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+.note-tablet-controls .clear-notes-btn {
+    border-color: var(--error-color);
+    color: var(--error-color);
+}
+.note-tablet-controls .clear-notes-btn:hover {
+    background-color: var(--error-color);
+    color: var(--card-bg-color);
+}
+
+
+textarea#note-textarea {
+    width: 100%;
+    min-height: 150px;
+    background-color: var(--bg-color); /* Slightly different for textarea */
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 10px;
+    font-family: var(--font-family);
+    font-size: 0.95em;
+    outline: none;
+    resize: vertical;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+}
+textarea#note-textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb,0,123,255), 0.2);
+}
+/* --- Navigation (Bottom Horizontal) --- */
+.nav-container {
+    width: 100%;
+    height: 15%;
+    position: fixed;
+    bottom: var(--footer-height); /* Sits on top of the footer */
+    left: 0;
+    background-color: var(--bg-color);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -1px 3px var(--shadow-color);
+    z-index: 990; /* Below floating buttons, above content scroll */
+    display: flex; /* To contain .nav-tabs */
+    align-items: center; /* Vertically center tabs if nav-container has padding */
+    overflow-x: auto; /* Allow horizontal scrolling for tabs if they overflow */
+    padding: 0 10px; /* Some padding for the container */
+}
+
+/* === Custom Scrollbar Styles === */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 4px;
+    border: 2px solid var(--ivory);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--rose-gold);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--platinum);
+    border-radius: 4px;
+}
+
+.nav-tabs {
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    width: 100%; /* Allow tabs to fill container or be centered */
+}
+
+.nav-tabs li {
+    position: relative;
+    min-width: max-content;
+}
+
+.nav-tabs li::before {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.nav-tabs li.active::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-family: var(--tech-font);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.nav-btn.active {
+    color: var(--text-primary);
+}
+
+.nav-btn:not(.active):hover {
+    color: var(--accent-color);
+}
+
+.lock-icon {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.nav-tabs li.locked .nav-btn {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.nav-tabs li:not(.locked) .lock-icon {
+    color: var(--success-color);
+}
+
+
+/* --- Footer and Achievements Display --- */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--nav-bg, var(--bg-color));
+    color: white;
+    padding: 0.8rem 1.5rem;
+    z-index: 99;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-btn {
+    background: none;
+    border: none;
+    color: var(--nav-link-text, var(--primary-color));
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-btn:hover {
+    background-color: var(--nav-link-hover-bg, var(--border-color));
+}
+
+#achievements-toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+/* Centered, fixed achievements panel */
+.achievements-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-secondary, var(--card-bg-color));
+    color: var(--text-primary, var(--text-color));
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+    width: 90%;
+    max-width: 400px;
+    max-height: 70vh;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    display: none;
+    z-index: 2001;
+    animation: slideInUp 0.4s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.achievements-panel h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--accent-blue, var(--primary-color));
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+#achievement-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#achievement-list li {
+    background-color: var(--bg-primary, var(--bg-color));
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary, var(--secondary-color));
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#achievement-list li::before {
+    content: '🏆';
+    margin-right: 5px;
+    font-size: 1.1rem;
+}
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    :root {
+        --header-height: 50px;
+        --nav-height: 45px;
+        --footer-height: 35px;
+    }
+    body {
+        padding-top: var(--header-height);
+        padding-bottom: calc(var(--nav-height) + var(--footer-height));
+    }
+
+    header h1 { font-size: 1.25em; }
+    header p { display: none; } /* Hide subtitle on small screens */
+    #settingsButton { font-size: 0.9rem; padding: 6px 10px; }
+
+    .container { padding: 15px; }
+    .lesson-section, .exercise { padding: 15px; }
+    .lesson-title { font-size: 1.25rem; }
+
+    .nav-container { padding: 0 5px; } /* Less padding for nav bar */
+    .nav-btn { padding: 8px 10px; font-size: 0.85em; }
+    .nav-btn.active::after { display: none; } /* Remove underline on mobile for cleaner look */
+
+    .floating-btn { width: 40px; height: 40px; font-size: 1.1em; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+
+    .modal-content { margin: 10vh auto; padding: 20px; }
+    .settings label { min-width: 80px; font-size: 0.9em; }
+    .settings select { font-size: 0.85em; }
+
+    .playground { gap: 15px; }
+    .code-editor-header { padding: 6px 10px; }
+    .code-editor-title { font-size: 0.8em; }
+    .code-editor-header button { padding: 4px 8px; font-size: 0.75em; }
+    textarea.code-input, .terminal { font-size: 0.85em; padding: 10px; }
+
+    .nav-tabs li { margin: 0 2px; } /* Tighter spacing for nav items */
+    .nav-btn { padding: 8px; } /* Even smaller padding */
+
+    .achievement-badge { padding: 8px 12px; font-size: 0.85em; }
+    .badge-icon { font-size: 1.1em; }
+
+    /* Ensure floating button and achievement panel don't overlap too much */
+    .floating-btn {
+      bottom: calc(var(--nav-height) + var(--footer-height) + 15px);
+      left: 15px;
+    }
+    .achievement-badge {
+      bottom: calc(var(--nav-height) + var(--footer-height) + 15px);
+      right: 15px;
+    }
+    .achievements-panel {
+      bottom: calc(var(--footer-height) + var(--nav-height) + 10px);
+      max-width: calc(100% - 30px); /* Full width with padding */
+    }
+
+}
+
+/* Helper RGB variables for themes (if needed for rgba() fallbacks or JS) */
+/* === Minimalist Theme === */
+:root {
+    /* Minimalist Color Palette */
+    --white: #ffffff;
+    --light-gray: #f5f5f5;
+    --gray: #dcdcdc;
+    --dark-gray: #333333;
+    --blue: #007acc;
+    --green: #28a745;
+    --red: #dc3545;
+
+    /* Shadows */
+    --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 3px 6px rgba(0, 0, 0, 0.15);
+
+    /* Typography */
+    --font-primary: 'Arial', sans-serif;
+
+    /* Transitions */
+    --transition-default: all 0.3s ease-in-out;
+}
+
+/* === Theme Variables === */
+body.light-theme {
+    --bg-color: var(--white);
+    --text-color: var(--dark-gray);
+    --primary-color: var(--blue);
+    --secondary-color: var(--gray);
+    --success-color: var(--green);
+    --error-color: var(--red);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+body.dark-theme {
+    --bg-color: var(--dark-gray);
+    --text-color: #f8f9fa; /* Lighter text for better contrast */
+    --primary-color: var(--blue);
+    --secondary-color: #b0b3b8; /* Softer gray for secondary elements */
+    --success-color: var(--green);
+    --error-color: var(--red);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+
+
+body.ocean-theme {
+    --bg-color: #e0f7fa;
+    --text-color: #004d40;
+    --primary-color: #00acc1;
+    --secondary-color: #00796b;
+    --success-color: #004d40;
+    --error-color: #006064;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+body.forest-theme {
+    --bg-color: #e8f5e9;
+    --text-color: #1b5e20;
+    --primary-color: #4caf50;
+    --secondary-color: #2e7d32;
+    --success-color: #1b5e20;
+    --error-color: #2e7d32;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}

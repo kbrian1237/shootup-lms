@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Test - ShootUp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dist/style.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+    <div class="p-8">
+        <h1 class="text-4xl font-bold mb-8 text-white">Dashboard Test</h1>
+        
+        <div class="bg-gray-800 rounded-xl p-6 mb-6">
+            <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Setup Test Data</h2>
+            <div class="flex gap-4 flex-wrap">
+                <button onclick="setupSampleProgress()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg">
+                    Setup Sample Progress
+                </button>
+                <button onclick="clearAllProgress()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+                    Clear All Progress
+                </button>
+                <button onclick="openDashboard()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                    Open Dashboard
+                </button>
+            </div>
+        </div>
+        
+        <div class="bg-gray-800 rounded-xl p-6">
+            <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Current Progress Data</h2>
+            <div id="progress-display" class="space-y-2">
+                <!-- Progress data will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="dist/data.js"></script>
+    <script src="dist/progress-sync.js"></script>
+    
+    <script>
+        function setupSampleProgress() {
+            const sampleData = {
+                'course_js': 75,
+                'course_python': 45,
+                'course_react': 100,
+                'course_node': 30,
+                'course_css': 90
+            };
+            
+            Object.entries(sampleData).forEach(([courseId, progress]) => {
+                if (window.ProgressSync) {
+                    window.ProgressSync.setCourseProgress(courseId, progress);
+                } else {
+                    localStorage.setItem(`progress_${courseId}`, progress.toString());
+                }
+            });
+            
+            updateProgressDisplay();
+            alert('Sample progress data has been set up!');
+        }
+        
+        function clearAllProgress() {
+            const keys = Object.keys(localStorage);
+            keys.forEach(key => {
+                if (key.startsWith('progress_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            
+            updateProgressDisplay();
+            alert('All progress data has been cleared!');
+        }
+        
+        function openDashboard() {
+            window.open('dashboard.html', '_blank');
+        }
+        
+        function updateProgressDisplay() {
+            const display = document.getElementById('progress-display');
+            const keys = Object.keys(localStorage);
+            const progressKeys = keys.filter(key => key.startsWith('progress_'));
+            
+            if (progressKeys.length === 0) {
+                display.innerHTML = '<p class="text-gray-400">No progress data found</p>';
+                return;
+            }
+            
+            display.innerHTML = progressKeys.map(key => {
+                const courseId = key.replace('progress_', '');
+                const progress = localStorage.getItem(key);
+                return `
+                    <div class="flex justify-between items-center p-3 bg-gray-700 rounded-lg">
+                        <span class="text-white">${courseId}</span>
+                        <span class="text-indigo-400">${progress}%</span>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Initial display update
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgressDisplay();
+        });
+    </script>
+</body>
+</html>

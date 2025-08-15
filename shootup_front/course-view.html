@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShootUp - Course View</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dist/style.css">
+    <style>
+        .hidden-loading {
+            display: none;
+        }
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(18, 18, 18, 0.8);
+            z-index: 50;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #4f46e5;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+
+    <!-- Main container for the entire layout -->
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+        <div id="navigation-placeholder"></div>
+        <!-- Main Content Area -->
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <!-- Loading and Error State Container -->
+            <div id="status-container" class="loading-overlay">
+                <div class="loading-spinner"></div>
+            </div>
+
+            <!-- Course Details View (Initially hidden) -->
+            <div id="course-details-view" class="p-8 hidden-loading">
+                <img data-bind="course.image" alt="Course Banner" class="w-full h-64 object-cover rounded-xl mb-8">
+                <h2 class="text-4xl font-bold mb-2 header-title" data-bind="course.title"></h2>
+                <div class="flex items-center gap-4 mb-4 text-gray-400">
+                    <span><strong>Category:</strong> <span data-bind="course.category"></span></span>
+                    <span><strong>Level:</strong> <span data-bind="course.level"></span></span>
+                </div>
+                <p class="text-lg text-gray-300 mb-6" data-bind="course.description"></p>
+                <div class="flex items-center gap-6 mb-8">
+                    <!-- Enroll file populated from data -->
+                    <a href="#" id="enrollBtn" class="cta-button animated-gradient text-white font-bold py-3 px-6 rounded-lg">Enroll Now</a>
+                    <div class="flex items-center gap-4">
+                        <button class="flex items-center gap-2 text-gray-400 hover:text-white"><i class="fas fa-thumbs-up"></i> <span data-bind="course.likes">1.2k</span></button>
+                        <button class="flex items-center gap-2 text-gray-400 hover:text-white"><i class="fas fa-comment"></i> <span data-bind="course.comments">34</span></button>
+                        <button class="flex items-center gap-2 text-gray-400 hover:text-white"><i class="fas fa-share"></i> Share</button>
+                    </div>
+                    <div class="flex items-center gap-1 text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <span data-bind="course.rating">4.5</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <h3 class="text-2xl font-bold mb-4">Course Content</h3>
+                        <div class="space-y-4" data-component="course-modules">
+                            <!-- Course modules will be rendered here dynamically -->
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Requirements</h3>
+                        <ul class="list-disc list-inside text-gray-300" data-component="course-requirements">
+                            <!-- Requirements will be rendered here dynamically -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="mt-8">
+                    <h3 class="text-2xl font-bold mb-4">Comments</h3>
+                    <div class="space-y-4" data-component="course-comments">
+                        <!-- Comments will be rendered here dynamically -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dist/data.js"></script>
+    <script src="dist/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const courseDetailsView = document.getElementById('course-details-view');
+            const statusContainer = document.getElementById('status-container');
+            
+            // Get the courseId from the URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const courseId = params.get('id');
+
+            if (!courseId) {
+                // If no courseId, display an error message and exit.
+                statusContainer.innerHTML = '<p class="text-center text-red-500 p-8">Course ID not found in URL.</p>';
+                return;
+            }
+
+            try {
+                // Load all data from the JSON file
+                const data = await window.ShootUpData.load();
+                const course = window.ShootUpData.getCourseById(data, courseId);
+                
+                if (course) {
+                    // If a course is found, set it as a context for data binding.
+                    window.ShootUpData.setContext('course', course);
+                    window.ShootUpData.bind(data, courseDetailsView);
+
+                    // Dynamically render course modules
+                    const modulesContainer = document.querySelector('[data-component="course-modules"]');
+                    if (modulesContainer) {
+                        modulesContainer.innerHTML = course.modules.map(module => `
+                            <div class="stats-card rounded-2xl p-4">
+                                <h4 class="font-bold">${module.title}</h4>
+                                <ul class="list-disc list-inside mt-2 ml-4 text-gray-300">
+                                    ${module.topics.map(topic => `<li>${topic}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('');
+                    }
+
+                    // Dynamically render requirements
+                    const requirementsContainer = document.querySelector('[data-component="course-requirements"]');
+                    if (requirementsContainer) {
+                        requirementsContainer.innerHTML = course.requirements.map(req => `<li>${req}</li>`).join('');
+                    }
+
+                    // Dynamically render comments
+                    const commentsContainer = document.querySelector('[data-component="course-comments"]');
+                    if (commentsContainer) {
+                        commentsContainer.innerHTML = course.comments.map(comment => `
+                            <div class="flex items-start gap-4">
+                                <img src="https://placehold.co/40x40/4f46e5/ffffff?text=${comment.author.charAt(0).toUpperCase()}" class="w-10 h-10 rounded-full">
+                                <div>
+                                    <h4 class="font-bold">${comment.author}</h4>
+                                    <p class="text-gray-400">${comment.text}</p>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+
+                    // Hide the status container and show the course details view
+                    statusContainer.classList.add('hidden-loading');
+                    courseDetailsView.classList.remove('hidden-loading');
+
+                } else {
+                    // If the course ID is valid but no course is found, display an error.
+                    statusContainer.innerHTML = `<p class="text-center text-red-500 p-8">Course with ID "${courseId}" not found.</p>`;
+                }
+            } catch (error) {
+                console.error("Failed to load course data:", error);
+                statusContainer.innerHTML = '<p class="text-center text-red-500 p-8">An error occurred while loading the course data.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

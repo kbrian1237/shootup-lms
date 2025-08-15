@@ -1,0 +1,1556 @@
+/* --- Base Styles and Theme Variables --- */
+:root {
+    /* Default Theme (Can be a luxurious light theme) */
+    --bg-primary: #f8f5f2; /* Soft off-white */
+    --bg-secondary: #ffffff; /* Pure white for cards */
+    --text-primary: #3a3a3a; /* Deep charcoal */
+    --text-secondary: #5c5c5c; /* Muted grey */
+    --accent-gold: #b8860b; /* Medium goldenrod */
+    --accent-blue: #0e4d92; /* Deep navy blue */
+    --border-color: #e0dcd7; /* Subtle border */
+    --shadow-color: rgba(0, 0, 0, 0.08); /* Soft shadow */
+    --success-color: #28a745; /* Standard green for success */
+    --error-color: #dc3545; /* Standard red for error */
+    --code-bg: #2d2d2d; /* Dark code background */
+    --code-text: #cccccc; /* Light grey code text */
+    --locked-grey: #8a8a8a; /* Muted grey for locked items */
+    --button-bg: var(--accent-blue);
+    --button-text: white;
+    --button-hover-bg: #0a3c70;
+    --nav-bg: #2c3e50; /* Dark background for nav */
+    --nav-link-text: white; /* Default nav link color */
+    --nav-link-hover-bg: rgba(255, 255, 255, 0.15);
+    --nav-link-active-bg: var(--accent-gold);
+    --nav-link-active-text: var(--text-primary); /* Should contrast with active bg */
+    --dark-color: #2c3e50; /* Define dark-color for achievement badge */
+}
+
+/* Dark Theme */
+body.dark-theme {
+    --bg-primary: #2c3e50; /* Dark background */
+    --bg-secondary: #34495e; /* Slightly lighter dark for cards */
+    --text-primary: #ecf0f1; /* Light text */
+    --text-secondary: #bdc3c7; /* Muted light grey */
+    --accent-gold: #f1c40f; /* Brighter gold */
+    --accent-blue: #3498db; /* Brighter blue */
+    --border-color: #5a6a7a; /* Visible border */
+    --shadow-color: rgba(0, 0, 0, 0.3); /* More prominent shadow */
+    --code-bg: #1e1e1e;
+    --code-text: #abb2bf;
+    --locked-grey: #95a5a6;
+    --button-bg: var(--accent-blue);
+    --button-text: white;
+    --button-hover-bg: #2980b9;
+    --nav-bg: #1a252f; /* Even darker nav */
+    --nav-link-text: #bdc3c7; /* Lighter text for dark nav */
+    --nav-link-hover-bg: rgba(255, 255, 255, 0.1);
+    --nav-link-active-bg: var(--accent-gold);
+    --nav-link-active-text: var(--dark-color);
+    --dark-color: #1a252f; /* Define dark-color for achievement badge */
+}
+
+/* Light Theme */
+body.light-theme {
+    --bg-primary: #f0f4f8;
+    --bg-secondary: #ffffff;
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --accent-gold: #e67e22;
+    --accent-blue: #3498db;
+    --border-color: #dbe4ee;
+    --shadow-color: rgba(0, 0, 0, 0.06);
+    --code-bg: #f4f4f4;
+    --code-text: #333;
+    --locked-grey: #95a5a6;
+    --button-bg: var(--accent-blue);
+    --button-text: white;
+    --button-hover-bg: #2980b9;
+    --nav-bg: #ecf0f1; /* Light background for nav */
+    --nav-link-text: var(--text-primary); /* Darker text for light nav */
+    --nav-link-hover-bg: rgba(0, 0, 0, 0.08);
+    --nav-link-active-bg: var(--accent-gold);
+    --nav-link-active-text: var(--text-primary); /* Darker text for light active */
+    --dark-color: #ecf0f1; /* Define dark-color for achievement badge */
+}
+
+/* Ocean Theme */
+body.ocean-theme {
+    --bg-primary: #e0f2f7; /* Light blue */
+    --bg-secondary: #ffffff;
+    --text-primary: #004d40; /* Dark teal */
+    --text-secondary: #37474f; /* Dark grey-blue */
+    --accent-gold: #ffb300; /* Amber */
+    --accent-blue: #0277bd; /* Cyan blue */
+    --border-color: #b2ebf2;
+    --shadow-color: rgba(0, 0, 0, 0.07);
+    --code-bg: #002633; /* Very dark blue */
+    --code-text: #80deea; /* Light cyan */
+    --locked-grey: #546e7a;
+    --button-bg: var(--accent-blue);
+    --button-text: white;
+    --button-hover-bg: #01579b;
+    --nav-bg: #004d40; /* Dark teal nav */
+    --nav-link-text: #e0f2f7; /* Light blue text */
+    --nav-link-hover-bg: rgba(255, 255, 255, 0.1);
+    --nav-link-active-bg: var(--accent-gold);
+    --nav-link-active-text: var(--text-primary);
+    --dark-color: #004d40; /* Define dark-color for achievement badge */
+}
+
+/* Forest Theme */
+body.forest-theme {
+    --bg-primary: #e8f5e9; /* Light green */
+    --bg-secondary: #ffffff;
+    --text-primary: #1b5e20; /* Dark green */
+    --text-secondary: #388e3c; /* Medium green */
+    --accent-gold: #fbc02d; /* Yellow */
+    --accent-blue: #33691e; /* Olive green */
+    --border-color: #c8e6c9;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --code-bg: #333333;
+    --code-text: #a5d6a7; /* Light green */
+    --locked-grey: #66bb6a;
+    --button-bg: var(--accent-blue);
+    --button-text: white;
+    --button-hover-bg: #2e7d32;
+    --nav-bg: #1b5e20; /* Dark green nav */
+    --nav-link-text: #e8f5e9; /* Light green text */
+    --nav-link-hover-bg: rgba(255, 255, 255, 0.1);
+    --nav-link-active-bg: var(--accent-gold);
+    --nav-link-active-text: var(--text-primary);
+    --dark-color: #1b5e20; /* Define dark-color for achievement badge */
+}
+
+
+/* Apply variables */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    padding-bottom: 80px; /* Add padding at the bottom for the fixed footer */
+    transition: background-color 0.5s ease, color 0.5s ease; /* Smooth theme transitions */
+    /* Default font family - will be overridden by JS */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- Header --- */
+header {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-gold));
+    color: white;
+    padding: 2.5rem 1.5rem; /* Increased padding */
+    text-align: center;
+    box-shadow: 0 6px 15px var(--shadow-color); /* More prominent shadow */
+    position: relative;
+    overflow: hidden;
+}
+
+header h1 {
+    font-size: 3rem; /* Larger title */
+    margin-bottom: 0.8rem;
+    animation: slideInDown 0.8s ease-out;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); /* Stronger text shadow */
+}
+
+header p {
+    font-size: 1.3rem; /* Larger tagline */
+    opacity: 0.95; /* Slightly more opaque */
+    animation: fadeIn 1.2s ease-out;
+}
+
+/* --- Settings Button and Modal Styles --- */
+
+/* Style for the settings button */
+#settingsButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--accent-blue);
+    font-size: 1rem;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    z-index: 120; /* Above nav and settings */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#settingsButton:hover {
+    background-color: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+}
+/* The Modal (background overlay) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2001; /* Above header and loader */
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(44, 62, 80, 0.6); /* Semi-transparent overlay */
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Show modal when active */
+.modal.open {
+    display: flex;
+    opacity: 1;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: var(--bg-secondary);
+    margin: 0;
+    padding: 2rem 1.5rem;
+    border: 1px solid var(--border-color);
+    width: 90%;
+    max-width: 420px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px var(--shadow-color);
+    color: var(--text-primary);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: fadeIn 0.4s;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    font-size: 1.25rem;
+    color: var(--accent-blue);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.7rem;
+}
+
+.close {
+    color: var(--accent-blue);
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    background: none;
+    border: none;
+    transition: color 0.2s;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--accent-gold);
+}
+
+/* Settings (Theme/Font Selects) */
+.settings {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.settings > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.settings label {
+    font-weight: 500;
+    color: var(--text-primary);
+    min-width: 90px;
+    font-size: 0.97rem;
+}
+
+.settings select {
+    flex-grow: 1;
+    padding: 7px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    font-size: 0.97rem;
+    cursor: pointer;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    outline: none;
+    transition: background-color 0.2s, border-color 0.2s;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.362%22%20height%3D%22292.362%22%3E%3Cpath%20fill%3D%22%233a3a3a%22%20d%3D%22M287.362%2C197.211L159.362%2C69.211c-3.906-3.906-10.234-3.906-14.141%2C0L5.001%2C197.211c-3.906%2C3.906-3.906%2C10.234%2C0%2C14.141s10.234%2C3.906%2C14.141%2C0l133.191-133.191l133.191%2C133.191c3.906%2C3.906%2C10.234%2C3.906%2C14.141%2C0S291.268%2C201.117%2C287.362%2C197.211z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 13px auto;
+}
+
+.settings select:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(14, 77, 146, 0.13);
+}
+
+.settings option {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Responsive adjustments for settings and modal */
+@media (max-width: 768px) {
+    #settingsButton {
+        top: 0.5rem;
+        right: 0.5rem;
+        font-size: 0.95rem;
+        padding: 7px 10px;
+    }
+    .modal-content {
+        padding: 1.2rem 0.7rem;
+        max-width: 98vw;
+    }
+    .settings label,
+    .settings select {
+        font-size: 0.9rem;
+    }
+    .settings > div {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 0.8rem 0.3rem;
+    }
+    .settings label {
+        min-width: 70px;
+    }
+    #settingsButton {
+        font-size: 0.9rem;
+        padding: 6px 8px;
+    }
+}
+/* --- Loader Overlay Styles --- */
+#loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(44, 62, 80, 0.85); /* Semi-transparent dark overlay */
+    z-index: 2000; /* Above all other content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+    opacity: 1;
+    pointer-events: all;
+}
+
+#loader-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+body.loading {
+    overflow: hidden; /* Prevent scrolling when loader is active */
+}
+
+/* Spinner Styles */
+.spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner::before {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 48px;
+    border: 6px solid #fff;
+    border-top: 6px solid var(--accent-gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 18px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+
+/* Loader text styling */
+.spinner p {
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: var(--accent-gold);
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* --- Navigation --- */
+.nav-container {
+    display: flex;
+    justify-content: center;
+    background-color: var(--nav-bg); /* Use nav background variable */
+    padding: 0.6rem; /* Slightly more padding */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tabs {
+    display: flex;
+    list-style: none;
+    gap: 0.8rem; /* Increased gap */
+    overflow-x: auto;
+    padding: 0.5rem;
+    max-width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.nav-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-tabs li {
+    min-width: fit-content;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.nav-tabs button {
+    background: transparent;
+    color: var(--nav-link-text); /* Use nav link text variable */
+    border: none;
+    padding: 0.6rem 1.2rem; /* Increased padding */
+    border-radius: 20px; /* Pill shape */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Slightly more space */
+    font-size: 1rem;
+}
+
+.nav-tabs button:hover:not(:disabled) {
+    background-color: var(--nav-link-hover-bg); /* Use nav link hover background variable */
+}
+
+.nav-tabs button.active {
+    background-color: var(--nav-link-active-bg); /* Use nav link active background variable */
+    color: var(--nav-link-active-text); /* Use nav link active text variable */
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for Locked Navigation Items */
+.nav-tabs li.locked {
+    opacity: 0.5; /* More visible locked state */
+    pointer-events: none;
+}
+
+.nav-tabs li.locked .nav-btn {
+     cursor: not-allowed;
+     color: var(--locked-grey);
+}
+
+
+/* Lock Icon Styling */
+.lock-icon {
+    font-size: 0.9rem; /* Slightly larger icon */
+    color: var(--locked-grey);
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+.lock-icon.fa-lock-open {
+    color: var(--success-color);
+}
+
+/* --- Main Content --- */
+.container {
+    max-width: 1300px; /* Wider container */
+    margin: 2.5rem auto; /* More margin */
+    padding: 0 2rem; /* More padding */
+}
+
+/* Lesson Section */
+.lesson-section {
+    display: none;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.lesson-section.active {
+    display: block;
+}
+
+.lesson-title {
+    color: var(--accent-blue); /* Use accent blue for titles */
+    margin-bottom: 2rem; /* More space below title */
+    font-size: 2.2rem; /* Slightly larger title */
+    border-bottom: 3px solid var(--accent-gold); /* Gold underline */
+    padding-bottom: 0.8rem; /* More padding below title */
+    display: inline-block;
+}
+
+.lesson-content {
+    background-color: var(--bg-secondary);
+    border-radius: 10px; /* More rounded corners */
+    padding: 2.5rem; /* More padding */
+    box-shadow: 0 4px 15px var(--shadow-color);
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border-color); /* Subtle border */
+}
+
+.lesson-content h3 {
+    color: var(--text-primary);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 1px dashed var(--border-color); /* Dashed sub-underline */
+    padding-bottom: 0.5rem;
+}
+
+.lesson-content p {
+    margin-bottom: 1.2rem; /* More space between paragraphs */
+    color: var(--text-secondary);
+}
+
+.lesson-content ul {
+    margin-bottom: 1.2rem;
+    padding-left: 20px;
+}
+
+.lesson-content li {
+    margin-bottom: 0.5rem;
+}
+
+.lesson-content code {
+    background-color: rgba(184, 134, 11, 0.1); /* Subtle gold background for inline code */
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--accent-gold); /* Gold color for inline code */
+}
+.lesson-content pre code {
+    display: block;
+    padding: 1.5rem; /* More padding */
+    background-color: var(--code-bg);
+    color: var(--code-text);
+    overflow-x: auto;
+    border-radius: 8px; /* Rounded corners for code blocks */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow */
+}
+
+
+/* --- Interactive Playground --- */
+.playground {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* More space between editor and visual */
+    margin: 3rem 0; /* More margin */
+}
+
+@media (min-width: 768px) {
+    .playground {
+        flex-direction: row;
+    }
+}
+
+.code-editor, .simulation-visual { /* Renamed server-visualization to simulation-visual for generality */
+    flex: 1;
+    min-height: 400px; /* Taller playgrounds */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 15px var(--shadow-color);
+    overflow: hidden; /* Ensure content respects border-radius */
+}
+
+.code-editor {
+    background-color: var(--code-bg);
+    padding: 1.5rem; /* More padding */
+    color: var(--code-text);
+    position: relative;
+    display: flex; /* Use flex to manage header and textarea layout */
+    flex-direction: column;
+}
+
+.code-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #444; /* Darker border */
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.code-editor-title {
+    font-weight: bold;
+    color: var(--accent-gold);
+    font-size: 1.1rem;
+}
+
+.run-btn, .reset-btn {
+    border: none;
+    padding: 0.4rem 1rem; /* Adjusted padding */
+    border-radius: 5px; /* Slightly more rounded */
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    margin-left: 0.6rem; /* More space */
+    font-weight: bold;
+}
+
+.run-btn {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.run-btn:hover {
+    background-color: #1e7e34; /* Darker green */
+}
+
+.reset-btn {
+    background-color: var(--error-color);
+    color: white;
+}
+
+.reset-btn:hover {
+    background-color: #bd2130; /* Darker red */
+}
+
+textarea.code-input {
+    width: 100%;
+    flex-grow: 1; /* Allow textarea to fill remaining space */
+    background-color: #1e1e1e; /* Keep dark background for code area */
+    color: var(--code-text);
+    border: none;
+    border-radius: 4px;
+    padding: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    resize: none;
+    font-size: 1rem; /* Slightly larger font */
+    line-height: 1.6; /* More comfortable line spacing */
+    outline: none;
+}
+
+/* Simulation Visualization Area */
+.simulation-visual {
+    background-color: var(--bg-secondary);
+    padding: 1.5rem; /* More padding */
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Placeholder for specific visualizations (remove or customize) */
+.simulation-placeholder {
+    font-size: 1.3rem; /* Larger placeholder text */
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+
+/* Terminal Output */
+.terminal {
+    width: 100%;
+    height: 200px; /* Taller terminal */
+    background-color: #1a1a1a; /* Darker terminal background */
+    color: #00ff00; /* Classic green text */
+    font-family: 'Courier New', Courier, monospace;
+    padding: 15px; /* More padding */
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow-y: auto;
+    font-size: 0.95rem; /* Slightly larger font */
+    white-space: pre-wrap;
+    border: 1px solid #333; /* Subtle border */
+}
+
+.terminal-line {
+    margin-bottom: 6px; /* More space between lines */
+}
+
+/* Terminal line colors */
+/* Using CSS variables for consistency */
+.terminal-line.system {
+    color: var(--accent-blue); /* Blue */
+}
+.terminal-line.error {
+    color: var(--error-color);
+}
+.terminal-line.success {
+    color: var(--success-color);
+}
+.terminal-line.request {
+    color: var(--accent-gold); /* Gold for requests */
+    font-weight: bold;
+}
+.terminal-line.response {
+     color: var(--code-text); /* Use code text color for responses */
+}
+
+/* Request Flow Animation Element */
+.request-flow {
+    position: absolute;
+    width: 15px; /* Reduced size */
+    height: 15px; /* Reduced size */
+    border-radius: 50%;
+    background-color: var(--accent-gold); /* Use accent color */
+    z-index: 10;
+    opacity: 0;
+    /* Animation defined below */
+}
+
+
+/* --- Exercise Section --- */
+.exercise {
+    background-color: var(--bg-secondary); /* Use secondary background */
+    border-left: 5px solid var(--accent-gold); /* Thicker gold border */
+    padding: 2rem; /* More padding */
+    border-radius: 0 10px 10px 0;
+    margin: 2.5rem 0;
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.exercise-title {
+    color: var(--accent-blue);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem; /* More space */
+    font-size: 1.8rem; /* Larger title */
+}
+
+.exercise-title i {
+    color: var(--accent-gold);
+    font-size: 1.5rem; /* Larger icon */
+}
+
+.exercise-instruction {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.exercise ol {
+    margin-bottom: 1.5rem;
+    padding-left: 20px;
+    color: var(--text-secondary);
+}
+
+.exercise li {
+    margin-bottom: 0.8rem;
+}
+
+/* Styling for individual quizzes */
+.quiz {
+    margin-bottom: 2rem; /* More space between quizzes */
+    padding: 1.5rem; /* More padding */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-primary); /* Use primary background for quizzes */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.quiz p {
+    margin-bottom: 1rem;
+    font-weight: 600; /* Slightly bolder question */
+    color: var(--text-primary);
+}
+
+.quiz-options label {
+    display: block;
+    margin-bottom: 0.8rem; /* More space between options */
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.quiz-options label:hover {
+    color: var(--accent-blue); /* Highlight on hover */
+}
+
+.quiz-options input[type="radio"] {
+    margin-right: 8px; /* More space */
+    cursor: pointer;
+}
+
+.check-btn {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 0.6rem 2rem; /* Larger button */
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 1.5rem; /* More space above button */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.check-btn:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-1px); /* Slight lift effect */
+}
+
+.check-btn:active {
+    transform: translateY(0); /* Press effect */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Feedback Styling */
+.feedback {
+    margin-top: 1.5rem; /* More space */
+    padding: 1.2rem; /* More padding */
+    border-radius: 6px; /* Slightly more rounded */
+    display: none;
+    font-weight: bold;
+    border: 1px solid transparent; /* Default transparent border */
+    animation: fadeIn 0.4s ease-out;
+}
+
+.feedback.success {
+    background-color: rgba(40, 167, 69, 0.15); /* More opaque background */
+    color: var(--success-color);
+    border-color: var(--success-color);
+    display: block;
+}
+
+.feedback.error {
+    background-color: rgba(220, 53, 69, 0.15); /* More opaque background */
+    color: var(--error-color);
+    border-color: var(--error-color);
+    display: block;
+}
+
+/* --- Progress Section --- */
+.progress-container {
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    padding: 2rem; /* More padding */
+    box-shadow: 0 4px 15px var(--shadow-color);
+    margin-top: 3rem; /* More margin */
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.progress-title {
+    color: var(--accent-blue);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.progress-bar {
+    height: 25px; /* Taller bar */
+    background-color: #e0e0e0;
+    border-radius: 12.5px; /* Half of height for pill shape */
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow */
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-gold), var(--accent-blue)); /* Gradient fill */
+    border-radius: 12.5px;
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-weight: bold;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+/* --- Achievement Badge (Temporary Notification) --- */
+.achievement-badge {
+    position: fixed;
+    bottom: 90px; /* Position above the footer and button */
+    right: 20px;
+    background-color: var(--accent-gold);
+    color: var(--dark-color); /* Use dark color for text */
+    padding: 1.2rem 1.8rem; /* More padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transform: translateX(150%);
+    transition: transform 0.5s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem; /* More space */
+    font-weight: bold;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.achievement-badge.show {
+    transform: translateX(0);
+}
+
+.badge-icon {
+    font-size: 1.8rem; /* Larger icon */
+}
+
+/* --- Floating Note Tablet Button --- */
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Circular button */
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 999; /* Above footer, below badge */
+}
+
+.floating-btn:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.floating-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+/* --- Note Tablet Modal/Panel --- */
+.note-tablet-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 800px; /* Increased max width for the panel */
+    height: 90%; /* Increased height */
+    max-height: 90vh; /* Use viewport height for better responsiveness */
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    z-index: 1000; /* Above everything else */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Ensure content respects panel boundaries */
+    border: 1px solid var(--border-color);
+    visibility: hidden; /* Hidden by default */
+    opacity: 0;
+    transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.note-tablet-panel.open {
+    visibility: visible;
+    opacity: 1;
+}
+
+.note-tablet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: var(--accent-blue);
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.note-tablet-header h4 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.note-tablet-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.note-tablet-header button:hover {
+    color: var(--accent-gold);
+}
+
+.note-tablet-content {
+    flex-grow: 1; /* Allow content to take up space */
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    overflow-y: auto; /* Add scroll to content if needed */
+}
+
+#note-textarea {
+    width: 100%;
+    flex-grow: 1; /* Allow textarea to take available space */
+    min-height: 150px; /* Minimum height */
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: vertical; /* Allow vertical resize */
+    margin-bottom: 1.5rem;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#note-textarea:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 5px rgba(14, 77, 146, 0.3);
+}
+
+.note-code-playground {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--code-bg);
+    color: var(--code-text);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allow playground to grow and take up available space */
+    min-height: 300px; /* Increased minimum height */
+}
+
+.note-code-playground .code-editor-header {
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid #444;
+}
+
+.note-code-playground textarea.code-input {
+    min-height: 100px; /* Smaller height for scratchpad */
+    height: auto; /* Adjust based on content */
+    flex-grow: 0; /* Don't grow infinitely */
+    margin-bottom: 1rem;
+    
+.note-code-playground .simulation-visual {
+    min-height: 200px; /* Increased visual area height */
+    padding: 1rem; /* More padding */
+    background-color: #1a1a1a; /* Match terminal bg */
+    border: none; /* Remove border */
+    box-shadow: none; /* Remove shadow */
+    border-top: 1px solid #444; /* Separator */
+    flex-grow: 1; /* Allow the visual area to grow */
+}
+    border-top: 1px solid #444; /* Separator */
+}
+
+.note-code-playground .terminal {
+    height: 100px; /* Fixed smaller height for scratchpad terminal */
+    margin-top: 0; /* Remove top margin */
+    padding: 10px;
+    border-radius: 0;
+    border: none;
+}
+
+
+.note-tablet-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    text-align: right;
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+
+/* --- Footer and Achievements Display --- */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--nav-bg); /* Use nav background variable */
+    color: white;
+    padding: 0.8rem 1.5rem;
+    z-index: 99;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column; /* Stack button and panel */
+    align-items: center;
+}
+
+.footer-btn {
+    background: none;
+    border: none;
+    color: var(--nav-link-text); /* Use nav link text variable */
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-btn:hover {
+    background-color: var(--nav-link-hover-bg); /* Use nav link hover background variable */
+}
+
+#achievements-toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.achievements-panel {
+    background-color: var(--bg-secondary); /* Use secondary background */
+    color: var(--text-primary);
+    padding: 1.5rem;
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-height: 200px; /* Limit height */
+    overflow-y: auto; /* Add scroll if needed */
+    margin-top: 10px;
+    border: 1px solid var(--border-color);
+    border-bottom: none; /* No bottom border */
+    display: none; /* Hidden by default */
+    animation: slideInUp 0.4s ease-out;
+}
+
+.achievements-panel h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--accent-blue);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+#achievement-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#achievement-list li {
+    background-color: var(--bg-primary); /* Use primary background for list items */
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#achievement-list li::before {
+    content: '🏆'; /* Trophy icon */
+    margin-right: 5px;
+    font-size: 1.1rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes flow {
+    0% { opacity: 0; transform: translateX(-50px) scale(0.5); }
+    20% { opacity: 1; transform: translateX(0) scale(1); }
+    80% { opacity: 1; transform: translateX(calc(100% - 70px)) scale(1); } /* Animate towards the right edge */
+    100% { opacity: 0; transform: translateX(calc(100% - 20px)) scale(0.5); } /* End slightly in from the right edge */
+}
+
+
+/* Add other animations like 'blink', 'pulse' if needed for specific simulations */
+/* Keeping blink and pulse from previous CSS */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+
+/* Style for the achievements panel when shown */
+footer.achievements-open .achievements-panel {
+    display: block;
+}
+
+/* Rotate the icon when the panel is open */
+footer.achievements-open #achievements-toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    header {
+        padding: 2rem 1rem;
+    }
+
+    header h1 {
+        font-size: 2.2rem;
+    }
+
+    header p {
+        font-size: 1.1rem;
+    }
+
+    .settings {
+        flex-direction: column;
+        top: 0.5rem;
+        right: 0.5rem;
+        gap: 10px;
+    }
+
+    .settings label, .settings select {
+        font-size: 0.8rem;
+    }
+
+    .nav-container {
+        padding: 0.4rem;
+    }
+
+    .nav-tabs {
+        gap: 0.5rem;
+        padding: 0.4rem;
+    }
+
+    .nav-tabs button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+        margin: 1.5rem auto;
+    }
+
+    .lesson-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .lesson-content {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .lesson-content h3 {
+        font-size: 1.3rem;
+        margin-top: 1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .playground {
+        flex-direction: column;
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .code-editor, .simulation-visual {
+        min-height: 300px;
+        padding: 1rem;
+    }
+
+    .code-editor-header {
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.6rem;
+    }
+
+    .code-editor-title {
+        font-size: 1rem;
+    }
+
+    .run-btn, .reset-btn {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
+        margin-left: 0.4rem;
+    }
+
+    textarea.code-input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .simulation-visual {
+        padding: 1rem;
+    }
+
+    .simulation-placeholder {
+        font-size: 1.1rem;
+    }
+
+    .terminal {
+        height: 150px;
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    .exercise {
+        padding: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .exercise-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .exercise-title i {
+        font-size: 1.2rem;
+    }
+
+    .quiz {
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+    }
+
+    .quiz p {
+        margin-bottom: 0.6rem;
+    }
+
+    .quiz-options label {
+        margin-bottom: 0.6rem;
+    }
+
+    .check-btn {
+        padding: 0.5rem 1.5rem;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+
+    .progress-container {
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .progress-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .progress-bar {
+        height: 20px;
+        border-radius: 10px;
+    }
+
+    .progress-fill {
+        border-radius: 10px;
+    }
+
+    .progress-text {
+        font-size: 1rem;
+    }
+
+    .achievement-badge {
+        bottom: 70px;
+        right: 10px;
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .badge-icon {
+        font-size: 1.5rem;
+    }
+
+    .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .note-tablet-panel {
+        width: 95%;
+        height: 90%;
+        max-height: 90vh; /* Use viewport height */
+    }
+
+    .note-tablet-header {
+        padding: 0.8rem 1rem;
+    }
+
+    .note-tablet-header h4 {
+        font-size: 1rem;
+    }
+
+    .note-tablet-header button {
+        font-size: 1.2rem;
+    }
+
+    .note-tablet-content {
+        padding: 1rem;
+    }
+
+    #note-textarea {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+        /* --- Note Tablet Control Styles --- */
+    .note-tablet-controls {
+        display: flex; /* Arrange buttons in a row */
+        flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        gap: 8px; /* Space between buttons */
+        margin-bottom: 15px; /* Space below the control bar */
+        padding-bottom: 10px; /* Add some padding at the bottom */
+        border-bottom: 1px solid var(--border-color); /* Separator line below controls */
+        align-items: center; /* Vertically align buttons */
+    }
+
+    .note-tablet-content .note-tablet-controls button {
+        background-color: var(--bg-primary); /* Use a background color from the theme */
+        color: var(--text-primary); /* Use text color from the theme */
+        border: 1px solid var(--border-color); /* Subtle border */
+        padding: 6px 10px; /* Padding for buttons */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.2s ease; /* Smooth transitions */
+        min-width: 30px; /* Minimum width for single-letter buttons */
+        text-align: center;
+    }
+
+    .note-tablet-content .note-tablet-controls button:hover {
+        background-color: var(--bg-secondary); /* Lighter background on hover */
+        border-color: var(--accent-blue); /* Highlight border on hover */
+        color: var(--accent-blue); /* Highlight text on hover */
+    }
+
+    .note-tablet-content .note-tablet-controls button:active {
+        background-color: var(--border-color); /* Darker background when pressed */
+        transform: translateY(1px); /* Press effect */
+    }
+
+    /* Specific style for the Clear button */
+    #clear-notes-btn {
+        background-color: var(--error-color); /* Use error color for clear */
+        color: white;
+        border-color: var(--error-color);
+    }
+
+    #clear-notes-btn:hover {
+        background-color: #c82333; /* Darker red on hover */
+        border-color: #bd2130;
+        color: white;
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 480px) {
+        .note-tablet-content .note-tablet-controls {
+            gap: 5px; /* Reduce gap on very small screens */
+        }
+
+        .note-tablet-content .note-tablet-controls button {
+            padding: 5px 8px; /* Reduce padding */
+            font-size: 0.85rem; /* Slightly smaller font */
+        }
+    }
+
+
+    .note-code-playground .code-editor-header {
+        padding: 0.6rem 0.8rem;
+    }
+
+    .note-code-playground textarea.code-input {
+         padding: 0.8rem;
+         font-size: 0.9rem;
+    }
+
+    .note-code-playground .terminal {
+        height: 80px;
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+
+    .note-tablet-footer {
+        padding: 0.8rem 1rem;
+    }
+
+    footer {
+        padding: 0.6rem 1rem;
+    }
+
+    .footer-btn {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .achievements-panel {
+        padding: 1rem;
+    }
+
+    .achievements-panel h4 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    #achievement-list li {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+}

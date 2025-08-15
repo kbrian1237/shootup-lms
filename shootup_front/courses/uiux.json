@@ -1,0 +1,75 @@
+{
+	"title": "The Art of UI/UX Design",
+	"category": "Design",
+	"level": "Beginner",
+	"rating": 4.8,
+	"banner": "https://placehold.co/1200x400/4b5563/ffffff?text=UI%2FUX+Design",
+	"description": "Master the art of creating beautiful, user-centered designs that delight and engage users!",
+	"outline": [
+		{ "title": "Design Fundamentals", "topics": ["Design Principles", "Color Theory", "Typography", "Visual Hierarchy"] },
+		{ "title": "User Research", "topics": ["User Personas", "User Journey Mapping", "Surveys & Interviews", "Competitive Analysis"] },
+		{ "title": "Information Architecture", "topics": ["Site Mapping", "Card Sorting", "Navigation Design", "Content Strategy"] },
+		{ "title": "Wireframing", "topics": ["Low-fidelity Wireframes", "High-fidelity Wireframes", "Wireframing Tools", "Best Practices"] },
+		{ "title": "Prototyping", "topics": ["Interactive Prototypes", "Prototyping Tools", "User Testing", "Iteration Process"] },
+		{ "title": "Visual Design", "topics": ["UI Components", "Design Systems", "Branding", "Iconography"] },
+		{ "title": "Mobile Design", "topics": ["Responsive Design", "Mobile-First Approach", "Touch Interfaces", "Platform Guidelines"] },
+		{ "title": "Accessibility", "topics": ["WCAG Guidelines", "Inclusive Design", "Screen Readers", "Color Contrast"] },
+		{ "title": "Design Tools", "topics": ["Figma", "Adobe XD", "Sketch", "Design Handoff"] },
+		{ "title": "User Testing", "topics": ["Usability Testing", "A/B Testing", "Analytics", "Feedback Collection"] },
+		{ "title": "Design Systems", "topics": ["Component Libraries", "Style Guides", "Design Tokens", "Maintenance"] },
+		{ "title": "Portfolio Development", "topics": ["Case Studies", "Design Process", "Presentation Skills", "Personal Branding"] }
+	],
+	"sections": [
+		{
+			"title": "Introduction to UI/UX Design",
+			"content": [
+				{ "type": "p", "text": "Welcome to The Art of UI/UX Design! This course will transform you into a skilled designer who creates meaningful, user-centered digital experiences." },
+				{ "type": "p", "text": "UI/UX Design combines creativity with psychology, technology with empathy. You'll learn to understand users deeply and create interfaces that are not just beautiful, but truly functional and delightful to use." },
+				{ "type": "p", "text": "In this comprehensive course, you'll explore:" },
+				{ "type": "ul", "listItems": [
+					"Fundamental design principles and visual design skills",
+					"User research methods and persona development",
+					"Information architecture and navigation design",
+					"Wireframing and prototyping techniques",
+					"Modern design tools and workflows",
+					"Mobile and responsive design strategies",
+					"Accessibility and inclusive design practices",
+					"User testing and design validation methods"
+				]},
+				{ "type": "p", "text": "By the end of this course, you'll have a strong portfolio of design work and the skills to create user experiences that truly make a difference!" }
+			],
+			"quizzes": [
+				{
+					"question": "1. What does UX stand for?",
+					"options": [
+						"User Experience",
+						"User Extension",
+						"Universal Experience",
+						"User Execution"
+					],
+					"correctAnswer": "A"
+				},
+				{
+					"question": "2. What is the primary goal of UI design?",
+					"options": [
+						"Making interfaces look beautiful",
+						"Creating intuitive and usable interfaces",
+						"Adding animations and effects",
+						"Following design trends"
+					],
+					"correctAnswer": "B"
+				},
+				{
+					"question": "3. What is a user persona?",
+					"options": [
+						"A real user of the product",
+						"A fictional character representing a user group",
+						"A design template",
+						"A testing method"
+					],
+					"correctAnswer": "B"
+				}
+			]
+		}
+	]
+}

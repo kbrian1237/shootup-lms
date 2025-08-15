@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Schedule - ShootUp</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dist/style.css">
+    
+    <style>
+        .calendar-day {
+            transition: all 0.2s ease;
+        }
+        .calendar-day:hover {
+            transform: translateY(-1px);
+        }
+        .calendar-day.today {
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
+        }
+        .session-content {
+            font-size: 0.75rem;
+        }
+        .day-number {
+            color: #e5e7eb;
+        }
+        .calendar-day.past .day-number {
+            color: #6b7280;
+        }
+        .calendar-day.completed {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+        }
+        .calendar-day.in-progress {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.1) 0%, rgba(234, 179, 8, 0.05) 100%);
+        }
+        .calendar-day.scheduled {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
+        }
+        .calendar-day.skipped {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+        }
+    </style>
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+
+    <!-- Main container for the entire layout -->
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+
+        <div id="navigation-placeholder"></div>
+
+        <!-- Main Content Area -->
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <!-- Sidebar toggle button (hidden when sidebar is open) -->
+            <button id="sidebar-toggle-btn" class="absolute top-8 left-8 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none transition-all duration-300 ease-in-out hidden btn-primary" title="Show Navigation">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+
+            <!-- Schedule Content -->
+            <div class="p-8">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h1 class="text-4xl font-bold text-white mb-2">Course Schedule</h1>
+                        <p class="text-gray-400">Manage your learning schedule and track progress</p>
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="showAllSchedules()" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-list mr-2"></i>
+                            All Schedules
+                        </button>
+                        <button onclick="createNewSchedule()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>
+                            New Schedule
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Course Selection -->
+                <div class="bg-gray-800 rounded-xl p-6 mb-8">
+                    <h2 class="text-xl font-semibold text-white mb-4">Select Course</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="course-selection">
+                        <!-- Course cards will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Today's Session -->
+                <div id="todays-session" class="bg-gray-800 rounded-xl p-6 mb-8 hidden">
+                    <h2 class="text-xl font-semibold text-white mb-4">
+                        <i class="fas fa-calendar-day mr-2 text-indigo-400"></i>
+                        Today's Session
+                    </h2>
+                    <div id="todays-session-content">
+                        <!-- Today's session content will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Schedule Calendar -->
+                <div class="bg-gray-800 rounded-xl p-6 mb-8">
+                    <div id="schedule-calendar">
+                        <div class="text-center py-12 text-gray-400">
+                            <i class="fas fa-calendar text-4xl mb-4"></i>
+                            <p>Select a course to view its schedule</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Sessions -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Upcoming Sessions -->
+                    <div class="bg-gray-800 rounded-xl p-6">
+                        <h2 class="text-xl font-semibold text-white mb-4">
+                            <i class="fas fa-clock mr-2 text-yellow-400"></i>
+                            Upcoming Sessions
+                        </h2>
+                        <div id="upcoming-sessions" class="space-y-3">
+                            <!-- Upcoming sessions will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Schedule Statistics -->
+                    <div class="bg-gray-800 rounded-xl p-6">
+                        <h2 class="text-xl font-semibold text-white mb-4">
+                            <i class="fas fa-chart-bar mr-2 text-green-400"></i>
+                            Schedule Statistics
+                        </h2>
+                        <div id="schedule-stats">
+                            <!-- Statistics will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Session Details Modal -->
+    <div id="session-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-gray-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-white">Session Details</h3>
+                    <button onclick="closeSessionModal()" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="session-modal-content">
+                    <!-- Session details will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dist/data.js"></script>
+    <script src="dist/script.js"></script>
+    <script src="dist/progress-sync.js"></script>
+    <script src="dist/course-scheduler.js"></script>
+    <script src="dist/course-calendar.js"></script>
+    <script src="dist/navigation-toggle.js"></script>
+    
+    <script>
+        let currentCourseId = null;
+        let allCourses = [];
+
+        /**
+         * Load detailed course data including outline from course JSON file
+         */
+        async function loadDetailedCourseData(course) {
+            if (!course.dataFile) {
+                // If no dataFile specified, return course with empty outline
+                console.warn('No dataFile specified for course:', course.id);
+                return { ...course, outline: [] };
+            }
+
+            try {
+                const response = await fetch(`courses/${course.dataFile}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch course data: ${response.status}`);
+                }
+                
+                const detailedData = await response.json();
+                
+                // Merge basic course info with detailed data
+                return {
+                    ...course,
+                    ...detailedData,
+                    // Ensure we have an outline
+                    outline: detailedData.outline || []
+                };
+            } catch (error) {
+                console.error('Error loading detailed course data:', error);
+                // Return course with empty outline as fallback
+                return { ...course, outline: [] };
+            }
+        }
+
+        /**
+         * Show schedule error message
+         */
+        function showScheduleError(message) {
+            const container = document.getElementById('schedule-calendar');
+            container.innerHTML = `
+                <div class="text-center py-12 text-red-400">
+                    <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                    <p class="text-lg font-semibold mb-2">Schedule Error</p>
+                    <p class="text-sm">${message}</p>
+                    <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                        Try Again
+                    </button>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Load course data
+                const data = await window.ShootUpData.load();
+                allCourses = data.courses || [];
+                
+                // Initialize the page
+                initializeCourseSelection();
+                initializeTodaysSession();
+                
+                // Check URL parameters for course selection
+                const urlParams = new URLSearchParams(window.location.search);
+                const courseId = urlParams.get('course');
+                if (courseId) {
+                    selectCourse(courseId);
+                }
+                
+            } catch (error) {
+                console.error('Error initializing schedule page:', error);
+                showError('Failed to load course data');
+            }
+        });
+
+        function initializeCourseSelection() {
+            const container = document.getElementById('course-selection');
+            if (!container || !allCourses.length) return;
+
+            container.innerHTML = allCourses.map(course => {
+                const schedule = window.CourseScheduler.getSchedule(course.id);
+                const hasSchedule = !!schedule;
+                const progress = window.ProgressSync ? window.ProgressSync.getCourseProgress(course.id) : 0;
+
+                return `
+                    <div class="course-card bg-gray-700 p-4 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors ${currentCourseId === course.id ? 'ring-2 ring-indigo-500' : ''}" 
+                         onclick="selectCourse('${course.id}')">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-semibold text-white">${course.title}</h3>
+                            ${hasSchedule ? '<i class="fas fa-calendar-check text-green-400"></i>' : '<i class="fas fa-calendar-plus text-gray-400"></i>'}
+                        </div>
+                        <p class="text-sm text-gray-400 mb-2">${course.category}</p>
+                        <div class="flex items-center justify-between">
+                            <div class="w-24 bg-gray-600 rounded-full h-2">
+                                <div class="bg-indigo-600 h-2 rounded-full" style="width: ${progress}%"></div>
+                            </div>
+                            <span class="text-xs text-gray-400">${progress}%</span>
+                        </div>
+                        ${hasSchedule ? 
+                            `<div class="mt-2 text-xs text-green-400">
+                                <i class="fas fa-check mr-1"></i>Scheduled
+                            </div>` : 
+                            `<div class="mt-2 text-xs text-gray-400">
+                                <i class="fas fa-plus mr-1"></i>Create Schedule
+                            </div>`
+                        }
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectCourse(courseId) {
+            currentCourseId = courseId;
+            
+            // Update course selection UI
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.classList.remove('ring-2', 'ring-indigo-500');
+            });
+            event.target.closest('.course-card')?.classList.add('ring-2', 'ring-indigo-500');
+            
+            // Show loading state
+            const container = document.getElementById('schedule-calendar');
+            container.innerHTML = `
+                <div class="text-center py-12 text-indigo-400">
+                    <i class="fas fa-spinner fa-spin text-4xl mb-4"></i>
+                    <p class="text-lg font-semibold mb-2">Loading Schedule</p>
+                    <p class="text-sm">Creating schedule for selected course...</p>
+                </div>
+            `;
+            
+            // Load course schedule
+            loadCourseSchedule(courseId);
+            
+            // Update URL
+            const url = new URL(window.location);
+            url.searchParams.set('course', courseId);
+            window.history.replaceState({}, '', url);
+        }
+
+        async function loadCourseSchedule(courseId) {
+            const course = allCourses.find(c => c.id === courseId);
+            if (!course) {
+                console.error('Course not found:', courseId);
+                return;
+            }
+
+            try {
+                // Load detailed course data with outline
+                console.log('Loading detailed course data for:', course);
+                const detailedCourse = await loadDetailedCourseData(course);
+                console.log('Detailed course data loaded:', detailedCourse);
+                
+                let schedule = window.CourseScheduler.getSchedule(courseId);
+                console.log('Existing schedule:', schedule);
+                
+                // If no schedule exists, create one
+                if (!schedule) {
+                    const startDate = new Date();
+                    startDate.setDate(startDate.getDate() + 1); // Start tomorrow
+                    
+                    console.log('Creating schedule for:', detailedCourse.title, 'with outline:', detailedCourse.outline);
+                    
+                    schedule = window.CourseScheduler.createSchedule(courseId, detailedCourse, startDate, {
+                        hoursPerDay: 4,
+                        itemsPerGroup: 4,
+                        skipWeekends: true
+                    });
+                }
+
+                // Create calendar
+                window.CourseCalendar.createCalendar('schedule-calendar', courseId);
+                
+                // Load today's session
+                loadTodaysSession(courseId);
+                
+                // Load upcoming sessions
+                loadUpcomingSessions(courseId);
+                
+                // Load statistics
+                loadScheduleStats(courseId);
+                
+            } catch (error) {
+                console.error('Error loading course schedule:', error);
+                showScheduleError('Failed to load course data for scheduling');
+            }
+        }
+
+        function initializeTodaysSession() {
+            // Check all courses for today's sessions
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            let todaysSession = null;
+            let todaysCourse = null;
+            
+            allCourses.forEach(course => {
+                const session = window.CourseScheduler.getTodaysSession(course.id);
+                if (session) {
+                    todaysSession = session;
+                    todaysCourse = course;
+                }
+            });
+            
+            const container = document.getElementById('todays-session');
+            const content = document.getElementById('todays-session-content');
+            
+            if (todaysSession && todaysCourse) {
+                container.classList.remove('hidden');
+                content.innerHTML = createTodaysSessionContent(todaysSession, todaysCourse);
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+
+        function loadTodaysSession(courseId) {
+            const session = window.CourseScheduler.getTodaysSession(courseId);
+            const course = allCourses.find(c => c.id === courseId);
+            
+            const container = document.getElementById('todays-session');
+            const content = document.getElementById('todays-session-content');
+            
+            if (session && course) {
+                container.classList.remove('hidden');
+                content.innerHTML = createTodaysSessionContent(session, course);
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+
+        function createTodaysSessionContent(session, course) {
+            const statusColors = {
+                'scheduled': 'text-indigo-400',
+                'in-progress': 'text-yellow-400',
+                'completed': 'text-green-400',
+                'skipped': 'text-red-400'
+            };
+
+            return `
+                <div class="flex items-start justify-between">
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-3">
+                            <h3 class="text-lg font-semibold text-white">${course.title}</h3>
+                            <span class="px-2 py-1 rounded-full text-xs ${statusColors[session.status]} bg-gray-700">
+                                ${session.status.replace('-', ' ')}
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-medium text-gray-300 mb-2">Today's Topics:</h4>
+                                <ul class="space-y-1">
+                                    ${session.topics.map(topic => `
+                                        <li class="text-sm text-gray-400 flex items-center">
+                                            <i class="fas fa-circle text-xs mr-2 text-indigo-400"></i>
+                                            ${topic.topicTitle}
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="mb-3">
+                                    <span class="text-sm text-gray-400">Allocated Time:</span>
+                                    <span class="text-white ml-2">${session.hoursAllocated} hours</span>
+                                </div>
+                                <div class="mb-3">
+                                    <span class="text-sm text-gray-400">Progress:</span>
+                                    <span class="text-white ml-2">${session.completedTopics.length}/${session.topics.length} topics</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 ml-4">
+                        ${session.status === 'scheduled' ? 
+                            `<button onclick="startSession('${course.id}', ${session.day})" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm">
+                                <i class="fas fa-play mr-1"></i>Start
+                            </button>` : ''}
+                        ${session.status !== 'completed' ? 
+                            `<button onclick="skipSession('${course.id}', ${session.day})" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm">
+                                <i class="fas fa-forward mr-1"></i>Skip
+                            </button>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadUpcomingSessions(courseId) {
+            const sessions = window.CourseScheduler.getUpcomingSessions(courseId, 7);
+            const container = document.getElementById('upcoming-sessions');
+            
+            if (!sessions.length) {
+                container.innerHTML = '<p class="text-gray-400 text-sm">No upcoming sessions</p>';
+                return;
+            }
+
+            container.innerHTML = sessions.slice(0, 5).map(session => `
+                <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div>
+                        <div class="font-medium text-white">Day ${session.day}</div>
+                        <div class="text-sm text-gray-400">${session.date.toLocaleDateString('en-US', { 
+                            weekday: 'short', 
+                            month: 'short', 
+                            day: 'numeric' 
+                        })}</div>
+                        <div class="text-xs text-gray-500">${session.topics.length} topics • ${session.hoursAllocated}h</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm text-indigo-400">${session.status}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadScheduleStats(courseId) {
+            const stats = window.CourseScheduler.getScheduleStats(courseId);
+            const container = document.getElementById('schedule-stats');
+            
+            if (!stats) {
+                container.innerHTML = '<p class="text-gray-400 text-sm">No statistics available</p>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center p-3 bg-gray-700 rounded-lg">
+                        <div class="text-2xl font-bold text-white">${stats.completedSessions}</div>
+                        <div class="text-sm text-gray-400">Completed</div>
+                    </div>
+                    <div class="text-center p-3 bg-gray-700 rounded-lg">
+                        <div class="text-2xl font-bold text-white">${stats.progressPercentage}%</div>
+                        <div class="text-sm text-gray-400">Progress</div>
+                    </div>
+                    <div class="text-center p-3 bg-gray-700 rounded-lg">
+                        <div class="text-2xl font-bold text-white">${stats.daysRemaining}</div>
+                        <div class="text-sm text-gray-400">Days Left</div>
+                    </div>
+                    <div class="text-center p-3 bg-gray-700 rounded-lg">
+                        <div class="text-2xl font-bold ${stats.isOnTrack ? 'text-green-400' : 'text-red-400'}">
+                            ${stats.isOnTrack ? 'On Track' : 'Behind'}
+                        </div>
+                        <div class="text-sm text-gray-400">Status</div>
+                    </div>
+                </div>
+                <div class="mt-4 text-sm text-gray-400">
+                    <div class="flex justify-between">
+                        <span>Average hours/day:</span>
+                        <span class="text-white">${stats.averageHoursPerDay}h</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Skipped sessions:</span>
+                        <span class="text-white">${stats.skippedSessions}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startSession(courseId, sessionDay) {
+            window.CourseScheduler.updateSession(courseId, sessionDay, {
+                status: 'in-progress',
+                startTime: new Date()
+            });
+            
+            // Redirect to course
+            window.location.href = `course-details.html?id=${courseId}`;
+        }
+
+        function skipSession(courseId, sessionDay) {
+            if (confirm('Are you sure you want to skip this session? It will be rescheduled to the next available day.')) {
+                window.CourseScheduler.skipDay(courseId, sessionDay);
+                loadCourseSchedule(courseId);
+                initializeTodaysSession();
+            }
+        }
+
+        function createNewSchedule() {
+            const courseId = prompt('Enter course ID:');
+            if (!courseId) return;
+            
+            const course = allCourses.find(c => c.id === courseId);
+            if (!course) {
+                alert('Course not found');
+                return;
+            }
+            
+            window.CourseCalendar.createScheduleDialog(courseId);
+        }
+
+        function showAllSchedules() {
+            const schedules = allCourses.map(course => {
+                const schedule = window.CourseScheduler.getSchedule(course.id);
+                return { course, schedule };
+            }).filter(item => item.schedule);
+
+            if (schedules.length === 0) {
+                alert('No schedules found');
+                return;
+            }
+
+            let message = 'All Schedules:\n\n';
+            schedules.forEach(({ course, schedule }) => {
+                const stats = window.CourseScheduler.getScheduleStats(course.id);
+                message += `${course.title}:\n`;
+                message += `  Progress: ${stats.progressPercentage}%\n`;
+                message += `  Days remaining: ${stats.daysRemaining}\n`;
+                message += `  Status: ${stats.isOnTrack ? 'On track' : 'Behind'}\n\n`;
+            });
+
+            alert(message);
+        }
+
+        function showError(message) {
+            const container = document.getElementById('schedule-calendar');
+            container.innerHTML = `
+                <div class="text-center py-12 text-red-400">
+                    <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        function closeSessionModal() {
+            document.getElementById('session-modal').classList.add('hidden');
+        }
+
+        // Override CourseCalendar.showSessionDetails to use our modal
+        window.CourseCalendar.showSessionDetails = function(sessionDay) {
+            if (!currentCourseId) return;
+            
+            const schedule = window.CourseScheduler.getSchedule(currentCourseId);
+            const session = schedule.sessions.find(s => s.day === parseInt(sessionDay));
+            const course = allCourses.find(c => c.id === currentCourseId);
+            
+            if (!session || !course) return;
+            
+            const modal = document.getElementById('session-modal');
+            const content = document.getElementById('session-modal-content');
+            
+            content.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-lg font-semibold text-white">Day ${session.day} - ${session.dayName}</h4>
+                        <span class="px-3 py-1 rounded-full text-sm ${getStatusColor(session.status)} bg-gray-700">
+                            ${session.status.replace('-', ' ')}
+                        </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h5 class="font-medium text-gray-300 mb-2">Topics (${session.topics.length}):</h5>
+                            <ul class="space-y-1 max-h-40 overflow-y-auto">
+                                ${session.topics.map(topic => `
+                                    <li class="text-sm text-gray-400 flex items-start">
+                                        <i class="fas fa-circle text-xs mr-2 mt-1 text-indigo-400"></i>
+                                        <div>
+                                            <div class="font-medium">${topic.topicTitle}</div>
+                                            <div class="text-xs text-gray-500">${topic.sectionTitle}</div>
+                                        </div>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <div class="space-y-3">
+                                <div>
+                                    <span class="text-sm text-gray-400">Date:</span>
+                                    <span class="text-white ml-2">${session.date.toLocaleDateString()}</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Allocated Time:</span>
+                                    <span class="text-white ml-2">${session.hoursAllocated} hours</span>
+                                </div>
+                                <div>
+                                    <span class="text-sm text-gray-400">Progress:</span>
+                                    <span class="text-white ml-2">${session.completedTopics.length}/${session.topics.length} topics</span>
+                                </div>
+                                ${session.actualHours > 0 ? `
+                                    <div>
+                                        <span class="text-sm text-gray-400">Actual Time:</span>
+                                        <span class="text-white ml-2">${session.actualHours} hours</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${session.notes ? `
+                        <div>
+                            <h5 class="font-medium text-gray-300 mb-2">Notes:</h5>
+                            <p class="text-sm text-gray-400 bg-gray-700 p-3 rounded">${session.notes}</p>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="flex gap-2 pt-4 border-t border-gray-700">
+                        ${session.status === 'scheduled' ? `
+                            <button onclick="startSession('${currentCourseId}', ${session.day}); closeSessionModal();" 
+                                    class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                                <i class="fas fa-play mr-1"></i>Start Session
+                            </button>
+                        ` : ''}
+                        ${session.status !== 'completed' ? `
+                            <button onclick="skipSession('${currentCourseId}', ${session.day}); closeSessionModal();" 
+                                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                <i class="fas fa-forward mr-1"></i>Skip Session
+                            </button>
+                        ` : ''}
+                        <button onclick="closeSessionModal()" 
+                                class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        };
+
+        function getStatusColor(status) {
+            const colors = {
+                'scheduled': 'text-indigo-400',
+                'in-progress': 'text-yellow-400',
+                'completed': 'text-green-400',
+                'skipped': 'text-red-400'
+            };
+            return colors[status] || 'text-gray-400';
+        }
+    </script>
+</body>
+</html>

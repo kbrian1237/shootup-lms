@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShootUp - My Courses</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dist/style.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]" data-iframe-enabled="true">
+
+    <!-- Main container for the entire layout -->
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+
+        <div id="navigation-placeholder"></div>
+
+        <!-- Main Content Area -->
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <!-- Sidebar toggle button (hidden when sidebar is open) -->
+            <button id="sidebar-toggle-btn" class="absolute top-8 left-8 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none transition-all duration-300 ease-in-out hidden btn-primary" title="Show Navigation">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+            
+            <!-- Back button for the course view (positioned below the toggle button) -->
+            <button id="back-to-lms" class="absolute top-20 left-8 z-50 text-white p-2 mb-4 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors duration-200 hidden btn-primary">
+                <i class="fa-solid fa-arrow-left text-xl"></i>
+            </button>
+
+            <!-- Loading overlay for iframe -->
+            <div id="loading-overlay" class="loading-overlay hidden-loading">
+                <div class="loading-spinner"></div>
+            </div>
+
+            <!-- LMS Dashboard View (Initially visible) -->
+            <div id="lms-view" class="p-8">
+                <h2 class="text-4xl font-bold mb-8 header-title animate-fade-in-up">My Courses</h2>
+
+                <!-- Course Cards Grid -->
+				<div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3" data-component="courses-grid"></div>
+            </div>
+            
+            <!-- Course iframe view (initially hidden) -->
+            <div id="course-view" class="hidden w-full h-full">
+                <iframe id="course-iframe" class="w-full h-full border-0"></iframe>
+            </div>
+        </main>
+    </div>
+
+	<script src="dist/data.js"></script>
+    <script src="dist/script.js"></script>
+    <script src="dist/progress-sync.js"></script>
+    <script src="dist/navigation-toggle.js"></script>
+</body>
+</html>

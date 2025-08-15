@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Fix Test - ShootUp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5] p-8">
+    <h1 class="text-4xl font-bold mb-8 text-white">Schedule Fix Test</h1>
+    
+    <div class="bg-gray-800 rounded-xl p-6 mb-6">
+        <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Test Results</h2>
+        <div id="test-results" class="space-y-2">
+            <p>🔄 Testing...</p>
+        </div>
+    </div>
+    
+    <div class="bg-gray-800 rounded-xl p-6">
+        <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Schedule Data</h2>
+        <div id="schedule-data" class="text-sm">
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <script src="dist/data.js"></script>
+    <script src="dist/course-scheduler.js"></script>
+    
+    <script>
+        async function runTests() {
+            const results = document.getElementById('test-results');
+            const scheduleData = document.getElementById('schedule-data');
+            
+            try {
+                // Test 1: Load course data
+                results.innerHTML = '<p>✅ Loading course data...</p>';
+                const data = await window.ShootUpData.load();
+                
+                if (!data.courses || data.courses.length === 0) {
+                    throw new Error('No courses found');
+                }
+                
+                results.innerHTML += '<p>✅ Course data loaded: ' + data.courses.length + ' courses</p>';
+                
+                // Test 2: Load detailed course data
+                const jsCourse = data.courses.find(c => c.id === 'course_js');
+                if (!jsCourse) {
+                    throw new Error('JavaScript course not found');
+                }
+                
+                results.innerHTML += '<p>✅ JavaScript course found: ' + jsCourse.title + '</p>';
+                
+                // Test 3: Load detailed course data
+                const response = await fetch(`courses/${jsCourse.dataFile}`);
+                if (!response.ok) {
+                    throw new Error('Failed to load course details');
+                }
+                
+                const detailedCourse = await response.json();
+                results.innerHTML += '<p>✅ Detailed course data loaded</p>';
+                results.innerHTML += '<p>📋 Outline sections: ' + (detailedCourse.outline?.length || 0) + '</p>';
+                results.innerHTML += '<p>📅 Schedule groups: ' + (detailedCourse.scheduleGroups?.length || 0) + '</p>';
+                
+                // Test 4: Create schedule
+                const mergedCourse = { ...jsCourse, ...detailedCourse };
+                
+                if (!window.CourseScheduler) {
+                    throw new Error('CourseScheduler not loaded');
+                }
+                
+                const startDate = new Date();
+                startDate.setDate(startDate.getDate() + 1);
+                
+                const schedule = window.CourseScheduler.createSchedule('course_js', mergedCourse, startDate);
+                
+                results.innerHTML += '<p>✅ Schedule created successfully!</p>';
+                results.innerHTML += '<p>📊 Total days: ' + schedule.totalDays + '</p>';
+                results.innerHTML += '<p>📚 Total topics: ' + schedule.totalTopics + '</p>';
+                results.innerHTML += '<p>🎯 Sessions: ' + schedule.sessions.length + '</p>';
+                
+                // Display schedule data
+                scheduleData.innerHTML = `
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-semibold text-white mb-2">Schedule Overview</h3>
+                            <p><span class="text-gray-400">Course:</span> ${schedule.courseTitle}</p>
+                            <p><span class="text-gray-400">Start Date:</span> ${schedule.startDate.toDateString()}</p>
+                            <p><span class="text-gray-400">Completion:</span> ${schedule.estimatedCompletionDate?.toDateString()}</p>
+                            <p><span class="text-gray-400">Total Days:</span> ${schedule.totalDays}</p>
+                            <p><span class="text-gray-400">Total Topics:</span> ${schedule.totalTopics}</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-semibold text-white mb-2">First 5 Sessions</h3>
+                            ${schedule.sessions.slice(0, 5).map(session => `
+                                <div class="bg-gray-700 p-3 rounded-lg mb-2">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="font-medium text-white">Day ${session.day}: ${session.title}</span>
+                                        <span class="text-sm text-gray-400">${session.date.toDateString()}</span>
+                                    </div>
+                                    <div class="text-sm text-gray-400">
+                                        ${session.topics.length} topics • ${session.hoursAllocated}h
+                                    </div>
+                                    <div class="text-xs text-gray-500 mt-1">
+                                        Topics: ${session.topics.map(t => t.topicTitle).join(', ')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                results.innerHTML += '<p class="text-green-400 font-semibold">🎉 All tests passed! Schedule system is working.</p>';
+                
+            } catch (error) {
+                results.innerHTML += '<p class="text-red-400">❌ Error: ' + error.message + '</p>';
+                console.error('Test error:', error);
+                
+                scheduleData.innerHTML = `
+                    <div class="text-red-400">
+                        <p>Error occurred during testing:</p>
+                        <pre class="bg-gray-900 p-3 rounded mt-2 text-xs">${error.stack || error.message}</pre>
+                    </div>
+                `;
+            }
+        }
+        
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

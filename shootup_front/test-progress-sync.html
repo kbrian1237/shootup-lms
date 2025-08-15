@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Synchronization Test - ShootUp</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dist/style.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+
+    <!-- Main container for the entire layout -->
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+
+        <div id="navigation-placeholder"></div>
+
+        <!-- Main Content Area -->
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <!-- Sidebar toggle button (hidden when sidebar is open) -->
+            <button id="sidebar-toggle-btn" class="absolute top-8 left-8 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none transition-all duration-300 ease-in-out hidden btn-primary" title="Show Navigation">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+
+            <!-- Test Content -->
+            <div class="p-8">
+                <h1 class="text-4xl font-bold mb-8 text-white">Progress Synchronization Test</h1>
+                
+                <!-- Test Course Cards -->
+                <div class="bg-gray-800 rounded-xl p-6 mb-6">
+                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Test Course Cards</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Course Card 1 -->
+                        <div class="course-card bg-gray-700 p-4 rounded-xl" data-course-id="course_js">
+                            <h3 class="text-lg font-semibold mb-2">JavaScript Fundamentals</h3>
+                            <div class="w-full bg-gray-600 rounded-full h-3 mb-2">
+                                <div class="bg-indigo-600 h-3 rounded-full progress-bar transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <p class="text-sm text-gray-400" data-progress-text>0% Complete</p>
+                        </div>
+                        
+                        <!-- Course Card 2 -->
+                        <div class="course-card bg-gray-700 p-4 rounded-xl" data-course-id="course_python">
+                            <h3 class="text-lg font-semibold mb-2">Python Basics</h3>
+                            <div class="w-full bg-gray-600 rounded-full h-3 mb-2">
+                                <div class="bg-indigo-600 h-3 rounded-full progress-bar transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <p class="text-sm text-gray-400" data-progress-text>0% Complete</p>
+                        </div>
+                        
+                        <!-- Course Card 3 -->
+                        <div class="course-card bg-gray-700 p-4 rounded-xl" data-course-id="course_react">
+                            <h3 class="text-lg font-semibold mb-2">React Development</h3>
+                            <div class="w-full bg-gray-600 rounded-full h-3 mb-2">
+                                <div class="bg-indigo-600 h-3 rounded-full progress-bar transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <p class="text-sm text-gray-400" data-progress-text>0% Complete</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Manual Test Controls -->
+                <div class="bg-gray-800 rounded-xl p-6 mb-6">
+                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Manual Test Controls</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Course ID:</label>
+                            <select id="course-select" class="w-full bg-gray-700 text-white p-2 rounded-lg">
+                                <option value="course_js">JavaScript Fundamentals</option>
+                                <option value="course_python">Python Basics</option>
+                                <option value="course_react">React Development</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Progress (%):</label>
+                            <input type="number" id="progress-input" min="0" max="100" value="0" class="w-full bg-gray-700 text-white p-2 rounded-lg">
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="updateProgress()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg w-full">
+                                Update Progress
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 flex-wrap">
+                        <button onclick="simulateProgressUpdate()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                            Simulate Course Progress
+                        </button>
+                        <button onclick="resetAllProgress()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
+                            Reset All Progress
+                        </button>
+                        <button onclick="loadSampleProgress()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                            Load Sample Progress
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Progress Status Display -->
+                <div class="bg-gray-800 rounded-xl p-6 mb-6">
+                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Progress Status</h2>
+                    <div id="progress-status" class="space-y-2">
+                        <!-- Status will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Test Results -->
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Test Results</h2>
+                    <div id="test-results" class="space-y-2 text-gray-300">
+                        <p>✅ Progress Sync Script: <span id="script-loaded" class="text-yellow-400">Loading...</span></p>
+                        <p>✅ LocalStorage Access: <span id="storage-access" class="text-yellow-400">Testing...</span></p>
+                        <p>✅ Event Listeners: <span id="event-listeners" class="text-yellow-400">Testing...</span></p>
+                        <p>✅ UI Updates: <span id="ui-updates" class="text-yellow-400">Testing...</span></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dist/data.js"></script>
+    <script src="dist/script.js"></script>
+    <script src="dist/progress-sync.js"></script>
+    <script src="dist/navigation-toggle.js"></script>
+    
+    <script>
+        // Test functions
+        function updateProgress() {
+            const courseId = document.getElementById('course-select').value;
+            const progress = parseInt(document.getElementById('progress-input').value);
+            
+            if (window.ProgressSync) {
+                window.ProgressSync.setCourseProgress(courseId, progress);
+                updateStatusDisplay();
+                logTestResult(`Manual progress update: ${courseId} = ${progress}%`);
+            }
+        }
+        
+        function simulateProgressUpdate() {
+            const courses = ['course_js', 'course_python', 'course_react'];
+            courses.forEach((courseId, index) => {
+                const progress = Math.floor(Math.random() * 101);
+                setTimeout(() => {
+                    if (window.ProgressSync) {
+                        window.ProgressSync.setCourseProgress(courseId, progress);
+                        logTestResult(`Simulated progress: ${courseId} = ${progress}%`);
+                    }
+                }, index * 500);
+            });
+            updateStatusDisplay();
+        }
+        
+        function resetAllProgress() {
+            const courses = ['course_js', 'course_python', 'course_react'];
+            courses.forEach(courseId => {
+                if (window.ProgressSync) {
+                    window.ProgressSync.resetCourseProgress(courseId);
+                }
+            });
+            updateStatusDisplay();
+            logTestResult('All progress reset');
+        }
+        
+        function loadSampleProgress() {
+            const sampleData = {
+                'course_js': 75,
+                'course_python': 45,
+                'course_react': 90
+            };
+            
+            Object.entries(sampleData).forEach(([courseId, progress]) => {
+                if (window.ProgressSync) {
+                    window.ProgressSync.setCourseProgress(courseId, progress);
+                }
+            });
+            updateStatusDisplay();
+            logTestResult('Sample progress loaded');
+        }
+        
+        function updateStatusDisplay() {
+            const statusDiv = document.getElementById('progress-status');
+            if (!window.ProgressSync) return;
+            
+            const allProgress = window.ProgressSync.getAllProgress();
+            statusDiv.innerHTML = Object.entries(allProgress)
+                .map(([courseId, progress]) => 
+                    `<div class="flex justify-between">
+                        <span>${courseId}:</span>
+                        <span class="text-indigo-400">${progress}%</span>
+                    </div>`
+                ).join('');
+        }
+        
+        function logTestResult(message) {
+            console.log(`[Progress Test] ${message}`);
+        }
+        
+        // Initialize tests
+        document.addEventListener('DOMContentLoaded', () => {
+            // Test script loading
+            setTimeout(() => {
+                const scriptStatus = document.getElementById('script-loaded');
+                if (window.ProgressSync) {
+                    scriptStatus.textContent = 'Loaded ✓';
+                    scriptStatus.className = 'text-green-400';
+                } else {
+                    scriptStatus.textContent = 'Failed ✗';
+                    scriptStatus.className = 'text-red-400';
+                }
+            }, 100);
+            
+            // Test localStorage access
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                document.getElementById('storage-access').textContent = 'Working ✓';
+                document.getElementById('storage-access').className = 'text-green-400';
+            } catch (error) {
+                document.getElementById('storage-access').textContent = 'Failed ✗';
+                document.getElementById('storage-access').className = 'text-red-400';
+            }
+            
+            // Test event listeners
+            let eventListenerTest = false;
+            const testListener = () => { eventListenerTest = true; };
+            window.addEventListener('courseProgressUpdate', testListener);
+            
+            // Trigger test event
+            window.dispatchEvent(new CustomEvent('courseProgressUpdate', {
+                detail: { courseId: 'test', progress: 50 }
+            }));
+            
+            setTimeout(() => {
+                const eventStatus = document.getElementById('event-listeners');
+                if (eventListenerTest) {
+                    eventStatus.textContent = 'Working ✓';
+                    eventStatus.className = 'text-green-400';
+                } else {
+                    eventStatus.textContent = 'Failed ✗';
+                    eventStatus.className = 'text-red-400';
+                }
+                window.removeEventListener('courseProgressUpdate', testListener);
+            }, 200);
+            
+            // Test UI updates
+            setTimeout(() => {
+                const uiStatus = document.getElementById('ui-updates');
+                const testCard = document.querySelector('[data-course-id="course_js"]');
+                if (testCard) {
+                    uiStatus.textContent = 'Ready ✓';
+                    uiStatus.className = 'text-green-400';
+                } else {
+                    uiStatus.textContent = 'Failed ✗';
+                    uiStatus.className = 'text-red-400';
+                }
+            }, 300);
+            
+            // Initial status update
+            setTimeout(updateStatusDisplay, 500);
+            
+            // Listen for progress updates
+            window.addEventListener('courseProgressUpdate', (event) => {
+                logTestResult(`Progress event received: ${event.detail.courseId} = ${event.detail.progress}%`);
+                setTimeout(updateStatusDisplay, 100);
+            });
+        });
+    </script>
+</body>
+</html>
