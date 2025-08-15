@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShootUp - Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dist/style.css">
+</head>
+<body class="bg-[#1e1e1e] text-[#f5f5f5]">
+
+    <div id="main-container" class="flex h-screen bg-[#121212]">
+        <div id="navigation-placeholder"></div>
+
+        <main id="content" class="flex-grow overflow-y-auto relative">
+            <button id="sidebar-toggle-btn" class="absolute top-8 left-8 z-50 p-3 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 focus:outline-none transition-all duration-300 ease-in-out hidden btn-primary" title="Show Navigation">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+
+            <div class="p-8">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Profile Header -->
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-4xl font-bold header-title animate-fade-in-up">My Profile</h2>
+                        <button id="editProfileBtn" class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 font-medium">
+                            <i class="fas fa-edit mr-2"></i>Edit Profile
+                        </button>
+                    </div>
+
+                    <!-- Profile Content -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Profile Info Card -->
+                        <div class="lg:col-span-1">
+                            <div class="stats-card rounded-2xl p-6 text-center">
+                                <div class="mb-6">
+                                    <img id="userAvatar" src="https://placehold.co/120x120/4f46e5/ffffff?text=U" alt="User Avatar" class="w-32 h-32 rounded-full mx-auto border-4 border-indigo-400 object-cover">
+                                    <button id="changeAvatarBtn" class="mt-4 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm">
+                                        <i class="fas fa-camera mr-2"></i>Change Photo
+                                    </button>
+                                </div>
+                                <h3 id="userName" class="text-2xl font-bold mb-2">Loading...</h3>
+                                <p id="userEmail" class="text-gray-400 mb-4">Loading...</p>
+                                <div class="flex justify-center space-x-4 text-sm">
+                                    <div class="text-center">
+                                        <div id="totalCourses" class="text-2xl font-bold text-indigo-400">0</div>
+                                        <div class="text-gray-400">Courses</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div id="completedCourses" class="text-2xl font-bold text-green-400">0</div>
+                                        <div class="text-gray-400">Completed</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div id="hoursLearned" class="text-2xl font-bold text-purple-400">0</div>
+                                        <div class="text-gray-400">Hours</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Details -->
+                        <div class="lg:col-span-2">
+                            <div class="stats-card rounded-2xl p-6">
+                                <h4 class="text-xl font-bold mb-6 text-indigo-300">Personal Information</h4>
+                                
+                                <!-- View Mode -->
+                                <div id="viewMode">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm text-gray-400 mb-2">First Name</label>
+                                            <div id="displayFirstName" class="p-3 bg-[#111827] rounded-lg border border-white/10">Loading...</div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-gray-400 mb-2">Last Name</label>
+                                            <div id="displayLastName" class="p-3 bg-[#111827] rounded-lg border border-white/10">Loading...</div>
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <label class="block text-sm text-gray-400 mb-2">Email Address</label>
+                                            <div id="displayEmail" class="p-3 bg-[#111827] rounded-lg border border-white/10">Loading...</div>
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <label class="block text-sm text-gray-400 mb-2">Display Name</label>
+                                            <div id="displayDisplayName" class="p-3 bg-[#111827] rounded-lg border border-white/10">Loading...</div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-gray-400 mb-2">Member Since</label>
+                                            <div id="displayMemberSince" class="p-3 bg-[#111827] rounded-lg border border-white/10">Loading...</div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm text-gray-400 mb-2">Role</label>
+                                            <div id="displayRole" class="p-3 bg-[#111827] rounded-lg border border-white/10 capitalize">Loading...</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Edit Mode -->
+                                <div id="editMode" class="hidden">
+                                    <form id="profileForm">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm text-gray-400 mb-2">First Name</label>
+                                                <input id="editFirstName" type="text" class="w-full p-3 rounded-lg bg-[#111827] border border-white/10 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all" required>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm text-gray-400 mb-2">Last Name</label>
+                                                <input id="editLastName" type="text" class="w-full p-3 rounded-lg bg-[#111827] border border-white/10 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all" required>
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <label class="block text-sm text-gray-400 mb-2">Display Name</label>
+                                                <input id="editDisplayName" type="text" class="w-full p-3 rounded-lg bg-[#111827] border border-white/10 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex justify-end space-x-4 mt-8">
+                                            <button type="button" id="cancelEditBtn" class="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200">
+                                                Cancel
+                                            </button>
+                                            <button type="submit" id="saveProfileBtn" class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200">
+                                                <span id="saveProfileText">Save Changes</span>
+                                                <i id="saveProfileSpinner" class="fas fa-spinner fa-spin ml-2 hidden"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Account Actions -->
+                            <div class="stats-card rounded-2xl p-6 mt-6">
+                                <h4 class="text-xl font-bold mb-6 text-indigo-300">Account Actions</h4>
+                                <div class="space-y-4">
+                                    <button id="changePasswordBtn" class="w-full text-left p-4 rounded-lg bg-[#111827] border border-white/10 hover:border-indigo-500 transition-colors duration-200 flex items-center justify-between">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-key text-indigo-400"></i>
+                                            <span>Change Password</span>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </button>
+                                    <button id="logoutBtn" class="w-full text-left p-4 rounded-lg bg-red-900/20 border border-red-500/20 hover:border-red-500 transition-colors duration-200 flex items-center justify-between text-red-400 hover:text-red-300">
+                                        <div class="flex items-center space-x-3">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            <span>Logout</span>
+                                        </div>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dist/auth-check.js"></script>
+    <script src="dist/api.js"></script>
+    <script src="dist/script.js"></script>
+    <script src="dist/navigation-toggle.js"></script>
+    <script src="dist/profile.js"></script>
+</body>
+</html>
