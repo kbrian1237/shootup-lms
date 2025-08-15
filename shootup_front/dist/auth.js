@@ -84,6 +84,8 @@ class AuthManager {
                 const response = await window.apiClient.login({ email, password });
                 localStorage.setItem('shootup_current_user', JSON.stringify(response.user));
                 this.showMessage(messageEl, 'Login successful!', 'success');
+                // Trigger navigation update
+                document.dispatchEvent(new CustomEvent('authStateChanged'));
                 setTimeout(() => window.location.href = 'dashboard.html', 1000);
             } else if (this.isFirebaseConfigured()) {
                 await this.auth.signInWithEmailAndPassword(email, password);
@@ -97,6 +99,8 @@ class AuthManager {
                 if (user) {
                     localStorage.setItem('shootup_current_user', JSON.stringify(user));
                     this.showMessage(messageEl, 'Login successful!', 'success');
+                    // Trigger navigation update
+                    document.dispatchEvent(new CustomEvent('authStateChanged'));
                     setTimeout(() => window.location.href = 'dashboard.html', 1000);
                 } else {
                     throw new Error('Invalid email or password');
@@ -144,6 +148,8 @@ class AuthManager {
                 const response = await window.apiClient.register({ firstName, lastName, email, password });
                 localStorage.setItem('shootup_current_user', JSON.stringify(response.user));
                 this.showMessage(messageEl, 'Account created successfully!', 'success');
+                // Trigger navigation update
+                document.dispatchEvent(new CustomEvent('authStateChanged'));
                 setTimeout(() => window.location.href = 'dashboard.html', 1000);
             } else if (this.isFirebaseConfigured()) {
                 const userCredential = await this.auth.createUserWithEmailAndPassword(email, password);
@@ -173,6 +179,8 @@ class AuthManager {
                 users.push(newUser);
                 localStorage.setItem('shootup_users', JSON.stringify(users));
                 localStorage.setItem('shootup_current_user', JSON.stringify(newUser));
+                // Trigger navigation update
+                document.dispatchEvent(new CustomEvent('authStateChanged'));
             }
 
             this.showMessage(messageEl, 'Account created successfully!', 'success');
@@ -235,6 +243,8 @@ class AuthManager {
             } else {
                 localStorage.removeItem('shootup_current_user');
             }
+            // Trigger navigation update
+            document.dispatchEvent(new CustomEvent('authStateChanged'));
             window.location.href = 'login.html';
         } catch (error) {
             console.error('Sign out error:', error);
