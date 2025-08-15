@@ -1,7 +1,7 @@
 // API client for ShootUp LMS Backend
 class APIClient {
     constructor() {
-        this.baseURL = 'http://localhost:5000/api';
+        this.baseURL = 'https://shootup-gzkp9hdic-kbrian1237s-projects.vercel.app/api';
         this.token = localStorage.getItem('shootup_token');
     }
 
