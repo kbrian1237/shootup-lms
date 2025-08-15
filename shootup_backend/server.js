@@ -23,7 +23,7 @@ app.use(limiter);
 // CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://shootup-lms-git-main-kbrian1237s-projects.vercel.app'] 
+    ? ['https://kbrian1237.github.io'] 
     : ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://localhost:5500'],
   credentials: true
 }));
