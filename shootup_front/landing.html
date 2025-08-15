@@ -72,6 +72,78 @@
             transform: scale(1.05);
             box-shadow: 0 0 20px rgba(0, 245, 160, 0.5);
         }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: linear-gradient(45deg, var(--accent-green), var(--accent-purple));
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .stats-counter {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--accent-green), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(31, 31, 31, 0.9), rgba(15, 15, 15, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .creator-badge {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-purple));
+            padding: 2px;
+            border-radius: 12px;
+        }
+
+        .creator-content {
+            background: var(--primary-dark);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .creator-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid;
+            border-image: linear-gradient(45deg, var(--accent-green), var(--accent-purple)) 1;
+            animation: floatUpDown 3s ease-in-out infinite;
+            object-fit: cover;
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -92,52 +164,290 @@
     </header>
 
     <!-- Hero Section -->
-    <main class="hero-section flex items-center justify-center text-center">
-        <div class="container mx-auto px-6">
-            <h2 class="text-5xl md:text-7xl font-black text-white leading-tight mb-4">
-                Unlock Your Potential with <span class="text-gradient">ShootUp</span>
+    <main class="hero-section flex items-center justify-center text-center relative">
+        <div class="floating-elements">
+            <div class="floating-element" style="left: 10%; width: 20px; height: 20px; animation-delay: 0s;"></div>
+            <div class="floating-element" style="left: 20%; width: 15px; height: 15px; animation-delay: 2s;"></div>
+            <div class="floating-element" style="left: 30%; width: 25px; height: 25px; animation-delay: 4s;"></div>
+            <div class="floating-element" style="left: 40%; width: 18px; height: 18px; animation-delay: 6s;"></div>
+            <div class="floating-element" style="left: 50%; width: 22px; height: 22px; animation-delay: 8s;"></div>
+            <div class="floating-element" style="left: 60%; width: 16px; height: 16px; animation-delay: 10s;"></div>
+            <div class="floating-element" style="left: 70%; width: 24px; height: 24px; animation-delay: 12s;"></div>
+            <div class="floating-element" style="left: 80%; width: 19px; height: 19px; animation-delay: 14s;"></div>
+            <div class="floating-element" style="left: 90%; width: 21px; height: 21px; animation-delay: 16s;"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="mb-6">
+                <span class="inline-block bg-gradient-to-r from-green-400 to-purple-500 text-white text-sm font-bold px-4 py-2 rounded-full mb-4 pulse-animation">
+                    🚀 Revolutionary Learning Platform
+                </span>
+            </div>
+            <h2 class="text-5xl md:text-7xl font-black text-white leading-tight mb-6">
+                Transform Your Learning Journey with <span class="text-gradient">ShootUp</span>
             </h2>
-            <p class="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8">
-                The modern, engaging, and effective learning management system designed to help you achieve your goals.
+            <p class="text-xl md:text-2xl text-text-secondary max-w-4xl mx-auto mb-8">
+                Experience the future of education with our cutting-edge LMS platform. Interactive courses, real-time progress tracking, and personalized learning paths designed to accelerate your success.
             </p>
-            <a href="index.html" class="cta-button animated-gradient text-white font-bold py-4 px-8 rounded-lg shadow-lg text-xl">
-                Get Started Now
-            </a>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                <a href="index.html" class="cta-button animated-gradient text-white font-bold py-4 px-8 rounded-lg shadow-lg text-xl">
+                    🎯 Start Learning Now
+                </a>
+                <a href="#demo" class="border-2 border-white/20 text-white font-bold py-4 px-8 rounded-lg hover:border-accent-green transition-all duration-300">
+                    📺 Watch Demo
+                </a>
+            </div>
+            <div class="flex justify-center items-center space-x-8 text-sm text-text-secondary">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-accent-green mr-2"></i>
+                    <span>Free to Start</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-accent-green mr-2"></i>
+                    <span>No Credit Card Required</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-accent-green mr-2"></i>
+                    <span>Instant Access</span>
+                </div>
+            </div>
         </div>
     </main>
 
+    <!-- Stats Section -->
+    <section class="py-16 bg-gradient-to-r from-primary-dark to-secondary-dark">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="stats-counter">10K+</div>
+                    <p class="text-text-secondary font-medium">Active Learners</p>
+                </div>
+                <div>
+                    <div class="stats-counter">500+</div>
+                    <p class="text-text-secondary font-medium">Courses Available</p>
+                </div>
+                <div>
+                    <div class="stats-counter">98%</div>
+                    <p class="text-text-secondary font-medium">Success Rate</p>
+                </div>
+                <div>
+                    <div class="stats-counter">24/7</div>
+                    <p class="text-text-secondary font-medium">Support Available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="py-20 bg-secondary-dark">
-        <div class="container mx-auto px-6 text-center">
-            <h3 class="text-4xl font-bold mb-4">About ShootUp</h3>
-            <p class="text-lg text-text-secondary max-w-3xl mx-auto">
-                ShootUp is more than just an LMS; it's a comprehensive platform designed to provide an immersive and effective learning experience. Our mission is to empower learners with the tools they need to succeed in a rapidly evolving world.
-            </p>
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-4xl md:text-5xl font-bold mb-6">Revolutionizing Education Through Technology</h3>
+                    <p class="text-lg text-text-secondary mb-6">
+                        ShootUp isn't just another learning platform – it's a complete educational ecosystem designed to adapt to your unique learning style. Our AI-powered recommendations, interactive content, and comprehensive analytics ensure you're always on the path to success.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-accent-green rounded-full mr-4"></div>
+                            <span class="text-text-primary">Personalized learning paths tailored to your goals</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-accent-purple rounded-full mr-4"></div>
+                            <span class="text-text-primary">Real-time collaboration with peers and instructors</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-accent-green rounded-full mr-4"></div>
+                            <span class="text-text-primary">Advanced analytics to track your progress</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-accent-purple rounded-full mr-4"></div>
+                            <span class="text-text-primary">Mobile-first design for learning on the go</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-accent-green/20 to-accent-purple/20 rounded-2xl p-8 backdrop-blur-sm border border-white/10">
+                        <div class="text-center">
+                            <i class="fas fa-graduation-cap text-6xl text-gradient mb-4"></i>
+                            <h4 class="text-2xl font-bold mb-4">Smart Learning Engine</h4>
+                            <p class="text-text-secondary">
+                                Our proprietary algorithm adapts to your learning pace, identifies knowledge gaps, and suggests the most effective study methods for optimal retention.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Features Section -->
     <section id="features" class="py-20">
         <div class="container mx-auto px-6">
-            <h3 class="text-4xl font-bold text-center mb-12">Why Choose ShootUp?</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl md:text-5xl font-bold mb-4">Powerful Features That Set Us Apart</h3>
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto">
+                    Discover the cutting-edge tools and features that make ShootUp the ultimate learning platform
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="feature-card rounded-xl p-8 text-center">
-                    <i class="fas fa-rocket text-4xl text-gradient mb-4"></i>
-                    <h4 class="text-2xl font-bold mb-2">Engaging Content</h4>
-                    <p class="text-text-secondary">Interactive courses and gamified learning to keep you motivated.</p>
+                <div class="feature-card rounded-xl p-8 text-center group">
+                    <div class="bg-gradient-to-br from-accent-green/20 to-accent-purple/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-rocket text-2xl text-gradient"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Interactive Learning</h4>
+                    <p class="text-text-secondary">Immersive courses with gamification, quizzes, and hands-on projects that make learning addictive.</p>
                 </div>
                 <!-- Feature 2 -->
-                <div class="feature-card rounded-xl p-8 text-center">
-                    <i class="fas fa-chart-line text-4xl text-gradient mb-4"></i>
-                    <h4 class="text-2xl font-bold mb-2">Track Your Progress</h4>
-                    <p class="text-text-secondary">Detailed analytics and achievements to monitor your growth.</p>
+                <div class="feature-card rounded-xl p-8 text-center group">
+                    <div class="bg-gradient-to-br from-accent-green/20 to-accent-purple/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chart-line text-2xl text-gradient"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Advanced Analytics</h4>
+                    <p class="text-text-secondary">Comprehensive progress tracking with detailed insights and personalized recommendations.</p>
                 </div>
                 <!-- Feature 3 -->
-                <div class="feature-card rounded-xl p-8 text-center">
-                    <i class="fas fa-user-shield text-4xl text-gradient mb-4"></i>
-                    <h4 class="text-2xl font-bold mb-2">Admin Control</h4>
-                    <p class="text-text-secondary">A powerful admin dashboard to manage users, courses, and more.</p>
+                <div class="feature-card rounded-xl p-8 text-center group">
+                    <div class="bg-gradient-to-br from-accent-green/20 to-accent-purple/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-user-shield text-2xl text-gradient"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Admin Dashboard</h4>
+                    <p class="text-text-secondary">Powerful administrative tools for managing users, courses, and organizational learning.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="feature-card rounded-xl p-8 text-center group">
+                    <div class="bg-gradient-to-br from-accent-green/20 to-accent-purple/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-mobile-alt text-2xl text-gradient"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Mobile Optimized</h4>
+                    <p class="text-text-secondary">Learn anywhere, anytime with our responsive design and offline capabilities.</p>
+                </div>
+                <!-- Feature 5 -->
+                <div class="feature-card rounded-xl p-8 text-center group">
+                    <div class="bg-gradient-to-br from-accent-green/20 to-accent-purple/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-users text-2xl text-gradient"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Collaborative Learning</h4>
+                    <p class="text-text-secondary">Connect with peers, join study groups, and learn together in our vibrant community.</p>
+                </div>
+                <!-- Feature 6 -->
+                <div class="feature-card rounded-xl p-8 text-center group">
+                    <div class="bg-gradient-to-br from-accent-green/20 to-accent-purple/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-certificate text-2xl text-gradient"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Certifications</h4>
+                    <p class="text-text-secondary">Earn industry-recognized certificates and badges to showcase your achievements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-secondary-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl font-bold mb-4">What Our Learners Say</h3>
+                <p class="text-xl text-text-secondary">Join thousands of satisfied learners who've transformed their careers</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="testimonial-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-accent-green to-accent-purple rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            S
+                        </div>
+                        <div>
+                            <h5 class="font-bold">Sarah Johnson</h5>
+                            <p class="text-text-secondary text-sm">Software Developer</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary mb-4">"ShootUp completely changed how I approach learning. The interactive courses and progress tracking kept me motivated throughout my journey."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="testimonial-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-accent-green to-accent-purple rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            M
+                        </div>
+                        <div>
+                            <h5 class="font-bold">Michael Chen</h5>
+                            <p class="text-text-secondary text-sm">Data Scientist</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary mb-4">"The analytics dashboard helped me identify my weak areas and focus my study time effectively. Landed my dream job in 3 months!"</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="testimonial-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-accent-green to-accent-purple rounded-full flex items-center justify-center text-white font-bold mr-4">
+                            E
+                        </div>
+                        <div>
+                            <h5 class="font-bold">Emily Rodriguez</h5>
+                            <p class="text-text-secondary text-sm">UX Designer</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary mb-4">"The mobile app is fantastic! I could learn during my commute and the offline feature was a game-changer for my busy schedule."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Creator Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="creator-badge">
+                    <div class="creator-content text-center">
+                        <div class="mb-6">
+                            <img src="https://cemma.rf.gd/assets/images/BrianKathurima.jpg" alt="Brian Kathurima" class="creator-image mx-auto mb-4">
+                            <h3 class="text-3xl font-bold mb-2">Meet the Creator</h3>
+                            <p class="text-xl text-text-secondary mb-6">Crafted with passion and expertise</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-accent-green/10 to-accent-purple/10 rounded-xl p-8 border border-white/10">
+                            <h4 class="text-2xl font-bold mb-4">
+                                <strong>Created by Brian Kathurima</strong>
+                            </h4>
+                            <p class="text-lg text-text-secondary mb-4">
+                                <strong>Computer Scientist & Educational Technology Innovator</strong>
+                            </p>
+                            <p class="text-text-secondary leading-relaxed">
+                                ShootUp LMS is the brainchild of <strong>Brian Kathurima</strong>, a passionate computer scientist dedicated to revolutionizing education through technology. With years of experience in software development and a deep understanding of learning methodologies, Brian has created a platform that bridges the gap between traditional education and modern digital learning needs.
+                            </p>
+                            <div class="flex justify-center items-center mt-6 space-x-6">
+                                <div class="text-center">
+                                    <i class="fas fa-code text-2xl text-accent-green mb-2"></i>
+                                    <p class="text-sm text-text-secondary">Full-Stack Developer</p>
+                                </div>
+                                <div class="text-center">
+                                    <i class="fas fa-brain text-2xl text-accent-purple mb-2"></i>
+                                    <p class="text-sm text-text-secondary">AI Enthusiast</p>
+                                </div>
+                                <div class="text-center">
+                                    <i class="fas fa-graduation-cap text-2xl text-accent-green mb-2"></i>
+                                    <p class="text-sm text-text-secondary">EdTech Pioneer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -161,9 +471,78 @@
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-accent-green/10 to-accent-purple/10">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Learning?</h3>
+            <p class="text-xl text-text-secondary mb-8 max-w-3xl mx-auto">
+                Join thousands of learners who are already accelerating their careers with ShootUp. Start your journey today and unlock your full potential.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="index.html" class="cta-button animated-gradient text-white font-bold py-4 px-8 rounded-lg shadow-lg text-xl">
+                    🚀 Get Started Free
+                </a>
+                <a href="#contact" class="border-2 border-accent-green text-accent-green font-bold py-4 px-8 rounded-lg hover:bg-accent-green hover:text-black transition-all duration-300">
+                    💬 Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="py-8 text-center text-text-secondary">
-        <p>&copy; 2025 ShootUp. All rights reserved.</p>
+    <footer class="py-12 bg-primary-dark border-t border-white/10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-2xl font-bold text-gradient mb-4">ShootUp</h4>
+                    <p class="text-text-secondary mb-4">Revolutionizing education through innovative technology and personalized learning experiences.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-text-secondary hover:text-accent-green transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-text-secondary hover:text-accent-green transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-text-secondary hover:text-accent-green transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Platform</h5>
+                    <ul class="space-y-2 text-text-secondary">
+                        <li><a href="#" class="hover:text-white transition-colors">Courses</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Analytics</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Certifications</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Support</h5>
+                    <ul class="space-y-2 text-text-secondary">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Company</h5>
+                    <ul class="space-y-2 text-text-secondary">
+                        <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 text-center">
+                <p class="text-text-secondary mb-2">&copy; 2025 ShootUp. All rights reserved.</p>
+                <p class="text-sm text-text-secondary">
+                    <strong>Created with ❤️ by Brian Kathurima - Computer Scientist</strong>
+                </p>
+            </div>
+        </div>
     </footer>
 
 </body>
