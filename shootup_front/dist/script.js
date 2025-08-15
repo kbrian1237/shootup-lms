@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof initializeNavigationToggle === 'function') {
                 initializeNavigationToggle();
             }
+            // Load navigation auth script
+            const script = document.createElement('script');
+            script.src = 'dist/navigation-auth.js';
+            document.head.appendChild(script);
         })
         .catch(() => {
             // Fallback navigation in case of an error.
