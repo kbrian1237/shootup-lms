@@ -52,6 +52,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="profile.html" class="nav-link flex items-center space-x-4 p-3 rounded-xl hover:bg-white/5 transition-colors duration-200">
+                            <i class="fa-solid fa-user text-xl text-indigo-400"></i>
+                            <span class="font-medium text-lg">Profile</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="settings.html" class="nav-link flex items-center space-x-4 p-3 rounded-xl hover:bg-white/5 transition-colors duration-200">
                             <i class="fa-solid fa-cogs text-xl text-indigo-400"></i>
                             <span class="font-medium text-lg">Settings</span>
@@ -63,11 +69,15 @@
                             <span class="font-medium text-lg">Admin</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="login.html" class="nav-link flex items-center space-x-4 p-3 rounded-xl hover:bg-white/5 transition-colors duration-200">
+                    <li id="authNavItem">
+                        <a href="login.html" id="loginNavLink" class="nav-link flex items-center space-x-4 p-3 rounded-xl hover:bg-white/5 transition-colors duration-200">
                             <i class="fa-solid fa-right-to-bracket text-xl text-indigo-400"></i>
                             <span class="font-medium text-lg">Login</span>
                         </a>
+                        <button id="logoutNavBtn" class="nav-link flex items-center space-x-4 p-3 rounded-xl hover:bg-white/5 transition-colors duration-200 w-full text-left hidden">
+                            <i class="fa-solid fa-sign-out-alt text-xl text-red-400"></i>
+                            <span class="font-medium text-lg">Logout</span>
+                        </button>
                     </li>
                 </ul>
             </nav>
@@ -83,12 +93,12 @@
         </button>
     </div>
     <!-- User Profile/Logout -->
-    <div class="mt-8 pt-4 border-t border-white/10">
-        <a href="#" class="user-profile flex items-center space-x-4 p-3 rounded-xl hover:bg-white/5 transition-colors duration-200">
-            <img src="https://placehold.co/40x40/4f46e5/ffffff?text=U" alt="User Avatar" class="w-10 h-10 rounded-full object-cover border-2 border-indigo-400">
+    <div id="userProfileSection" class="mt-8 pt-4 border-t border-white/10 hidden">
+        <a href="profile.html" class="user-profile flex items-center space-x-4 p-3 rounded-xl hover:bg-white/5 transition-colors duration-200">
+            <img id="navUserAvatar" src="https://placehold.co/40x40/4f46e5/ffffff?text=U" alt="User Avatar" class="w-10 h-10 rounded-full object-cover border-2 border-indigo-400">
             <div>
-                <span class="font-medium">Jane Doe</span>
-                <p class="text-sm text-text-secondary">Student</p>
+                <span id="navUserName" class="font-medium">Loading...</span>
+                <p id="navUserRole" class="text-sm text-text-secondary">Student</p>
             </div>
         </a>
     </div>
