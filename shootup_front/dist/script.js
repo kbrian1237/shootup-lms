@@ -9,9 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 initializeNavigationToggle();
             }
             // Load navigation auth script
-            const script = document.createElement('script');
-            script.src = 'dist/navigation-auth.js';
-            document.head.appendChild(script);
+            const authScript = document.createElement('script');
+            authScript.src = 'dist/navigation-auth.js';
+            document.head.appendChild(authScript);
+            
+            // Load mobile navigation script
+            const mobileScript = document.createElement('script');
+            mobileScript.src = 'dist/mobile-nav.js';
+            document.head.appendChild(mobileScript);
         })
         .catch(() => {
             // Fallback navigation in case of an error.
